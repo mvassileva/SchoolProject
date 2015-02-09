@@ -11,12 +11,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -42,6 +40,8 @@ public class BookController {
 		//dummyDataLoad();
 	}
    
+	//For Weird Testing, remove soon?
+	//
 	private void dummyDataLoad() {
 		for (int i=0; i<300; i++) {
 			Author a = new Author();
@@ -58,16 +58,6 @@ public class BookController {
 			//booksList.add(b);
 			mapper.addBook(b);
 		}
-	}
-	
-	// Weird jsp test
-	// TODO: Remove?
-	@RequestMapping( value = "book",
-			 method = RequestMethod.GET)
-	public String printBook(ModelMap model) {	
-		model.addAttribute("message", "Books!");
-		//model.addAttribute("bookList", booksList);
-		return "books";
 	}
 	
 	/**
