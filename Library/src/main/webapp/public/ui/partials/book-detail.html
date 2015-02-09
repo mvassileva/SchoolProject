@@ -1,0 +1,31 @@
+<h1>{{book.title}} - ISBN: {{book.isbn}}</h1>
+
+<div ng-show="book.authors">
+    Authors
+    <ul ng-repeat="author in book.authors">
+        <li>
+            {{author.lastName}}, {{author.firstName}}
+        </li>
+    </ul>
+</div>
+
+<br/>Book Status: {{book.status}}
+
+<br/>Checkout Duration: {{book.checkOutDuration}}
+<br/>Publish Date: {{book.publishDate}}
+
+<div ng-show="book.dueDate">
+        <br/>Due Date: {{book.dueDate}}
+</div>
+
+<div ng-show="book.waitingList">
+    <br/>Waiting List:
+    <ul ng-repoeat="patron in book.waitingList">
+        <li>
+            {{patron.lastName}}, {{patron.firstName}}
+        </li>
+    </ul>
+</div>
+
+
+
