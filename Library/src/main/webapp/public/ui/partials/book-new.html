@@ -1,0 +1,34 @@
+
+<div>
+    <form class="pure-form pure-form-aligned" ng-submit="newBook()">
+        <fieldset>
+        <legend>New Book:</legend>
+        <div class="pure-control-group">
+                <label for="title">Title:</label>
+                <Input id="title" type=text ng-model="bookData.title"/>
+        </div>
+            
+       <div class="pure-control-group">
+                <label for="isbn">ISBN:</label>
+                <Input id="isbn" type=text ng-model="bookData.isbn"/>
+       </div>
+            
+        <div class="pure-control-group">
+                <label for="duration">Checkout Duration:</label>
+                <Input id="duration" type=text ng-model="bookData.checkOutDuration"/>
+        </div>
+        
+        <div class="pure-control-group" >
+                <label for="authors">Author</label>
+                <select id="authors" ng-model="bookData.author" ng-options="i.lastName+', '+i.firstName for i in authors">
+                    <option value="">Select Author</option>
+                </select>
+        </div>
+        
+        <div class="pure-controls">
+            <button type="submit" class="button button-positive button-block">Create</button>
+        </div>
+        
+        </fieldset>
+      </form>
+</div>
