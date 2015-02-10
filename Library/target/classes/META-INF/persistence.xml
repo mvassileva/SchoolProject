@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
-    <persistence-unit name="jpaData" transaction-type="RESOURCE_LOCAL">
-        <class>edu.spsu.swe2313.group7.library.model.Book</class>
-        <class>edu.spsu.swe2313.group7.library.model.Author</class>
-        <class>edu.spsu.swe2313.group7.library.model.Patron</class>
-    </persistence-unit>
-</persistence>
