@@ -5,59 +5,65 @@ var libraryServices = angular.module('libraryServices', ['ngResource']);
 });*/
 
 libraryServices.factory('Book', ['$resource',
-    function($resource) {
+    function ($resource) {
+        'use strict';
+
         return $resource('/library/api/book', {}, {
             query: {
-                    method: "GET",
-                    isArray: true,
-                    headers: { 'Accept' : 'application/json' },
+                method: 'GET',
+                isArray: true,
+                headers: {Accept: 'application/json'}
             },
             add: {
-                    method: "POST",
-                    isArray: false,
-                    headers: { 'Accept' : 'application/json' },
+                method: 'POST',
+                isArray: false,
+                headers: {Accept: 'application/json'}
             }
-        })
+        });
     }
 ]);
 
 libraryServices.factory('Book', ['$resource',
-    function($resource) {
+    function ($resource) {
+        'use strict';
+
         return $resource('/library/api/book/:id', {}, {
             get: {
-                    method: "GET",
+                    method: 'GET',
                     isArray: false,
-                    headers: { 'Accept' : 'application/json' },
+                    headers: {Accept: 'application/json'}
             },
             update: {
-                    method: "PUT",
+                    method: 'PUT',
                     isArray: false,
-                    headers: { 'Accept' : 'application/json' },
+                    headers: {Accept: 'application/json'}
             },
             remove: {
-                    method: "DELETE",
+                    method: 'DELETE',
                     isArray: false,
-                    headers: { 'Accept' : 'application/json' },
-            },
-        })
+                    headers: {Accept: 'application/json'}
+            }
+        });
     }
 ]);
 
 
 libraryServices.factory('Author', ['$resource',
-    function($resource) {
+    function ($resource) {
+        'use strict';
+
         return $resource('/library/api/author', {}, {
             query: {
-                    method: "GET",
+                    method: 'GET',
                     isArray: true,
-                    headers: { 'Accept' : 'application/json' },
+                    headers: {Accept: 'application/json'}
             },
             add: {
-                    method: "POST",
+                    method: 'POST',
                     isArray: false,
-                    headers: { 'Accept' : 'application/json' },
+                    headers: {Accept: 'application/json'}
             }
-        })
+        });
     }
 ]);
 
