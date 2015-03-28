@@ -67,7 +67,7 @@
     "regexp"          : true,
 
     "maxerr"          : false,
-    "globals"         : {"angular": true},
+    "globals"         : {"angular": false},
     "scope"           : false,
     "maxstatements"   : false,
     "maxdepth"        : false,
@@ -75,7 +75,7 @@
     "maxcomplexity"   : false,
     "shadow"          : false,
     "unused"          : "vars",
-    "latedef"         : true,
+    "latedef"         : false,
     "ignore"          : false,
     "ignoreDelimiters": false
 }

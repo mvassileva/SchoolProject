@@ -1,2 +1,5 @@
+.bower_components
+docs
 nb-configuration.xml
+node_modules
 target

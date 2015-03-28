@@ -1,19 +1,42 @@
 <!doctype html>
-<html ng-app="libraryApp">
+<html ng-app="app" lang="en" class="no-js">
+
+
+
 <head>
-    <title>Hello AngularJS</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+<title>Library - SWE2313</title>
+
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<link rel="stylesheet" href="css/vendor/normalize-css/normalize.css"/>
+<link rel="stylesheet" href="styles/main.css"/>
 </head>
 
+
+
 <body>
+<h1>Library - SWE2313</h1>
+<!-- <div ng-view></div> -->
 
-<div ng-view></div>
+<!-- external dependencies -->
+<script src="script/vendor/angular/angular.min.js"></script>
+<!-- <script src="script/vendor/angular-route/angular-route.min.js"></script> -->
+<!-- <script src="script/vendor/angular-resource/angular-resource.min.js"></script> -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-route.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-resource.min.js"></script>
-<script src="js/controllers.js"></script>
-<script src="js/services.js"></script>
-<script src="js/app.js"></script>
+<!-- core modules and services -->
+<script src="script/core/core-module.js"></script>
+<!-- <script src="script/core/config.js"></script> -->
+<!-- <script src="script/core/author-service.js"></script> -->
+<!-- <script src="script/core/book-service.js"></script> -->
+
+<!-- controllers -->
+<!-- <script src="script/core/author-controller.js"></script> -->
+<!-- <script src="script/core/book-controller.js"></script> -->
+<!-- <script src="script/core/book-detail-controller.js"></script> -->
+
+
+
 </body>
 </html>
