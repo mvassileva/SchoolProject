@@ -103,8 +103,7 @@
                 <configuration>
                     <webResources>
                         <resource>
-                            <!--<directory>${project.parent.basedir}/public</directory> -->
-                            <directory>src/main/resources/webbapp/public</directory>
+                            <directory>src/main/webapp/public</directory>
                         </resource>
                     </webResources>
                 </configuration>
