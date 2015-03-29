@@ -4,25 +4,30 @@
 
 
 <head>
-<title>Library - SWE2313</title>
+<title></title>
 
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <link rel="stylesheet" href="style/vendor/normalize-css/normalize.css"/>
+<link rel="stylesheet" href="style/main.css"/>
 </head>
 
 
 
 <body>
-<h1>Library - SWE2313</h1>
-<!-- <div ng-view></div> -->
+<header class="header"><h1>Library Inventory Control</h1></header>
+
+<main class="wrapper">
+    <div ng-controller="PageController">{{foo}}</div>
+</main>
 
 <!-- external dependencies -->
 <script src="script/vendor/angular/angular.min.js"></script>
 <!-- <script src="script/vendor/angular-route/angular-route.min.js"></script> -->
 <!-- <script src="script/vendor/angular-resource/angular-resource.min.js"></script> -->
+<script src="script/app.js"></script>
 
 <!-- core modules and services -->
 <script src="script/core/core-module.js"></script>
@@ -34,6 +39,7 @@
 <!-- <script src="script/core/author-controller.js"></script> -->
 <!-- <script src="script/core/book-controller.js"></script> -->
 <!-- <script src="script/core/book-detail-controller.js"></script> -->
+<script src="script/core/page-controller.js"></script>
 
 
 
