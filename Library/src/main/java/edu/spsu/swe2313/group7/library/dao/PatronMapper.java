@@ -47,6 +47,13 @@ public class PatronMapper {
 		//return null;
 	}
 	
+	public List<Patron> getPatronsWithFines() {
+	List<Patron> pList = em.createQuery("select p from Patron p where lateFees > 0", Patron.class).getResultList();
+	logger.error("LIST LENGTH " + pList.size());
+	return pList;
+	//return null;
+	}
+	
 	public void removePatron(long id) {   
 		Patron p = (Patron) em.find(Patron.class, id);
 		if (p != null) {

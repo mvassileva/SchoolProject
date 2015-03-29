@@ -1,5 +1,6 @@
 package edu.spsu.swe2313.group7.library.controller;
 
+import edu.spsu.swe2313.group7.library.dao.AuthorMapper;
 import edu.spsu.swe2313.group7.library.dao.BookMapper;
 import edu.spsu.swe2313.group7.library.dao.PatronMapper;
 import edu.spsu.swe2313.group7.library.model.Author;
@@ -26,42 +27,61 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author Robert Whitaker
  */
 @Controller
-@RequestMapping("/patron")
-public class PatronController {
+@RequestMapping("/reports")
+public class ReportController {
 	private static final Logger logger = Logger.getLogger(BookController.class);
 	
 	@Autowired
 	@Qualifier("patronMapper")
-	private PatronMapper mapper;
+	private PatronMapper patronMapper;
 
-	public void setMapper(PatronMapper mapper) {
-		this.mapper = mapper;
+	public void setPatronMapper(PatronMapper mapper) {
+		this.patronMapper = mapper;
 	}
+	
+	@Autowired
+	@Qualifier("bookMapper")
+	private BookMapper bookMapper;
+
+	public void setBookMapper(BookMapper mapper) {
+		this.bookMapper = mapper;
+	}
+	
+	@Autowired
+	@Qualifier("authorMapper")
+	private AuthorMapper authorMapper;
+
+	public void setAuthorMapper(AuthorMapper mapper) {
+		this.authorMapper = mapper;
+	}
+	
 	
 	@PostConstruct
 	private void init() {
-		Patron p = new Patron();
-		p.setFirstName("Bob");
-		p.setLastName("Jones");
-		p.setDateOfBirth(new Date());
-		p.setLateFees(2);
-		p.setBookCheckoutLimit(12);
-		p.setBookCheckedOutCount(0);
-		p.setAllowedCheckout(true);
-		createPatron(p);
+
 	}
    
-	/**
-	 *
-	 * @return
-	 */
-	@RequestMapping( value = "",
+
+	@RequestMapping( value = "Fines",
 			 method = RequestMethod.GET)
-	public @ResponseBody List<Patron> getPatronList() {
-		return mapper.getPatrons();
-		//return booksList;
+	public @ResponseBody List<Patron> getFinesList() {
+		return patronMapper.getPatronsWithFines();
 	}
 	
+	
+	@RequestMapping( value = "BooksByAuthor/{authorId}",
+			 method = RequestMethod.GET)
+	public @ResponseBody List<Book> getBooksByAuthor(@PathVariable long authorId) {
+		return bookMapper.getBooksByAuthor(authorId);
+	}
+	
+	@RequestMapping( value = "overDueBooks",
+			 method = RequestMethod.GET)
+	public @ResponseBody List<Book> getOverDueBooks() {
+		return bookMapper.getOverDueBooks();
+	}
+	
+	/*
 	@RequestMapping( value="",
 			 method = RequestMethod.POST)
 	@ResponseBody
@@ -92,4 +112,5 @@ public class PatronController {
 		logger.debug("Called Find Patron By Id");
 		return mapper.getPatronById(patronId);
 	}
+*/
 }

@@ -4,7 +4,10 @@ import edu.spsu.swe2313.group7.library.dao.BookMapper;
 import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.Book;
 import edu.spsu.swe2313.group7.library.model.BookStatus;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.ui.ModelMap;
@@ -30,32 +33,35 @@ public class BookController {
 	@Autowired
 	@Qualifier("bookMapper")
 	private BookMapper mapper;
+	
 
 	public void setMapper(BookMapper mapper) {
 		this.mapper = mapper;
 	}
 	
 	@PostConstruct
-	private void init() {
+	private void init() throws ParseException {
 		//dummyDataLoad();
 	}
    
 	//For Weird Testing, remove soon?
 	//
-	private void dummyDataLoad() {
+	private void dummyDataLoad() throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
 		for (int i=0; i<300; i++) {
 			Author a = new Author();
 			a.setLastName("Dickens");
 			a.setFirstName("Charles");
 			Book b = new Book();
-			List<Author> aList = new ArrayList(1);
-			aList.add(a);
-			//b.setAuthors(aList);
 			b.setTitle("Book:"+i);
-			//b.setId(i);
+			b.setAuthor(a);
 			b.setISBN13(i*20 + i*30 + i*i+1 + i*30 + i+17*20 + "-" + i*i +i*i*i + 30*i);
-			b.setStatus(BookStatus.CHECKEDIN);
-			//booksList.add(b);
+			if (i % 3 == 0 ) {
+				b.setStatus(BookStatus.CHECKEDOUT);
+				b.setDueDate(format.parse("2015-01-01"));
+			} else {
+				b.setStatus(BookStatus.CHECKEDIN);
+			}
 			mapper.addBook(b);
 		}
 	}

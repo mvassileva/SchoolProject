@@ -78,5 +78,19 @@ public class BookMapper {
 		logger.error("Delete: Unable to find book with id:" + id);
 		
 	}
+	
+	public List<Book> getBooksByAuthor(long authorId) {
+		//TODO: wire up by author search
+		List<Book> bList = em.createQuery("select b from Book b", Book.class).getResultList();
+		logger.error("LIST LENGTH " + bList.size());
+		return bList;
+	}
+	
+	public List<Book> getOverDueBooks() {
+	//TODO: wire up by author search
+	List<Book> bList = em.createQuery("select b from Book b where b.dueDate < CURRENT_DATE ", Book.class).getResultList();
+	logger.error("LIST LENGTH " + bList.size());
+	return bList;
+	}
 
 }
