@@ -50,6 +50,7 @@ code {
 
 form {
     display: inline;
+    line-height: 2em;
 }
 
 a {

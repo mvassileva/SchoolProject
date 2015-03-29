@@ -3,6 +3,14 @@
 
     angular.module('app.core').config(config);
 
+    /**
+     * Route configuration
+     *
+     * @memberof module:core
+     *
+     * @param {object} $routeProvider
+     * The route provider (ngRoute)
+     */
     function config($routeProvider) {
         $routeProvider.
             when('/books', {

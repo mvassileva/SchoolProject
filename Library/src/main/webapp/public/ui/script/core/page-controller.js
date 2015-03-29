@@ -1,9 +1,7 @@
 (function () {
     'use strict';
 
-    angular
-        .module('app.core')
-        .controller('PageController', PageController);
+    angular.module('app.core').controller('PageController', PageController);
 
     PageController.$inject = ['$scope'];
 

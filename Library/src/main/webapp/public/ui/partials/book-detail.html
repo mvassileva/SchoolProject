@@ -9,17 +9,17 @@
     </ul>
 </div>
 
-<br/>Book Status: {{book.status}}
+<div>Book Status: {{book.status}}</div>
 
-<br/>Checkout Duration: {{book.checkOutDuration}}
-<br/>Publish Date: {{book.publishDate}}
+<div>Checkout Duration: {{book.checkOutDuration}}</div>
+<div>Publish Date: {{book.publishDate}}</div>
 
 <div ng-show="book.dueDate">
-        <br/>Due Date: {{book.dueDate}}
+        <div>Due Date: {{book.dueDate}}</div>
 </div>
 
 <div ng-show="book.waitingList">
-    <br/>Waiting List:
+    <div>Waiting List:</div>
     <ul ng-repoeat="patron in book.waitingList">
         <li>
             {{patron.lastName}}, {{patron.firstName}}

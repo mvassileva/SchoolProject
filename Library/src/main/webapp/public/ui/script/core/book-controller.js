@@ -3,19 +3,19 @@
 
     angular.module('app.core').controller('BookController', BookController);
 
-    BookController.$inject = ['$scope', 'Book', 'Author'];
+    BookController.$inject = ['$scope', 'BookService', 'AuthorService'];
 
-    function BookController($scope, Book, Author) {
-        $scope.books = Book.query();
+    function BookController($scope, BookService, AuthorService) {
+        $scope.books = BookService.query();
 
         $scope.bookData = {};
 
         $scope.newBook = function newBook() {
-            var book = new Book($scope.bookData);
+            var book = new BookService($scope.bookData);
             book.$save();
         };
 
-        $scope.authors = Author.query();
+        $scope.authors = AuthorService.query();
         $scope.orderProp = 'title';
     }
 }());

@@ -2,4 +2,5 @@
 docs
 nb-configuration.xml
 node_modules
+npm-debug.log
 target
