@@ -6,6 +6,13 @@
      *
      * @description
      * This is the core module, everything depends on this.
+     *
+     * @requires ngRoute
+     * @requires ngResource
      */
-    angular.module('app.core', ['ngRoute', 'ngResource']);
+    angular.module('app.core', [
+        /* Angular modules */
+        'ngRoute',
+        'ngResource'
+    ]);
 }());

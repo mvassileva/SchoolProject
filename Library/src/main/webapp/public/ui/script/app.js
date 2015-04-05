@@ -10,10 +10,6 @@
      * @requires core
      */
     angular.module('app', [
-        /* Angular modules */
-        'ngRoute',
-        'ngResource',
-
         /* Custom modules */
         'app.core'
     ]);

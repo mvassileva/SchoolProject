@@ -14,16 +14,16 @@
     function config($routeProvider) {
         $routeProvider.
             when('/books', {
-                templateUrl: 'partials/book-list.html',
-                controller: 'BookController'
+                controller: 'BookController',
+                templateUrl: 'partials/book-list.html'
             }).
             when('/book/:bookId', {
-                templateUrl: 'partials/book-detail.html',
-                controller: 'BookDetailController'
+                controller: 'BookDetailController',
+                templateUrl: 'partials/book-detail.html'
             }).
             when('/books/new', {
-                templateUrl: 'partials/book-new.html',
-                controller: 'BookController'
+                controller: 'BookController',
+                templateUrl: 'partials/book-new.html'
             }).
             otherwise({
                 redirectTo: '/books'
