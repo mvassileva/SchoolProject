@@ -14,7 +14,7 @@
         <div>
             <!--Body content-->
             <ul>
-                <li ng-repeat="book in books | filter:query | orderBy:orderProp">
+                <li ng-repeat="book in books | filter:query | orderBy:orderProperty">
                     <!--<a href="#/book/{{book.id}}"><img ng-src="{{book.imageUrl}}"></a> -->
                     <a href="#/book/{{book.id}}">{{book.title}}</a>
                     <p>{{book.snippet}}</p>

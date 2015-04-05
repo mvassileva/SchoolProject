@@ -18,6 +18,7 @@ module.exports = function (grunt) {
                 /* exclude */
                 '!**/vendor/**/*.js',
                 '!.bower_components/**/*.js',
+                '!docs/**/*.js',
                 '!node_modules/**/*.js'
             ],
             options: {reporter: 'inline'}
@@ -33,6 +34,7 @@ module.exports = function (grunt) {
                     /* exclude */
                     '!**/vendor/**/*.js',
                     '!.bower_components/**/*.js',
+                    '!docs/**/*.js',
                     '!node_modules/**/*.js'
                 ]
             },

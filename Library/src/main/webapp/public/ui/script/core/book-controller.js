@@ -16,6 +16,6 @@
         };
 
         $scope.authors = AuthorService.query();
-        $scope.orderProp = 'title';
+        $scope.orderProperty = 'title';
     }
 }());
