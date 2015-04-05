@@ -6,18 +6,35 @@ Software engineering class project
 ## Development
 ### OS X
 #### Requirements
-- [Maven][maven] - It is recommend to install this with [Homebrew][homebrew] if
-  it is not already installed.
+- [Maven][maven] 3.2.x - It is recommend to install this with
+  [Homebrew][homebrew] if it is not already installed.
 
 ```shell
 $ brew install maven
 ```
 
-- [Xcode][xcode] - Install this from the App Store.  This will get you all of
-  the basic developer tools needed to install Homebrew and Maven.
+- [Xcode][xcode] 6.x.x - Install this from the App Store.  This will get you all
+  of the basic developer tools needed to install Homebrew and Maven.
+
+If you are going to do work on the front end web app, there are more details in
+this [README.md](/Library/src/main/webapp/public/ui/README.md)
 
 
 --------------------------------------------------------------------------------
+
+
+## How to update the front end dependencies
+These are checked in so you only need to do this if you want to update any of
+the bower dependencies.  Angular would be the one that will likely update soon.
+
+```shell
+$ cd Library/src/main/webapp/public/ui
+$ npm install
+```
+
+This will install the dependencies listed in `package.json` and `bower.json`,
+then do a `grunt build` which will copy the files from `.bower_componetns` into
+their appropriate `vendor` locations that are checked into source control.
 
 
 ## How to start the backend API Server

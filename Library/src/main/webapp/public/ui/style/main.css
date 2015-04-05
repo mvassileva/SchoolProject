@@ -1,0 +1,76 @@
+.cf:before, .cf:after {
+    content: "";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+*,
+*:before,
+*:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: .9em;
+}
+
+body,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: normal;
+    margin: 0 0 .5em;
+}
+
+img {
+    display: block;
+}
+
+code {
+    white-space: nowrap;
+}
+
+form {
+    display: inline;
+    line-height: 2em;
+}
+
+a {
+    color: #369;
+    text-decoration: none;
+}
+
+.header {
+    background-color: #404040;
+    color: #fefefe;
+    height: 80px;
+    padding: 1em 20px;
+}
+
+.header a {
+    background-color: #404040;
+    color: #369;
+    text-decoration: none;
+}
+
+.wrapper {
+    padding: 20px;
+}
