@@ -1,6 +1,7 @@
 {
   "name": "library",
   "version": "0.1.0",
+  "private": true,
   "description": "Frontend Angular app",
   "main": "index.html",
   "scripts": {
