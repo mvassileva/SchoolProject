@@ -34,7 +34,7 @@ This is only needed if you need to update the bower dependencies (angular),
 generate documentation, or run the unit tests locally.
 
 ```shell
-$ cd Library/src/main/sebapp/public/ui/
+$ cd Library/src/main/webapp/public/ui/
 $ npm install
 ```
 
