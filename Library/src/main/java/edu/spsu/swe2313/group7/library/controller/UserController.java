@@ -1,11 +1,11 @@
 package edu.spsu.swe2313.group7.library.controller;
 
 import edu.spsu.swe2313.group7.library.dao.BookMapper;
-import edu.spsu.swe2313.group7.library.dao.PatronMapper;
+import edu.spsu.swe2313.group7.library.dao.UserMapper;
 import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.Book;
 import edu.spsu.swe2313.group7.library.model.BookStatus;
-import edu.spsu.swe2313.group7.library.model.Patron;
+import edu.spsu.swe2313.group7.library.model.User;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,21 +26,21 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author Robert Whitaker
  */
 @Controller
-@RequestMapping("/patron")
-public class PatronController {
+@RequestMapping("/user")
+public class UserController {
 	private static final Logger logger = Logger.getLogger(BookController.class);
 	
 	@Autowired
-	@Qualifier("patronMapper")
-	private PatronMapper mapper;
+	@Qualifier("userMapper")
+	private UserMapper mapper;
 
-	public void setMapper(PatronMapper mapper) {
+	public void setMapper(UserMapper mapper) {
 		this.mapper = mapper;
 	}
 	
 	@PostConstruct
 	private void init() {
-		Patron p = new Patron();
+		User p = new User();
 		p.setFirstName("Bob");
 		p.setLastName("Jones");
 		p.setDateOfBirth(new Date());
@@ -48,7 +48,7 @@ public class PatronController {
 		p.setBookCheckoutLimit(12);
 		p.setBookCheckedOutCount(0);
 		p.setAllowedCheckout(true);
-		createPatron(p);
+		createUser(p);
 	}
    
 	/**
@@ -57,21 +57,21 @@ public class PatronController {
 	 */
 	@RequestMapping( value = "",
 			 method = RequestMethod.GET)
-	public @ResponseBody List<Patron> getPatronList() {
-		return mapper.getPatrons();
+	public @ResponseBody List<User> getUserList() {
+		return mapper.getUsers();
 		//return booksList;
 	}
 	
 	@RequestMapping( value="",
 			 method = RequestMethod.POST)
 	@ResponseBody
-	public Patron createPatron(@RequestBody Patron p) {
-		logger.debug("Found Patron:");
+	public User createUser(@RequestBody User p) {
+		logger.debug("Found User:");
 		logger.debug("Last Name: " + p.getLastName());
 		logger.debug("First Name: " + p.getFirstName());
 
-		Long id = mapper.addPatron(p);
-		logger.info("Saved Patron with id " + id);
+		Long id = mapper.addUser(p);
+		logger.info("Saved User with id " + id);
 		return p;	
 	}
 	
@@ -79,8 +79,8 @@ public class PatronController {
 			 method = RequestMethod.PUT,
 			 produces = "application/json")
 	@ResponseBody
-	public void updatePatron(@PathVariable long patronId, @RequestBody Patron p) {
-		mapper.updatePatron(p);
+	public void updateUser(@PathVariable long patronId, @RequestBody User p) {
+		mapper.updateUser(p);
 	}
 	
 	
@@ -88,8 +88,8 @@ public class PatronController {
 	@RequestMapping( value="{patronId}",
 			 method = RequestMethod.GET,
 			 produces = "application/json")
-	public @ResponseBody Patron findBookById(@PathVariable long patronId) {
-		logger.debug("Called Find Patron By Id");
-		return mapper.getPatronById(patronId);
+	public @ResponseBody User findBookById(@PathVariable long patronId) {
+		logger.debug("Called Find User By Id");
+		return mapper.getUserById(patronId);
 	}
 }

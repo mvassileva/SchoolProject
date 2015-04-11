@@ -7,14 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import edu.spsu.swe2313.group7.library.util.PasswordHash;
 
 /**
  *
  * @author Robert Whitaker
  */
 @Entity
-@Table(name="PATRON")
-public class Patron {
+@Table(name="USER")
+public class User {
 	
 	@Id
 	@Column(name="id")
@@ -28,7 +29,45 @@ public class Patron {
 	private int bookCheckedOutCount;
 	private int lateFees;
 	private boolean allowedCheckout;
+	private UserLevel level;
+	private String userName;
+	private String passwordHash;
 
+	public UserLevel getLevel() {
+		return level;
+	}
+
+	public void setLevel(UserLevel level) {
+		this.level = level;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+	public boolean setPassword(String password) {
+		PasswordHash hashFunction = new PasswordHash();
+		String hash = hashFunction.passwordToHash(password);
+		if (hash != null) {
+			this.passwordHash = hash;
+			return true;
+		}
+		return false;
+		
+	}
+	
 	public long getId() {
 		return id;
 	}
