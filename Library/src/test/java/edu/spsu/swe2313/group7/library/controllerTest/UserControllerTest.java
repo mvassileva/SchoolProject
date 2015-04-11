@@ -17,28 +17,28 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import edu.spsu.swe2313.group7.library.dao.PatronMapper;
-import edu.spsu.swe2313.group7.library.model.Patron;
+import edu.spsu.swe2313.group7.library.dao.UserMapper;
+import edu.spsu.swe2313.group7.library.model.User;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/library-context.xml")
-public class PatronControllerTest
+public class UserControllerTest
 {
 
 	private static SimpleDateFormat format;
 
 	@Autowired
-	@Qualifier("patronMapper")
-	private PatronMapper pMap;
+	@Qualifier("userMapper")
+	private UserMapper pMap;
 
-	public PatronControllerTest() {
+	public UserControllerTest() {
 	}
 
 	@BeforeClass
 	public static void setUpClass()
 	{
-		format = new SimpleDateFormat("YYYY-MM-DD");
+		format = new SimpleDateFormat("yyyy-MM-DD");
 
 	}
 
@@ -60,30 +60,30 @@ public class PatronControllerTest
 	@Test
 	public void bogusSpringTest()
 	{
-		assertNotNull("Patron Mapper DAO object is null, unable to complete further testsing", pMap);
+		assertNotNull("User Mapper DAO object is null, unable to complete further testsing", pMap);
 	}
 
 	@Test
-	public void initializePatron() throws ParseException
+	public void initializeUser() throws ParseException
 	{
-		Patron p = new Patron();
-		p.setLastName("Vassileva");
-		p.setFirstName("Maria");
-		p.setDateOfBirth(format.parse("09/01/1989"));
-		p.setAllowedCheckout(true);
-		p.setBookCheckedOutCount(1);
-		p.setBookCheckoutLimit(5);
-		p.setLateFees(0);
+		User u = new User();
+		u.setLastName("Vassileva");
+		u.setFirstName("Maria");
+		u.setDateOfBirth(format.parse("09/01/1989"));
+		u.setAllowedCheckout(true);
+		u.setBookCheckedOutCount(1);
+		u.setBookCheckoutLimit(5);
+		u.setLateFees(0);
 	
-		Long id = pMap.addPatron(p);
+		Long id = pMap.addUser(u);
 
-		assertEquals("First Name doesn't match Expected!", "Maria", pMap.getPatronById(id).getFirstName());
-		assertEquals("Last Name doesn't match Expected!", "Vassileva", pMap.getPatronById(id).getLastName());
-		assertEquals("Date of Birth doesn't match!", "Maria", pMap.getPatronById(id).getDateOfBirth());
-		assertEquals("Book Checked Out Count doesn't match!", 1, pMap.getPatronById(id).getBookCheckedOutCount());
-		assertEquals("Book Checkout Limit doesn't match!", 5, pMap.getPatronById(id).getBookCheckoutLimit());
-		assertEquals("Late Fees doesn't match!", 0, pMap.getPatronById(id).getLateFees());
-		assertEquals("Date of Birth doesn't match!", format.parse("09/01/1989"), pMap.getPatronById(id).getDateOfBirth());
+		assertEquals("First Name doesn't match Expected!", "Maria", pMap.getUserById(id).getFirstName());
+		assertEquals("Last Name doesn't match Expected!", "Vassileva", pMap.getUserById(id).getLastName());
+		assertEquals("Date of Birth doesn't match!", "Maria", pMap.getUserById(id).getDateOfBirth());
+		assertEquals("Book Checked Out Count doesn't match!", 1, pMap.getUserById(id).getBookCheckedOutCount());
+		assertEquals("Book Checkout Limit doesn't match!", 5, pMap.getUserById(id).getBookCheckoutLimit());
+		assertEquals("Late Fees doesn't match!", 0, pMap.getUserById(id).getLateFees());
+		assertEquals("Date of Birth doesn't match!", format.parse("09/01/1989"), pMap.getUserById(id).getDateOfBirth());
 	}
 }
 
