@@ -18,7 +18,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.spsu.swe2313.group7.library.dao.AuthorMapper;
-import edu.spsu.swe2313.group7.library.dao.BookMapper;
 import edu.spsu.swe2313.group7.library.model.Author;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,10 +26,6 @@ public class AuthorControllerTest
 {
 
 	private static SimpleDateFormat format;
-
-	@Autowired
-	@Qualifier("bookMapper")
-	private BookMapper bMap;
 
 	@Autowired
 	@Qualifier("authorMapper")
@@ -63,7 +58,6 @@ public class AuthorControllerTest
 	@Test
 	public void bogusSpringTest()
 	{
-		assertNotNull("Book Mapper DAO object is null, unable to complete further testsing", bMap);
 		assertNotNull("Author Mapper DAO object is null, unable to complete further testsing", aMap);
 	}
 
@@ -80,7 +74,7 @@ public class AuthorControllerTest
 
 		assertEquals("First Name doesn't match", "Frank", aMap.getAuthorById(id).getFirstName());
 		assertEquals("Last Name doesn't match", "Tsui", aMap.getAuthorById(id).getLastName());
-		assertEquals("Date of Birth doesn't match", "01/01/1960", aMap.getAuthorById(id).getDateOfBirth());
+		assertEquals("Date of Birth doesn't match", format.parse("01/01/1960"), aMap.getAuthorById(id).getDateOfBirth());
 
 	}
 
