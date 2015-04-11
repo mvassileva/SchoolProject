@@ -110,7 +110,7 @@ public class BookControllerTest
 		b.setTitle("Essentials Of Software Engineering");
 		b.setStatus(BookStatus.CHECKEDIN);
 		b.setAuthors(aList);
-		b.setPublishDate(format.parse("02/13/2013"));
+		b.setPublishDate(format.parse("2013-02-13"));
 
 		Long id = bMap.addBook(b);
 
