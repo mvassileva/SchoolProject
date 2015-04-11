@@ -18,7 +18,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.spsu.swe2313.group7.library.dao.AuthorMapper;
-import edu.spsu.swe2313.group7.library.dao.BookMapper;
 import edu.spsu.swe2313.group7.library.model.Author;
 import java.util.TimeZone;
 
@@ -28,10 +27,6 @@ public class AuthorControllerTest
 {
 
 	private static SimpleDateFormat format;
-
-	@Autowired
-	@Qualifier("bookMapper")
-	private BookMapper bMap;
 
 	@Autowired
 	@Qualifier("authorMapper")
@@ -64,7 +59,6 @@ public class AuthorControllerTest
 	@Test
 	public void bogusSpringTest()
 	{
-		assertNotNull("Book Mapper DAO object is null, unable to complete further testsing", bMap);
 		assertNotNull("Author Mapper DAO object is null, unable to complete further testsing", aMap);
 	}
 

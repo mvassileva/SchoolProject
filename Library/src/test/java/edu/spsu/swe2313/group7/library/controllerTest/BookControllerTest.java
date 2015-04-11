@@ -89,25 +89,16 @@ public class BookControllerTest
 		Author a1 = new Author();
 		a1.setLastName("Tsui");
 		a1.setFirstName("Frank");
-		// a1.setId(1);
 
 		Author a2 = new Author();
 		a2.setLastName("Karam");
 		a2.setFirstName("Orlando");
-		// a2.setId(2);
 
 		Author a3 = new Author();
 		a3.setLastName("Bernal");
 		a3.setFirstName("Barbara");
-		// a3.setId(3);
+		
 		List<Author> aList = new LinkedList<>();
-
-		// aMap.addAuthor(a1);
-		// System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-		// + "Author DD : "+ a1.getId() +
-		// "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-		// aMap.addAuthor(a2);
-		// aMap.addAuthor(a3);
 
 		aList.add(a1);
 		aList.add(a2);
@@ -119,7 +110,7 @@ public class BookControllerTest
 		b.setTitle("Essentials Of Software Engineering");
 		b.setStatus(BookStatus.CHECKEDIN);
 		b.setAuthors(aList);
-		b.setPublishDate(format.parse("2013-02-13"));
+		b.setPublishDate(format.parse("02/13/2013"));
 
 		Long id = bMap.addBook(b);
 
