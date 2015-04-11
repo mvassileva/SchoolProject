@@ -13,7 +13,7 @@ public class PasswordHash {
 
 	public String passwordToHash(String incomingPassword) {
 		try {
-			MessageDigest md = MessageDigest.getInstance("SHA256");
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(incomingPassword.getBytes());
 			byte[] bytes = md.digest();
 			StringBuilder builder = new StringBuilder();

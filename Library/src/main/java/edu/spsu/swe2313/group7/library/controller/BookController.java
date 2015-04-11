@@ -1,5 +1,6 @@
 package edu.spsu.swe2313.group7.library.controller;
 
+import edu.spsu.swe2313.group7.library.dao.AuthMapper;
 import edu.spsu.swe2313.group7.library.dao.BookMapper;
 import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.Book;
@@ -34,6 +35,9 @@ public class BookController {
 	@Qualifier("bookMapper")
 	private BookMapper mapper;
 	
+	@Autowired
+	@Qualifier("authMapper")
+	private AuthMapper authMapper;
 
 	public void setMapper(BookMapper mapper) {
 		this.mapper = mapper;
@@ -47,7 +51,7 @@ public class BookController {
 	//For Weird Testing, remove soon?
 	//
 	private void dummyDataLoad() throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-DD");
 		for (int i=0; i<300; i++) {
 			Author a = new Author();
 			a.setLastName("Dickens");

@@ -36,7 +36,7 @@ public class UserMapper {
 	
 	public User getUserById(long id) {   
 		User u = (User) em.find(User.class, id);
-		logger.info("Book loaded successfully, " + u.getLastName() + ", " + u.getFirstName());
+		logger.info("User loaded successfully, " + u.getLastName() + ", " + u.getFirstName());
 		return u;
 	}
 	
@@ -63,5 +63,11 @@ public class UserMapper {
 		}
 		logger.error("Delete: Unable to find User with id:" + id);
 		
+	}
+	
+	public User getUserByName(String name) {
+		User u = (User) em.find(User.class, name);
+		logger.info("Book loaded successfully, " + u.getLastName() + ", " + u.getFirstName());
+		return u;
 	}
 }
