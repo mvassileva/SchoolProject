@@ -2,7 +2,7 @@ package edu.spsu.swe2313.group7.library.dao;
 
 import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.Book;
-import edu.spsu.swe2313.group7.library.model.Patron;
+import edu.spsu.swe2313.group7.library.model.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,7 +31,7 @@ public class BookMapper {
 			}
 		}
 		if (b.getWaitingList() != null) {
-			for (Patron p : b.getWaitingList()) {
+			for (User p : b.getWaitingList()) {
 				em.persist(p);
 			}
 		}

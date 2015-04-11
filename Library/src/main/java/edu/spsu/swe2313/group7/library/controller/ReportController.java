@@ -2,11 +2,11 @@ package edu.spsu.swe2313.group7.library.controller;
 
 import edu.spsu.swe2313.group7.library.dao.AuthorMapper;
 import edu.spsu.swe2313.group7.library.dao.BookMapper;
-import edu.spsu.swe2313.group7.library.dao.PatronMapper;
+import edu.spsu.swe2313.group7.library.dao.UserMapper;
 import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.Book;
 import edu.spsu.swe2313.group7.library.model.BookStatus;
-import edu.spsu.swe2313.group7.library.model.Patron;
+import edu.spsu.swe2313.group7.library.model.User;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,11 +32,11 @@ public class ReportController {
 	private static final Logger logger = Logger.getLogger(BookController.class);
 	
 	@Autowired
-	@Qualifier("patronMapper")
-	private PatronMapper patronMapper;
+	@Qualifier("userMapper")
+	private UserMapper userMapper;
 
-	public void setPatronMapper(PatronMapper mapper) {
-		this.patronMapper = mapper;
+	public void setUserMapper(UserMapper mapper) {
+		this.userMapper = mapper;
 	}
 	
 	@Autowired
@@ -64,8 +64,8 @@ public class ReportController {
 
 	@RequestMapping( value = "Fines",
 			 method = RequestMethod.GET)
-	public @ResponseBody List<Patron> getFinesList() {
-		return patronMapper.getPatronsWithFines();
+	public @ResponseBody List<User> getFinesList() {
+		return userMapper.getUsersWithFines();
 	}
 	
 	
@@ -85,32 +85,32 @@ public class ReportController {
 	@RequestMapping( value="",
 			 method = RequestMethod.POST)
 	@ResponseBody
-	public Patron createPatron(@RequestBody Patron p) {
-		logger.debug("Found Patron:");
+	public User createUser(@RequestBody User p) {
+		logger.debug("Found User:");
 		logger.debug("Last Name: " + p.getLastName());
 		logger.debug("First Name: " + p.getFirstName());
 
-		Long id = mapper.addPatron(p);
-		logger.info("Saved Patron with id " + id);
+		Long id = mapper.addUser(p);
+		logger.info("Saved User with id " + id);
 		return p;	
 	}
 	
-	@RequestMapping( value="{patronId}",
+	@RequestMapping( value="{userId}",
 			 method = RequestMethod.PUT,
 			 produces = "application/json")
 	@ResponseBody
-	public void updatePatron(@PathVariable long patronId, @RequestBody Patron p) {
-		mapper.updatePatron(p);
+	public void updateUser(@PathVariable long userId, @RequestBody User p) {
+		mapper.updateUser(p);
 	}
 	
 	
 	
-	@RequestMapping( value="{patronId}",
+	@RequestMapping( value="{userId}",
 			 method = RequestMethod.GET,
 			 produces = "application/json")
-	public @ResponseBody Patron findBookById(@PathVariable long patronId) {
-		logger.debug("Called Find Patron By Id");
-		return mapper.getPatronById(patronId);
+	public @ResponseBody User findBookById(@PathVariable long userId) {
+		logger.debug("Called Find User By Id");
+		return mapper.getUserById(userId);
 	}
 */
 }

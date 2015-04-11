@@ -54,14 +54,14 @@ public class Book {
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="PATRON_ID")
-	private Patron checkedOutBy;
+	private User checkedOutBy;
 	
 	
 	private Date dueDate;
 	
 	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name="BOOK_WAITING_PATRONS", joinColumns = { @JoinColumn(name= "BOOK_ID") }, inverseJoinColumns = {@JoinColumn(name="PATRON_ID") })
-	private List<Patron> waitingList;
+	private List<User> waitingList;
 
 	
 	public Author getAuthor() {
@@ -131,11 +131,11 @@ public class Book {
 		this.status = status;
 	}
 
-	public Patron getCheckedOutBy() {
+	public User getCheckedOutBy() {
 		return checkedOutBy;
 	}
 
-	public void setCheckedOutBy(Patron checkedOutBy) {
+	public void setCheckedOutBy(User checkedOutBy) {
 		this.checkedOutBy = checkedOutBy;
 	}
 
@@ -147,11 +147,11 @@ public class Book {
 		this.dueDate = dueDate;
 	}
 
-	public List<Patron> getWaitingList() {
+	public List<User> getWaitingList() {
 		return waitingList;
 	}
 
-	public void setWaitingList(List<Patron> waitingList) {
+	public void setWaitingList(List<User> waitingList) {
 		this.waitingList = waitingList;
 	}
 
