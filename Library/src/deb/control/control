@@ -1,0 +1,8 @@
+Package: [[name]]
+Version: [[version]]
+Section: misc
+Depends: tomcat6
+Priority: low
+Architecture: all
+Description: [[description]]
+Maintainer: rwhitak3@spsu.edu
