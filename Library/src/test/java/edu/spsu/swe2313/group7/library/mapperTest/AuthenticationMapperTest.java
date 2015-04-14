@@ -1,4 +1,4 @@
-package edu.spsu.swe2313.group7.library.mapperTest;
+package edu.spsu.swe2313.group7.library.MapperTest;
 
 import edu.spsu.swe2313.group7.library.dao.AuthenticationMapper;
 import edu.spsu.swe2313.group7.library.dao.UserMapper;
@@ -7,7 +7,6 @@ import edu.spsu.swe2313.group7.library.model.User;
 import edu.spsu.swe2313.group7.library.model.UserLevel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import static junit.framework.Assert.assertNotSame;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -82,7 +81,7 @@ public class AuthenticationMapperTest {
 		u.setBookCheckedOutCount(1);
 		u.setBookCheckoutLimit(5);
 		u.setLateFees(0);
-		u.setLevel(UserLevel.LIBRARIAN);
+		u.setUserLevel(UserLevel.LIBRARIAN);
 		u.setPassword("TEST1");
 		u.setUserName("mvassileva");
 		

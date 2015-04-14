@@ -19,7 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.spsu.swe2313.group7.library.dao.AuthorMapper;
 import edu.spsu.swe2313.group7.library.model.Author;
-import java.util.TimeZone;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/library-context.xml")
