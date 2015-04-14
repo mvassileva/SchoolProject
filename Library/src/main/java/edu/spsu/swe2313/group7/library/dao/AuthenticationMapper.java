@@ -24,6 +24,9 @@ public class AuthenticationMapper {
 	private static final Logger logger = Logger.getLogger(AuthenticationMapper.class);
 	private Map<String, AuthenticationToken> authMap;
 
+	//TODO: properties file
+	//One hour in ms
+	private static Long sessionDuration = (long) 3600000;
 	private PasswordHash hashFunc;
 
 	@Autowired
@@ -52,6 +55,7 @@ public class AuthenticationMapper {
 					tok.setUserName(username);
 					String tokenValue = tok.generateToken();
 					tok.setLevel(u.getUserLevel());
+					tok.setExperation(System.currentTimeMillis() + sessionDuration);
 					authMap.put(tokenValue, tok);
 					return tok;
 				}
@@ -66,6 +70,10 @@ public class AuthenticationMapper {
 		return authMap.get(token);
 	}
 
+	public void expireToken (AuthenticationToken token) {
+		authMap.remove(token);
+	}
+	
 	/*
 	This allows various functions to check to see if an action is allowed by sending
 	the info they recieved from the end user and what minimum level they have requested
@@ -128,6 +136,8 @@ public class AuthenticationMapper {
 		if (testToken.getExperation() > System.currentTimeMillis()) {
 			//Token Expired
 			logger.error("Token Expired, for User: " + user + ", token = " + token);
+			logger.error("Deleting token");
+			expireToken(testToken);
 			return null;
 		}
 		//Everything looks good, return the user level
