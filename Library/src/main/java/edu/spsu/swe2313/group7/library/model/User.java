@@ -1,5 +1,6 @@
 package edu.spsu.swe2313.group7.library.model;
 
+import edu.spsu.swe2313.group7.library.dao.UserMapper;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import edu.spsu.swe2313.group7.library.util.PasswordHash;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -16,7 +18,7 @@ import edu.spsu.swe2313.group7.library.util.PasswordHash;
 @Entity
 @Table(name="USER")
 public class User {
-	
+	private static final Logger logger = Logger.getLogger(User.class);
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -135,17 +137,21 @@ public class User {
 	
 	public boolean checkCheckoutStatus() {
 		if (!isAllowedCheckout()) {
+			logger.debug("User isn't allowed to checkout");
 			return false;
 		}
 		if  (getLateFees() > 0 ) {
 			//User owes fees, cannot check out more books
+			logger.debug("User has late fees greater than 0");
 			return false;
 		}
 		if (getBookCheckedOutCount() >= this.getBookCheckoutLimit()) {
 			//User has checked out too many books
+			logger.debug("User has too many books checked out");
 			return false;
 		}
 		//Everything looks good, allow checkout
+		logger.debug("User is allowed checkout");
 		return true;
 		
 	}

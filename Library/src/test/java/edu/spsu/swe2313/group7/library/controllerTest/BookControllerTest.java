@@ -13,12 +13,15 @@ import edu.spsu.swe2313.group7.library.model.User;
 import edu.spsu.swe2313.group7.library.model.UserLevel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -36,6 +39,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/library-context.xml")
 public class BookControllerTest {
+	private static final Logger logger = Logger.getLogger(BookControllerTest.class);
 	private static SimpleDateFormat format;
 	
 	//Controller under test
@@ -109,7 +113,7 @@ public class BookControllerTest {
 		try {
 			lib1.setDateOfBirth(format.parse("1989-09-01"));
 		} catch (ParseException ex) {
-			Logger.getLogger(BookControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+			logger.error("Unable to parse Date", ex);
 		}
 		lib1.setAllowedCheckout(true);
 		lib1.setBookCheckedOutCount(1);
@@ -120,6 +124,18 @@ public class BookControllerTest {
 		lib1.setPassword("TEST1");
 		
 		userMapper.addUser(lib1);
+		
+		// Setup patron id to use for testing
+		User patron1 = new User();
+		patron1.setLastName("Patron1");
+		patron1.setFirstName("Patron1");
+		patron1.setBookCheckoutLimit(8);
+		patron1.setBookCheckedOutCount(0);
+		patron1.setAllowedCheckout(true);
+		patron1.setUserLevel(UserLevel.PATRON);
+		patron1.setUserName("patron1");
+		
+		userMapper.addUser(patron1);
 	}
 
 	@After
@@ -162,5 +178,66 @@ public class BookControllerTest {
 		
 		Book bookResult = bookController.createBook("lib1", token.getToken(), b);
 		assertEquals("Titles do not match", b.getTitle(), bookResult.getTitle());
+	}
+	
+	
+	@Test
+	public void testCheckout() throws Exception {
+		//Load up some data!
+		createBookTest();
+		//Setup auth
+		AuthenticationToken token = authMapper.userLogin("lib1","TEST1");
+		assertNotNull("Token recieved is null", token);
+		
+		//Find user id
+		logger.debug("Attempting to load user by name");
+		User p = userMapper.getUserByName("patron1");	
+		logger.debug("Getting Books with the title 'Test Book 1'");
+		List<Book> bList = bookController.getBookByTitle("Test Book 1");
+		if (bList != null && !bList.isEmpty()) {
+			for (Book b : bList ) {
+				if (b == null) {
+					logger.error("Book found to be null");
+					continue;
+				}
+				logger.debug("Found Book, with Title: " + b.getTitle() + " and id: " + b.getId());
+				
+				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.DATE, b.getCheckOutDuration());
+				logger.debug("Calling checkout book, with book id =" + b.getId() + " and user id: " + p.getId());
+				Date d = bookController.checkOutBook("lib1", token.getToken(), b.getId(), p.getId());
+				assertNotNull("Checkout returned null!", d);
+				assertEquals("Due date not matched", cal.getTime().toString(), d.toString());
+			}
+		} else {
+			logger.error("No books found");
+		}
+		//TODO: fix
+		
+		/*
+		logger.debug("Getting the book again, to see if the correct user has it checked out");
+		List<Book> bList2 = bookController.getBookByTitle("Test Book 1");
+		if (bList2 != null && !bList.isEmpty()) {
+			for (Book b : bList ) {
+				if (b == null) {
+					logger.error("Book found to be null");
+					continue;
+				}
+				logger.debug("Found Book, with Title: " + b.getTitle() + " and id: " + b.getId());
+				assertEquals("Correct User not found", p,b.getCheckedOutBy());
+			}
+		}*/
+	}
+	@Test
+	public void testCheckoutFail() throws Exception {
+		//Setup auth
+		AuthenticationToken token = authMapper.userLogin("lib1","TEST1");
+		assertNotNull("Token recieved is null", token);
+		
+		//Find user id
+		User p = userMapper.getUserByName("patron1");	
+		Date d = bookController.checkOutBook("lib1", token.getToken(), 12, p.getId());
+		//This should fail
+		assertTrue("Checkout Succeeded when it should have failed, check book id 12?", d == null);
 	}
 }

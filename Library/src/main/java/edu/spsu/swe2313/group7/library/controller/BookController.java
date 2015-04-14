@@ -83,10 +83,6 @@ public class BookController {
 		}
 	}
 	
-	/**
-	 *
-	 * @return
-	 */
 	@RequestMapping( value = "",
 			 method = RequestMethod.GET)
 	public @ResponseBody List<Book> getBookList() {
@@ -169,8 +165,9 @@ public class BookController {
 		if (authMapper.verifyUserAccessLevel(userName, key, UserLevel.JRLIBRARIAN)) {
 			Book b = bookMapper.getBookById(bookId);
 			User u = userMapper.getUserById(userId);
-
+//TODO: move to book mapper?
 			if (b != null && u != null) {
+				logger.debug("Attempting checkout book id:" + b.getId() + " to User Id: " + u.getId());
 				// Book and user are valid
 				if (b.getStatus() == BookStatus.CHECKEDIN
 					&& u.checkCheckoutStatus()) {
@@ -186,6 +183,9 @@ public class BookController {
 					cal.add(Calendar.DATE, b.getCheckOutDuration());
 					b.setDueDate(cal.getTime());
 					return b.getDueDate();
+				} else {
+					logger.debug("Book Status is " + b.getStatus());
+					logger.debug("User Checkout Status is " + u.checkCheckoutStatus());
 				}
 
 			}
@@ -218,7 +218,13 @@ public class BookController {
 		//Under other circumstances error
 		return null;
 	}
-
+	
+	@RequestMapping( value = "/title/{title}",
+			 method = RequestMethod.GET,
+			 produces = "application/json")
+	public @ResponseBody List<Book> getBookByTitle(@PathVariable String title) {
+		return bookMapper.getBookByTitle(title);
+	}
 
 	
 
