@@ -32,10 +32,10 @@ public class UserController {
 	
 	@Autowired
 	@Qualifier("userMapper")
-	private UserMapper mapper;
+	private UserMapper userMapper;
 
-	public void setMapper(UserMapper mapper) {
-		this.mapper = mapper;
+	public void setUserMapper(UserMapper mapper) {
+		this.userMapper = mapper;
 	}
 	
 	@PostConstruct
@@ -58,7 +58,7 @@ public class UserController {
 	@RequestMapping( value = "",
 			 method = RequestMethod.GET)
 	public @ResponseBody List<User> getUserList() {
-		return mapper.getUsers();
+		return userMapper.getUsers();
 		//return booksList;
 	}
 	
@@ -70,7 +70,7 @@ public class UserController {
 		logger.debug("Last Name: " + p.getLastName());
 		logger.debug("First Name: " + p.getFirstName());
 
-		Long id = mapper.addUser(p);
+		Long id = userMapper.addUser(p);
 		logger.info("Saved User with id " + id);
 		return p;	
 	}
@@ -80,7 +80,7 @@ public class UserController {
 			 produces = "application/json")
 	@ResponseBody
 	public void updateUser(@PathVariable long patronId, @RequestBody User p) {
-		mapper.updateUser(p);
+		userMapper.updateUser(p);
 	}
 	
 	
@@ -90,6 +90,6 @@ public class UserController {
 			 produces = "application/json")
 	public @ResponseBody User findBookById(@PathVariable long patronId) {
 		logger.debug("Called Find User By Id");
-		return mapper.getUserById(patronId);
+		return userMapper.getUserById(patronId);
 	}
 }

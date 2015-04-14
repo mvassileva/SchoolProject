@@ -1,6 +1,6 @@
 package edu.spsu.swe2313.group7.library.controller;
 
-import edu.spsu.swe2313.group7.library.dao.AuthMapper;
+import edu.spsu.swe2313.group7.library.dao.AuthenticationMapper;
 import edu.spsu.swe2313.group7.library.dao.BookMapper;
 import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.Book;
@@ -33,14 +33,18 @@ public class BookController {
 	
 	@Autowired
 	@Qualifier("bookMapper")
-	private BookMapper mapper;
+	private BookMapper bookMapper;
 	
 	@Autowired
 	@Qualifier("authMapper")
-	private AuthMapper authMapper;
+	private AuthenticationMapper authMapper;
 
-	public void setMapper(BookMapper mapper) {
-		this.mapper = mapper;
+	public void setBookMapper(BookMapper mapper) {
+		this.bookMapper = mapper;
+	}
+
+	public void setAuthMapper(AuthenticationMapper authMapper) {
+		this.authMapper = authMapper;
 	}
 	
 	@PostConstruct
@@ -66,7 +70,7 @@ public class BookController {
 			} else {
 				b.setStatus(BookStatus.CHECKEDIN);
 			}
-			mapper.addBook(b);
+			bookMapper.addBook(b);
 		}
 	}
 	
@@ -77,7 +81,7 @@ public class BookController {
 	@RequestMapping( value = "",
 			 method = RequestMethod.GET)
 	public @ResponseBody List<Book> getBookList() {
-		return mapper.getBooks();
+		return bookMapper.getBooks();
 		//return booksList;
 	}
 	
@@ -99,7 +103,7 @@ public class BookController {
 		}
 		//b.setId(lastIndex()+1);
 		//booksList.add(b);
-		Long id = mapper.addBook(b);
+		Long id = bookMapper.addBook(b);
 		logger.info("Saved Book with id " + id);
 		return b;	
 	}
@@ -121,7 +125,7 @@ public class BookController {
 				return b.getTitle();	
 			} 
 		}*/
-		mapper.updateBook(b);
+		bookMapper.updateBook(b);
 		
 		//return "{\"Error\": \"Book not found, update impossoble\"";
 	}
@@ -141,7 +145,7 @@ public class BookController {
 		}
 		logger.debug("Didn't find book!");
 		return null; */
-		return mapper.getBookById(bookId);
+		return bookMapper.getBookById(bookId);
 	}
 	/*
 	private long lastIndex() {
