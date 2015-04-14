@@ -9,9 +9,20 @@
 		  value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
 	    </layout>
 	</appender>
- 
+        <logger name="org.springframework">
+            <level value="error"/>
+        </logger>
+        <logger name="org.hibernate">
+            <level value="error"/>
+        </logger>
+        <logger name="javax.persistence">
+            <level value="error"/>
+        </logger>
+        <logger name="edu.spsu.swe2313.group7.library">
+            <level value="debug"/>
+        </logger>
 	<root>
-		<level value="DEBUG" />
+		<level value="debug" />
 		<appender-ref ref="console" />
 	</root>
  
