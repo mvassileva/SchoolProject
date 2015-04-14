@@ -1,4 +1,4 @@
-package edu.spsu.swe2313.group7.library.controllerTest;
+package edu.spsu.swe2313.group7.library.MapperTest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,7 +23,7 @@ import java.util.TimeZone;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/library-context.xml")
-public class AuthorControllerTest
+public class AuthorMapperTest
 {
 
 	private static SimpleDateFormat format;
@@ -32,7 +32,7 @@ public class AuthorControllerTest
 	@Qualifier("authorMapper")
 	private AuthorMapper aMap;
 
-	public AuthorControllerTest() {
+	public AuthorMapperTest() {
 	}
 
 	@BeforeClass
