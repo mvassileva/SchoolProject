@@ -19,58 +19,65 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author Robert Whitaker
  */
-
 @Controller
 @RequestMapping("/author")
 public class AuthorController {
+
 	private static final Logger logger = Logger.getLogger(AuthorController.class);
-	
+
 	@Autowired
 	@Qualifier("authorMapper")
-	private AuthorMapper mapper;
-	
+	private AuthorMapper authorMapper;
+
 	@PostConstruct
 	public void init() {
 		//throw around some test books
 		//authorList = new ArrayList(300);
 		dummyDataLoad();
 	}
-	   
+
+	public void setAuthorMapper(AuthorMapper mapper) {
+		this.authorMapper = mapper;
+	}
+
 	private void dummyDataLoad() {
-		for (int i=0; i<300; i++) {
+		for (int i = 0; i < 300; i++) {
 			Author a = new Author();
-			a.setLastName("Last"+i);
-			a.setFirstName("First"+i);
-			mapper.addAuthor(a);
-	
+			a.setLastName("Last" + i);
+			a.setFirstName("First" + i);
+			authorMapper.addAuthor(a);
+
 		}
 	}
-	
-	@RequestMapping( value = "",
-			 method = RequestMethod.GET,
-			 produces = "application/json")
-	public @ResponseBody List<Author> getAuthorList(ModelMap model) {
-		return mapper.getAuthors();
+
+	@RequestMapping(value = "",
+		method = RequestMethod.GET,
+		produces = "application/json")
+	public @ResponseBody
+	List<Author> getAuthorList(ModelMap model) {
+		return authorMapper.getAuthors();
 	}
-	
-	@RequestMapping( value="",
-			 method = RequestMethod.POST)
+
+	@RequestMapping(value = "",
+		method = RequestMethod.POST)
 	@ResponseBody
 	public Author createAuthor(@RequestBody Author a) {
-		mapper.addAuthor(a);
+		authorMapper.addAuthor(a);
 		return a;
-		
+
 	}
-	@RequestMapping( value="{authorId}",
-			 method = RequestMethod.GET,
-			 produces = "application/json")
-	public @ResponseBody Author findAuthorById(@PathVariable long authorId) {
+
+	@RequestMapping(value = "{authorId}",
+		method = RequestMethod.GET,
+		produces = "application/json")
+	public @ResponseBody
+	Author findAuthorById(@PathVariable long authorId) {
 		logger.debug("Called Find Author By Id");
-		Author a = mapper.getAuthorById(authorId);
+		Author a = authorMapper.getAuthorById(authorId);
 		logger.debug("Author Object loaded!");
 		logger.debug("Author Name:" + a.getFirstName() + " " + a.getLastName());
 		logger.debug("Author ID = " + a.getId());
-		
+
 		return (a);
-	}	
+	}
 }

@@ -1,6 +1,6 @@
 package edu.spsu.swe2313.group7.library.controller;
 
-import edu.spsu.swe2313.group7.library.dao.AuthMapper;
+import edu.spsu.swe2313.group7.library.dao.AuthenticationMapper;
 import edu.spsu.swe2313.group7.library.dao.UserMapper;
 import edu.spsu.swe2313.group7.library.model.AuthenticationToken;
 import edu.spsu.swe2313.group7.library.model.NameAndPassword;
@@ -32,7 +32,12 @@ public class AuthenticationController {
 
 	@Autowired
 	@Qualifier("authMapper")
-	private AuthMapper authMapper;
+	private AuthenticationMapper authMapper;
+
+	public void setAuthMapper(AuthenticationMapper authMapper) {
+		this.authMapper = authMapper;
+	}
+	
 	
 	@RequestMapping( value="/login",
 			 method = RequestMethod.POST)

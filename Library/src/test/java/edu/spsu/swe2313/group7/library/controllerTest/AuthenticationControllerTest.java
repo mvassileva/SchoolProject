@@ -40,7 +40,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/library-context.xml")
-public class AuthControllerTest {
+public class AuthenticationControllerTest {
 	private static SimpleDateFormat format;
 	
 	

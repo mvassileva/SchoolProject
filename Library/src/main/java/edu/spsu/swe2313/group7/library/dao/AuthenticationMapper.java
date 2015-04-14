@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Transactional
 @Service("authMapper")
-public class AuthMapper {
+public class AuthenticationMapper {
 
 	private Map<String, AuthenticationToken> authMap;
 
@@ -26,18 +26,23 @@ public class AuthMapper {
 
 	@Autowired
 	@Qualifier("userMapper")
-	private UserMapper mapper;
+	private UserMapper userMapper;
 
 	@PostConstruct
-	private void init() throws ParseException {
+	public void init() throws ParseException {
 		authMap = new HashMap<>();
 		hashFunc = new PasswordHash();
 	}
 
+	public void setUserMapper(UserMapper mapper) {
+		this.userMapper = mapper;
+	}
+
+
 	public AuthenticationToken userLogin(String username, String password) throws Exception {
 		if (username != null && password != null) {
 			//Fetch user info and auth
-			User u = mapper.getUserByName(username);
+			User u = userMapper.getUserByName(username);
 			if (u != null) {
 				if (u.getPasswordHash().equals(hashFunc.passwordToHash(password))) {
 					// Everything looks legit, lets make a token.

@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/library-context.xml")
-public class AuthMapperTest {
+public class AuthenticationMapperTest {
 	private static SimpleDateFormat format;
 
 	@Autowired
@@ -40,7 +40,7 @@ public class AuthMapperTest {
 	
 	
 	
-	public AuthMapperTest() {
+	public AuthenticationMapperTest() {
 	}
 
 	@BeforeClass
