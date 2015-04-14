@@ -38,15 +38,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class BookControllerTest {
 	private static SimpleDateFormat format;
 	
+	//Controller under test
 	@Autowired
 	private BookController bookController;
 	
+	
+	//Auth and User mapper, so we can control login and auth data to test
+	//methods in the controller class
 	@Autowired
 	private AuthenticationMapper authMapper;
 	
 	@Autowired
 	private UserMapper userMapper;
-		
+	
+	
+	
 	@BeforeClass
 	public static void setUpClass()
 	{
