@@ -2,9 +2,11 @@ package edu.spsu.swe2313.group7.library.controller;
 
 import edu.spsu.swe2313.group7.library.dao.AuthenticationMapper;
 import edu.spsu.swe2313.group7.library.dao.BookMapper;
+import edu.spsu.swe2313.group7.library.model.AuthenticationToken;
 import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.Book;
 import edu.spsu.swe2313.group7.library.model.BookStatus;
+import edu.spsu.swe2313.group7.library.model.UserLevel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 /**
  *
@@ -88,24 +91,39 @@ public class BookController {
 	@RequestMapping( value="",
 			 method = RequestMethod.POST)
 	@ResponseBody
-	public Book createBook(@RequestBody Book b) {
-		logger.debug("Found Book:");
-		logger.debug("Title: " + b.getTitle());
-		logger.debug("ISBN10: " + b.getISBN10());
-		logger.debug("ISBN13: " + b.getISBN13());
-		logger.debug("Authors: " );
-		if (b.getAuthors() != null ) {
-			for (Author a : b.getAuthors()) {
-				logger.debug(a.getFirstName());
+	public Book createBook(@RequestHeader("API-User") String userName, @RequestHeader("API-Key") String key, @RequestBody Book b) {
+		if (key != null) {
+			AuthenticationToken token = authMapper.getAuthToken(key);
+			if (token != null) {
+				if (userName.equalsIgnoreCase(token.getUserName())) {
+					if (token.getLevel() == UserLevel.ADMINISTRATOR
+						|| token.getLevel() == UserLevel.LIBRARIAN) {
+						logger.debug("Found Book:");
+						logger.debug("Title: " + b.getTitle());
+						logger.debug("ISBN10: " + b.getISBN10());
+						logger.debug("ISBN13: " + b.getISBN13());
+						logger.debug("Authors: ");
+						if (b.getAuthors() != null) {
+							for (Author a : b.getAuthors()) {
+								logger.debug(a.getFirstName());
+							}
+						} else {
+							logger.debug("NONE!");
+						}
+						//b.setId(lastIndex()+1);
+						//booksList.add(b);
+						Long id = bookMapper.addBook(b);
+						logger.info("Saved Book with id " + id);
+						return b;
+					}
+				}
 			}
-		} else {
-			logger.debug("NONE!");
+
 		}
-		//b.setId(lastIndex()+1);
-		//booksList.add(b);
-		Long id = bookMapper.addBook(b);
-		logger.info("Saved Book with id " + id);
-		return b;	
+		
+		//In all other sceanarios this is not allowed!
+		//todo: fix up return code
+		return null;
 	}
 	
 	@RequestMapping( value="{bookId}",

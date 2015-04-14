@@ -105,7 +105,7 @@ public class BookControllerTest {
 		lib1.setBookCheckedOutCount(1);
 		lib1.setBookCheckoutLimit(5);
 		lib1.setLateFees(0);
-		lib1.setLevel(UserLevel.LIBRARIAN);
+		lib1.setUserLevel(UserLevel.LIBRARIAN);
 		lib1.setUserName("lib1");
 		lib1.setPassword("TEST1");
 		
@@ -142,7 +142,7 @@ public class BookControllerTest {
 		b.setISBN13("37");
 		b.setTitle("Test Book 1");
 		
-		Book bookResult = bookController.createBook(b);
+		Book bookResult = bookController.createBook("lib1", token.getToken(), b);
 		assertEquals("Titles do not match", b.getTitle(), bookResult.getTitle());
 		//mockMvc.perform(get("/auth/login"));
 		
@@ -157,7 +157,7 @@ private String setupUser() throws Exception {
 		u.setBookCheckedOutCount(1);
 		u.setBookCheckoutLimit(5);
 		u.setLateFees(0);
-		u.setLevel(UserLevel.LIBRARIAN);
+		u.setUserLevel(UserLevel.LIBRARIAN);
 		u.setPassword("TEST1");
 		u.setUserName("lib1");
 		

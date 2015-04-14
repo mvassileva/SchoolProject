@@ -29,16 +29,16 @@ public class User {
 	private int bookCheckedOutCount;
 	private int lateFees;
 	private boolean allowedCheckout;
-	private UserLevel level;
+	private UserLevel userLevel;
 	private String userName;
 	private String passwordHash;
 
-	public UserLevel getLevel() {
-		return level;
+	public UserLevel getUserLevel() {
+		return userLevel;
 	}
 
-	public void setLevel(UserLevel level) {
-		this.level = level;
+	public void setUserLevel(UserLevel userLevel) {
+		this.userLevel = userLevel;
 	}
 
 	public String getUserName() {

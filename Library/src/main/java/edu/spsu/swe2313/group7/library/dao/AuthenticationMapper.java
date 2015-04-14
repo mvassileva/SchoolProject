@@ -49,6 +49,7 @@ public class AuthenticationMapper {
 					AuthenticationToken tok = new AuthenticationToken();
 					tok.setUserName(username);
 					String tokenValue = tok.generateToken();
+					tok.setLevel(u.getUserLevel());
 					authMap.put(tokenValue, tok);
 					return tok;
 				}

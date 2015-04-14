@@ -121,7 +121,7 @@ private String preload() throws Exception {
 		u.setBookCheckedOutCount(1);
 		u.setBookCheckoutLimit(5);
 		u.setLateFees(0);
-		u.setLevel(UserLevel.LIBRARIAN);
+		u.setUserLevel(UserLevel.LIBRARIAN);
 		u.setPassword("TEST1");
 		u.setUserName("lib1");
 		//userMapper.addUser(u);

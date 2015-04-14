@@ -15,6 +15,15 @@ public class AuthenticationToken {
 	private String userName;
 	private Date experation;
 	private String token;
+	private UserLevel level;
+
+	public UserLevel getLevel() {
+		return level;
+	}
+
+	public void setLevel(UserLevel level) {
+		this.level = level;
+	}
 
 	public String getUserName() {
 		return userName;
