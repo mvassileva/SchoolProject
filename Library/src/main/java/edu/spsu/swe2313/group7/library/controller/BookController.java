@@ -2,16 +2,20 @@ package edu.spsu.swe2313.group7.library.controller;
 
 import edu.spsu.swe2313.group7.library.dao.AuthenticationMapper;
 import edu.spsu.swe2313.group7.library.dao.BookMapper;
+import edu.spsu.swe2313.group7.library.dao.UserMapper;
 import edu.spsu.swe2313.group7.library.model.AuthenticationToken;
 import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.Book;
 import edu.spsu.swe2313.group7.library.model.BookStatus;
+import edu.spsu.swe2313.group7.library.model.User;
 import edu.spsu.swe2313.group7.library.model.UserLevel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,13 +37,18 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @RequestMapping("/book")
 public class BookController {
 	private static final Logger logger = Logger.getLogger(BookController.class);
+	private static SimpleDateFormat format;
 	
 	@Autowired
 	@Qualifier("bookMapper")
 	private BookMapper bookMapper;
 	
 	@Autowired
-	@Qualifier("authMapper")
+	@Qualifier("userMapper")
+	private UserMapper userMapper;
+	
+	@Autowired
+	@Qualifier("userMapper")
 	private AuthenticationMapper authMapper;
 
 	public void setBookMapper(BookMapper mapper) {
@@ -52,6 +61,7 @@ public class BookController {
 	
 	@PostConstruct
 	private void init() throws ParseException {
+		format = new SimpleDateFormat("yyyy-MM-DD");
 		//dummyDataLoad();
 	}
    
@@ -92,35 +102,26 @@ public class BookController {
 			 method = RequestMethod.POST)
 	@ResponseBody
 	public Book createBook(@RequestHeader("API-User") String userName, @RequestHeader("API-Key") String key, @RequestBody Book b) {
-		if (key != null) {
-			AuthenticationToken token = authMapper.getAuthToken(key);
-			if (token != null) {
-				if (userName.equalsIgnoreCase(token.getUserName())) {
-					if (token.getLevel() == UserLevel.ADMINISTRATOR
-						|| token.getLevel() == UserLevel.LIBRARIAN) {
-						logger.debug("Found Book:");
-						logger.debug("Title: " + b.getTitle());
-						logger.debug("ISBN10: " + b.getISBN10());
-						logger.debug("ISBN13: " + b.getISBN13());
-						logger.debug("Authors: ");
-						if (b.getAuthors() != null) {
-							for (Author a : b.getAuthors()) {
-								logger.debug(a.getFirstName());
-							}
-						} else {
-							logger.debug("NONE!");
-						}
-						//b.setId(lastIndex()+1);
-						//booksList.add(b);
-						Long id = bookMapper.addBook(b);
-						logger.info("Saved Book with id " + id);
-						return b;
-					}
+		if (authMapper.verifyUserAccessLevel(userName, key, UserLevel.LIBRARIAN)) {
+			logger.debug("Found Book:");
+			logger.debug("Title: " + b.getTitle());
+			logger.debug("ISBN10: " + b.getISBN10());
+			logger.debug("ISBN13: " + b.getISBN13());
+			logger.debug("Authors: ");
+			if (b.getAuthors() != null) {
+				for (Author a : b.getAuthors()) {
+					logger.debug(a.getFirstName());
 				}
+			} else {
+				logger.debug("NONE!");
 			}
-
+						//b.setId(lastIndex()+1);
+			//booksList.add(b);
+			Long id = bookMapper.addBook(b);
+			logger.info("Saved Book with id " + id);
+			return b;
 		}
-		
+
 		//In all other sceanarios this is not allowed!
 		//todo: fix up return code
 		return null;
@@ -130,22 +131,28 @@ public class BookController {
 			 method = RequestMethod.PUT,
 			 produces = "application/json")
 	@ResponseBody
-	public void updateBook(@PathVariable long bookId, @RequestBody Book b) {
-		/*
-		for (Book oldbook : booksList) {
-			if (oldbook.getId() == bookId) {
-				logger.debug("Found Book!");
-				oldbook.copyFromBook(b);
-				logger.debug("Found Book:");
-				logger.debug("Title: " + oldbook.getTitle());
-				logger.debug("ISBN10: " + oldbook.getISBN10());
-				logger.debug("ISBN13: " + oldbook.getISBN13());
-				return b.getTitle();	
-			} 
-		}*/
-		bookMapper.updateBook(b);
-		
-		//return "{\"Error\": \"Book not found, update impossoble\"";
+	public Book updateBook(@RequestHeader("API-User") String userName, @RequestHeader("API-Key") String key, @PathVariable long bookId, @RequestBody Book b) {
+		if (authMapper.verifyUserAccessLevel(userName, key, UserLevel.LIBRARIAN)) {
+			logger.debug("Found Book:");
+			logger.debug("Title: " + b.getTitle());
+			logger.debug("ISBN10: " + b.getISBN10());
+			logger.debug("ISBN13: " + b.getISBN13());
+			logger.debug("Authors: ");
+			if (b.getAuthors() != null) {
+				for (Author a : b.getAuthors()) {
+					logger.debug(a.getFirstName());
+				}
+			} else {
+				logger.debug("NONE!");
+			}
+			bookMapper.updateBook(b);
+			return b;
+		}
+
+		//In all other sceanarios this is not allowed!
+		//todo: fix up return code
+		return null;
+
 	}
 	
 	
@@ -155,26 +162,68 @@ public class BookController {
 			 produces = "application/json")
 	public @ResponseBody Book findBookById(@PathVariable long bookId) {
 		logger.debug("Called Find Book By Id");
-		/*for (Book b : booksList) {
-			if (b.getId() == bookId) {
-				logger.debug("Found Book!");
-				return b;
-			}
-		}
-		logger.debug("Didn't find book!");
-		return null; */
 		return bookMapper.getBookById(bookId);
 	}
-	/*
-	private long lastIndex() {
-		//this is bad, should be fixed
-		long highest=0;
-		for (Book b : booksList) {
-			if (b.getId() > highest) {
-				highest = b.getId();
+	
+	@RequestMapping( value="/checkout/{bookId}/{userId}",
+			 method = RequestMethod.GET,
+			 produces = "application/json")
+	@ResponseBody
+	public Date checkOutBook(@RequestHeader("API-User") String userName, @RequestHeader("API-Key") String key, @PathVariable long bookId, @PathVariable long userId) {
+		if (authMapper.verifyUserAccessLevel(userName, key, UserLevel.JRLIBRARIAN)) {
+			Book b = bookMapper.getBookById(bookId);
+			User u = userMapper.getUserById(userId);
+
+			if (b != null && u != null) {
+				// Book and user are valid
+				if (b.getStatus() == BookStatus.CHECKEDIN
+					&& u.checkCheckoutStatus()) {
+								//Book is checked in
+					//User is allowed to check out
+					b.setStatus(BookStatus.CHECKEDOUT);
+					b.setCheckedOutBy(u);
+					u.setBookCheckedOutCount(u.getBookCheckedOutCount()+1);
+
+					//Make a new date for right now, add the number of 
+					//days for the book's checkout duration to it, and then set it.
+					Calendar cal = Calendar.getInstance();
+					cal.add(Calendar.DATE, b.getCheckOutDuration());
+					b.setDueDate(cal.getTime());
+					return b.getDueDate();
+				}
+
 			}
 		}
-		return highest;
+		//Under other circumstances error
+		return null;
 	}
-	*/
+
+
+	@RequestMapping( value="/checkin/{bookId}/",
+			 method = RequestMethod.GET,
+			 produces = "application/json")
+	@ResponseBody
+	public Integer checkInBook(@RequestHeader("API-User") String userName, @RequestHeader("API-Key") String key, @PathVariable long bookId) {
+		if (authMapper.verifyUserAccessLevel(userName, key, UserLevel.JRLIBRARIAN)) {
+			Book b = bookMapper.getBookById(bookId);
+			if (b != null) {
+				User u = b.getCheckedOutBy();
+				if (u!= null) {
+					// Book and user are valid
+					if (b.getStatus() == BookStatus.CHECKEDOUT) {
+						b.setStatus(BookStatus.CHECKEDIN);
+						b.setCheckedOutBy(null);
+						u.setBookCheckedOutCount(u.getBookCheckedOutCount()-1);
+						return u.getLateFees();
+					}
+				}
+			}
+		}
+		//Under other circumstances error
+		return null;
+	}
+
+
+	
+
 }

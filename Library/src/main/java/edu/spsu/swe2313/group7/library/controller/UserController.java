@@ -6,6 +6,7 @@ import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.Book;
 import edu.spsu.swe2313.group7.library.model.BookStatus;
 import edu.spsu.swe2313.group7.library.model.User;
+import edu.spsu.swe2313.group7.library.model.UserLevel;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +49,9 @@ public class UserController {
 		p.setBookCheckoutLimit(12);
 		p.setBookCheckedOutCount(0);
 		p.setAllowedCheckout(true);
+		p.setUserLevel(UserLevel.ADMINISTRATOR);
+		p.setUserName("test1");
+		p.setPassword("test1");
 		createUser(p);
 	}
    

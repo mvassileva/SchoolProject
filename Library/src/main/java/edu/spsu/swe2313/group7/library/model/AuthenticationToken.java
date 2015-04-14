@@ -13,7 +13,7 @@ import java.util.UUID;
 public class AuthenticationToken {
 
 	private String userName;
-	private Date experation;
+	private long experation;
 	private String token;
 	private UserLevel level;
 
@@ -33,11 +33,11 @@ public class AuthenticationToken {
 		this.userName = userName;
 	}
 
-	public Date getExperation() {
+	public long getExperation() {
 		return experation;
 	}
 
-	public void setExperation(Date experation) {
+	public void setExperation(long experation) {
 		this.experation = experation;
 	}
 

@@ -132,4 +132,21 @@ public class User {
 		this.allowedCheckout = allowedCheckout;
 	}
 	
+	
+	public boolean checkCheckoutStatus() {
+		if (!isAllowedCheckout()) {
+			return false;
+		}
+		if  (getLateFees() > 0 ) {
+			//User owes fees, cannot check out more books
+			return false;
+		}
+		if (getBookCheckedOutCount() >= this.getBookCheckoutLimit()) {
+			//User has checked out too many books
+			return false;
+		}
+		//Everything looks good, allow checkout
+		return true;
+		
+	}
 }

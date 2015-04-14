@@ -2,12 +2,14 @@ package edu.spsu.swe2313.group7.library.dao;
 
 import edu.spsu.swe2313.group7.library.model.AuthenticationToken;
 import edu.spsu.swe2313.group7.library.model.User;
+import edu.spsu.swe2313.group7.library.model.UserLevel;
 import edu.spsu.swe2313.group7.library.util.PasswordHash;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Service;
 @Transactional
 @Service("authMapper")
 public class AuthenticationMapper {
-
+	private static final Logger logger = Logger.getLogger(AuthenticationMapper.class);
 	private Map<String, AuthenticationToken> authMap;
 
 	private PasswordHash hashFunc;
@@ -62,6 +64,74 @@ public class AuthenticationMapper {
 	
 	public AuthenticationToken getAuthToken(String token) {
 		return authMap.get(token);
+	}
+
+	/*
+	This allows various functions to check to see if an action is allowed by sending
+	the info they recieved from the end user and what minimum level they have requested
+	
+	Returns True if User and Token are valid and the user level meets or exceeds the minAccessLevel
+	Returns false in all other cases
+	*/
+	public boolean verifyUserAccessLevel(String User, String token, UserLevel minAccessLevel) {
+		UserLevel level = checkLogin(User, token);
+		if (level == null) {
+			//Something went wrong.
+			return false;
+		}
+		
+		//This essentially ranks the user levels, so that if say an administrator was trying 
+		//to access a feature that a JRLibrarian could, it would drop down to there and return
+		//However in the opposite case, the functions would not return, and fall out of the switch
+		//finally reaching the bottom return false statement
+		switch (level) {
+			case ADMINISTRATOR:
+				if (minAccessLevel == UserLevel.ADMINISTRATOR) {
+					return true;
+				}
+			case LIBRARIAN:
+				if (minAccessLevel == UserLevel.LIBRARIAN) {
+					return true;
+				}
+			case JRLIBRARIAN:
+				if (minAccessLevel == UserLevel.JRLIBRARIAN) {
+					return true;
+				}
+			case OTHERSTAFF:
+				if (minAccessLevel == UserLevel.OTHERSTAFF) {
+					return true;
+				}
+			case PATRON:
+				if (minAccessLevel == UserLevel.PATRON) {
+					return true;
+				}
+			case NOACCESS:
+		}
+		
+		return false;
+	}
+
+	private UserLevel checkLogin(String user, String token) {
+		AuthenticationToken testToken = this.getAuthToken(token);
+		if (testToken == null) {
+			//Token invalid
+			logger.error("Invalid token recieved, User: " + user + ", token = " + token);
+			return null;
+		}
+		//Check UserNames
+		if (!user.equalsIgnoreCase(testToken.getUserName())) {
+			//User name on token doesn't match token key
+			logger.error("Invalid user name specified, User: " + user + ", doesn't match token user:" + testToken.getUserName());
+			return null;
+		}
+		//Check Expiration
+		if (testToken.getExperation() > System.currentTimeMillis()) {
+			//Token Expired
+			logger.error("Token Expired, for User: " + user + ", token = " + token);
+			return null;
+		}
+		//Everything looks good, return the user level
+		return testToken.getLevel();
 	}
 
 }
