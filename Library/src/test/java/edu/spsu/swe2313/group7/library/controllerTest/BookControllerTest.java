@@ -19,6 +19,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -92,8 +93,11 @@ public class BookControllerTest {
 
 	@Before
 	public void setUp() {
+		//Called before every test
+		
 		//Preload with admin user
-		//UserMapper userMap = new UserMapper();
+		//This is useful for testing the restricted functions that require a librarian user
+		
 		User lib1 = new User();
 		lib1.setFirstName("One");
 		try {
@@ -128,7 +132,15 @@ public class BookControllerTest {
 	
 	@Test
 	public void loginTest() throws Exception {
-		NameAndPassword testLogin = new NameAndPassword();
+		AuthenticationToken token = authMapper.userLogin("lib1","TEST1");
+		assertNotNull("Token recieved is null", token);
+		//Now that we have a token, lets add a book(using the token)
+		
+		assertTrue(authMapper.verifyUserAccessLevel("lib1", token.getToken(), UserLevel.LIBRARIAN));
+	}
+	
+	@Test
+	public void createBookTest() throws Exception {
 		AuthenticationToken token = authMapper.userLogin("lib1","TEST1");
 		assertNotNull("Token recieved is null", token);
 		//Now that we have a token, lets add a book(using the token)
@@ -144,28 +156,5 @@ public class BookControllerTest {
 		
 		Book bookResult = bookController.createBook("lib1", token.getToken(), b);
 		assertEquals("Titles do not match", b.getTitle(), bookResult.getTitle());
-		//mockMvc.perform(get("/auth/login"));
-		
-	}
-	
-private String setupUser() throws Exception {
-		User u = new User();
-		u.setLastName("Libraian");
-		u.setFirstName("One");
-		u.setDateOfBirth(format.parse("1989-09-01"));
-		u.setAllowedCheckout(true);
-		u.setBookCheckedOutCount(1);
-		u.setBookCheckoutLimit(5);
-		u.setLateFees(0);
-		u.setUserLevel(UserLevel.LIBRARIAN);
-		u.setPassword("TEST1");
-		u.setUserName("lib1");
-		
-		/*Long id = uMap.addUser(u);
-		
-		AuthenticationToken token = authMap.userLogin("lib1", "TEST1");
-		assertNotNull("Null token returned, login faulty", token.getToken());
-		return token.getToken();*/
-		return null;
 	}
 }

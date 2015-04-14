@@ -71,6 +71,10 @@ public class AuthenticationMapper {
 	}
 
 	public void expireToken (AuthenticationToken token) {
+		expireToken(token.getToken());
+	}
+	
+	public void expireToken(String token) {
 		authMap.remove(token);
 	}
 	
@@ -84,10 +88,11 @@ public class AuthenticationMapper {
 	public boolean verifyUserAccessLevel(String User, String token, UserLevel minAccessLevel) {
 		UserLevel level = checkLogin(User, token);
 		if (level == null) {
+			logger.debug("CheckLogin returned with null");
 			//Something went wrong.
 			return false;
 		}
-		
+		logger.debug("Checking User Priviledge Level");
 		//This essentially ranks the user levels, so that if say an administrator was trying 
 		//to access a feature that a JRLibrarian could, it would drop down to there and return
 		//However in the opposite case, the functions would not return, and fall out of the switch
@@ -95,25 +100,31 @@ public class AuthenticationMapper {
 		switch (level) {
 			case ADMINISTRATOR:
 				if (minAccessLevel == UserLevel.ADMINISTRATOR) {
+					logger.debug("Requested Level Administrator, current level " + level);
 					return true;
 				}
 			case LIBRARIAN:
 				if (minAccessLevel == UserLevel.LIBRARIAN) {
+					logger.debug("Requested Level Librarian, current level " + level);
 					return true;
 				}
 			case JRLIBRARIAN:
 				if (minAccessLevel == UserLevel.JRLIBRARIAN) {
+					logger.debug("Requested Level JRLibrarian, current level " + level);
 					return true;
 				}
 			case OTHERSTAFF:
 				if (minAccessLevel == UserLevel.OTHERSTAFF) {
+					logger.debug("Requested Level OTHERStaff, current level " + level);
 					return true;
 				}
 			case PATRON:
 				if (minAccessLevel == UserLevel.PATRON) {
+					logger.debug("Requested Level PATRON, current level " + level);
 					return true;
 				}
 			case NOACCESS:
+				logger.debug("Found no Access");
 		}
 		
 		return false;
@@ -133,7 +144,7 @@ public class AuthenticationMapper {
 			return null;
 		}
 		//Check Expiration
-		if (testToken.getExperation() > System.currentTimeMillis()) {
+		if (testToken.getExperation() < System.currentTimeMillis()) {
 			//Token Expired
 			logger.error("Token Expired, for User: " + user + ", token = " + token);
 			logger.error("Deleting token");
@@ -141,6 +152,7 @@ public class AuthenticationMapper {
 			return null;
 		}
 		//Everything looks good, return the user level
+		logger.debug("Returning user level");
 		return testToken.getLevel();
 	}
 

@@ -48,7 +48,7 @@ public class BookController {
 	private UserMapper userMapper;
 	
 	@Autowired
-	@Qualifier("userMapper")
+	@Qualifier("authMapper")
 	private AuthenticationMapper authMapper;
 
 	public void setBookMapper(BookMapper mapper) {

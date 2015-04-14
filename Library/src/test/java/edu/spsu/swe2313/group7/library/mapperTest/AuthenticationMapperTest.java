@@ -10,7 +10,9 @@ import java.text.SimpleDateFormat;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -71,7 +73,7 @@ public class AuthenticationMapperTest {
 	}
 
 	@Test
-	public void initializeUser() throws ParseException, Exception
+	public void loginUserTest() throws ParseException, Exception
 	{
 		User u = new User();
 		u.setLastName("Vassileva");
@@ -94,7 +96,44 @@ public class AuthenticationMapperTest {
 		
 		assertEquals("Token's do not match expected", token, token2);
 
+		//Test User levels
+		//Since our user is a Libraian, this should return true for all except administrator test
+		assertFalse(aMapper.verifyUserAccessLevel("mvassileva", token.getToken(), UserLevel.ADMINISTRATOR));
+		assertTrue(aMapper.verifyUserAccessLevel("mvassileva", token.getToken(), UserLevel.LIBRARIAN));
+		assertTrue(aMapper.verifyUserAccessLevel("mvassileva", token.getToken(), UserLevel.JRLIBRARIAN));
+		assertTrue(aMapper.verifyUserAccessLevel("mvassileva", token.getToken(), UserLevel.OTHERSTAFF));
+		assertTrue(aMapper.verifyUserAccessLevel("mvassileva", token.getToken(), UserLevel.PATRON));
+		
+		// Check failed login
+		assertFalse(aMapper.verifyUserAccessLevel("mvassileva", token.getToken()+11111, UserLevel.LIBRARIAN));
+		
+		User u1 = new User();
+		u1.setUserName("tester1");
+		u1.setUserLevel(UserLevel.NOACCESS);
+		u1.setPassword("test1");
+		pMap.addUser(u1);
+		
+		AuthenticationToken token3 = aMapper.userLogin("tester1", "test1");
+		assertFalse(aMapper.verifyUserAccessLevel("tester1", token3.getToken(), UserLevel.ADMINISTRATOR));
+		assertFalse(aMapper.verifyUserAccessLevel("tester1", token3.getToken(), UserLevel.PATRON));
+	}
+	
+	@Test
+	public void expireTokenTest() throws ParseException, Exception {
+		User u1 = new User();
+		u1.setUserName("tester2");
+		u1.setUserLevel(UserLevel.ADMINISTRATOR);
+		u1.setPassword("test2");
+		pMap.addUser(u1);
+		AuthenticationToken token = aMapper.userLogin("tester2", "test2");
+		//Verify that we have a good session, this should return true saying we are and admin
+		assertTrue(aMapper.verifyUserAccessLevel("tester2", token.getToken(), UserLevel.ADMINISTRATOR));
+		//Expire token
+		aMapper.expireToken(token);
+		//Token should now be invalid:
+		assertFalse(aMapper.verifyUserAccessLevel("tester2", token.getToken(), UserLevel.ADMINISTRATOR));
 		
 		
 	}
+	
 }
