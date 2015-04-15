@@ -1,7 +1,0 @@
-
-public class searchItem {
-//private int book_id=0;
-public searchItem(){
-	
-}
-}
