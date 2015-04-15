@@ -1,0 +1,99 @@
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+
+@SuppressWarnings("serial")
+public class checkOut extends JDialog {
+
+	private final JPanel contentPanel = new JPanel();
+	private JTextField textField;
+	private JTextField textField_1;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+			checkOut dialog = new checkOut();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create the dialog.
+	 */
+	public checkOut() {
+		setBounds(100, 100, 263, 146);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+		{
+			JLabel lblNewLabel = new JLabel("Book ID");
+			lblNewLabel.setBounds(46, 11, 46, 14);
+			contentPanel.add(lblNewLabel);
+		}
+		
+		JLabel lblStudentId = new JLabel("Student ID");
+		lblStudentId.setBounds(46, 41, 78, 14);
+		contentPanel.add(lblStudentId);
+		
+		textField = new JTextField();
+		textField.setBounds(134, 8, 86, 20);
+		contentPanel.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(134, 38, 86, 20);
+		contentPanel.add(textField_1);
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+
+						try {
+							int book_id=Integer.valueOf(textField.getText());
+							int std_id=Integer.valueOf(textField_1.getText());
+
+							allFunctions s=new allFunctions();
+
+							Boolean x=s.checkOut(book_id,std_id);
+							if(x==true){
+								JOptionPane.showMessageDialog(null, "Book CheckedOut");
+							}else{
+								JOptionPane.showMessageDialog(null, "Wrong Input");
+							}
+						} catch (NumberFormatException e1) {
+							JOptionPane.showInputDialog(null, "Not valid Data");
+							e1.printStackTrace();
+						}
+						textField.setText("");
+						textField_1.setText("");
+					}
+				});
+				okButton.setActionCommand("OK");
+				buttonPane.add(okButton);
+				getRootPane().setDefaultButton(okButton);
+			}
+		}
+	}
+}

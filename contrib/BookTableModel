@@ -1,0 +1,70 @@
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.table.AbstractTableModel;
+
+
+@SuppressWarnings("serial")
+public class BookTableModel extends AbstractTableModel {
+	static int countt=0;
+private ArrayList<Books> db;
+private int coln=8;
+private int row=0;
+private String[] column={"ID","Subject","Title","Publisher","Quantity","Author","Shelve Code","ISBN"};
+	public BookTableModel(){
+		System.out.println("new Table model");
+		try {
+			//if(db.size()!=0){
+					//System.out.println(getRowCount());
+			//}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void setData(ArrayList<Books> db){
+		this.db=db;
+	}
+	@Override
+	public int getColumnCount() {
+		// TODO Auto-generated method stub
+		return this.coln;
+	}
+	public void setRowCount(int row){
+		 this.row=row;
+	}
+
+	@Override
+	public int getRowCount() {
+		// TODO Auto-generated method stub
+		return db.size();
+	}
+	public void clear(){
+		db.clear();
+	}
+
+	@Override
+	public Object getValueAt(int row, int col) {
+		// TODO Auto-generated method stub
+		Books book=db.get(row);
+		switch(col){
+		case 0: return book.getId();
+		case 1:	return book.getSubject();
+		case 2:	return book.getTitle();
+		case 3:	return book.getPublisher();
+		case 4:	return book.getQuantity();
+		case 5:	return book.getAuthor();
+		case 6:	return book.getShelvecode();
+		case 7:	return book.getIsbn();
+		
+		
+		}
+		return null;
+	}
+	@Override
+	public String getColumnName(int column) {
+		// TODO Auto-generated method stub
+		return this.column[column];
+	}
+
+}

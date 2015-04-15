@@ -1,0 +1,56 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import javax.swing.JOptionPane;
+
+
+
+
+public class Stock {
+
+private int book_id=0;
+private int quantity=0;
+
+
+
+public int getBook_id() {
+	return book_id;
+}
+public void setBook_id(int book_id) {
+	this.book_id = book_id;
+}
+public int getQuantity() {
+	return quantity;
+}
+public void setQuantity(int quantity) {
+	this.quantity = quantity;
+}
+public void save(){
+	String url="jdbc:mysql://localhost/simple_library";
+	Connection c=null;
+	PreparedStatement stm=null;
+	try{
+		Class.forName("com.mysql.jdbc.Driver");
+		c=DriverManager.getConnection(url,"root","");
+		if(this.getBook_id()==0){
+		stm=c.prepareStatement("Insert into stock(book_id,quantity) values (?,?)");
+		stm.setInt(1, this.getBook_id());
+		stm.setInt(2, this.getQuantity());
+		}else{
+			stm=c.prepareStatement("Update stock set quantity=quantity+? where book_id=?");
+			stm.setInt(1, this.getQuantity());
+			stm.setInt(2, this.getBook_id());
+		}
+		stm.execute();
+		JOptionPane.showMessageDialog(null, "Data maintained");
+		
+	}catch(Exception e){
+		JOptionPane.showMessageDialog(null, e.getMessage().toString());
+	}
+}
+
+
+
+
+}

@@ -1,0 +1,172 @@
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JTable;
+
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import java.util.ArrayList;
+
+import javax.swing.UIManager;
+
+
+@SuppressWarnings("serial")
+public class SearchBooks extends JDialog {
+	static int count=0;
+	private final JPanel contentPanel = new JPanel();
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTable table;
+	
+	
+	
+
+	/**
+	 * Launch the application.
+	 */
+	
+	public static void main(String[] args)
+		{
+		try {
+			SearchBooks dialog = new SearchBooks();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create the dialog.
+	 */
+	public SearchBooks() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				table.setVisible(true);
+				//JScrollPane scroll=new JScrollPane(table);
+				//scroll.setVisible(true);
+			}
+		});
+		setBounds(100, 100, 450, 323);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+		{
+			JLabel lblNewLabel = new JLabel("Book ID");
+			lblNewLabel.setBounds(49, 30, 46, 14);
+			contentPanel.add(lblNewLabel);
+		}
+		{
+			JLabel lblIsbn = new JLabel("ISBN");
+			lblIsbn.setBounds(49, 61, 46, 14);
+			contentPanel.add(lblIsbn);
+		}
+		{
+			JLabel lblShelveCode = new JLabel("Shelve Code");
+			lblShelveCode.setBounds(49, 96, 78, 14);
+			contentPanel.add(lblShelveCode);
+		}
+		{
+			textField = new JTextField();
+			textField.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+				doFilter();
+				}
+			});
+			textField.setBounds(154, 27, 86, 20);
+			contentPanel.add(textField);
+			textField.setColumns(10);
+		}
+		{
+			textField_1 = new JTextField();
+			textField_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				doFilter();
+				}
+			});
+			textField_1.setColumns(10);
+			textField_1.setBounds(154, 58, 86, 20);
+			contentPanel.add(textField_1);
+		}
+		{
+			textField_2 = new JTextField();
+			textField_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					doFilter();
+				}
+			});
+			textField_2.setColumns(10);
+			textField_2.setBounds(154, 93, 86, 20);
+			contentPanel.add(textField_2);
+		}
+		{
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBounds(28, 121, 375, 119);
+			contentPanel.add(scrollPane);
+			table = new JTable();
+			scrollPane.setViewportView(table);
+			table.setBorder(UIManager.getBorder("ScrollPane.border"));
+		}
+		{
+			setVisible(true);
+		}
+		
+		
+		
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				JButton okButton = new JButton("OK");
+				okButton.setActionCommand("OK");
+				buttonPane.add(okButton);
+				getRootPane().setDefaultButton(okButton);
+			}
+		}
+	}
+	
+	public void doFilter(){
+		allFunctions all=new allFunctions();
+		 BookTableModel bookmodel=new BookTableModel();
+		ArrayList<Books> x =new ArrayList<Books>();
+		
+		table.setVisible(true);
+		//add(new JScrollPane(table));
+		int book_id=0;
+		if(!textField.getText().equals(""))
+		{book_id=Integer.valueOf(textField.getText());}
+		String shelve_code=textField_1.getText();
+		String isbn=textField_2.getText();
+		
+		x=all.search(book_id, isbn, shelve_code);
+		if(x==null){
+			JOptionPane.showMessageDialog(null, "No any related Data Found");
+		}else{
+		bookmodel.setData(x);
+		System.out.println(bookmodel.getRowCount());
+		table.setModel(bookmodel);
+		//table.setCo
+		bookmodel.fireTableDataChanged();
+		
+		}
+		
+}
+}
