@@ -3,6 +3,6 @@
     <persistence-unit name="jpaData" transaction-type="RESOURCE_LOCAL">
         <class>edu.spsu.swe2313.group7.library.model.Book</class>
         <class>edu.spsu.swe2313.group7.library.model.Author</class>
-        <class>edu.spsu.swe2313.group7.library.model.Patron</class>
+        <class>edu.spsu.swe2313.group7.library.model.User</class>
     </persistence-unit>
 </persistence>

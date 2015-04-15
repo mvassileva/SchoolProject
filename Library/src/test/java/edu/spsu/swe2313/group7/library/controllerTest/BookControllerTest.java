@@ -207,27 +207,43 @@ public class BookControllerTest {
 				logger.debug("Calling checkout book, with book id =" + b.getId() + " and user id: " + p.getId());
 				Date d = bookController.checkOutBook("lib1", token.getToken(), b.getId(), p.getId());
 				assertNotNull("Checkout returned null!", d);
-				assertEquals("Due date not matched", cal.getTime().toString(), d.toString());
+				
+				
+				//This is kind of goofy so bear with me.
+				
+				//Convert both dates to epoch seconds
+				//Then use integer division to fix any time discrepancies
+				long returnedDueDate = d.getTime();
+				long expectedDueDate = cal.getTime().getTime();
+				
+				//This converts both to the nearest day(in days since epoch)
+				long rDueDate = returnedDueDate/86400000;
+				long eDueDate = expectedDueDate/86400000;
+				//Now we just assert that the longs are equal, we could convert back to Dates and they should match
+				//but it's extra work, and doesn't get you much but pretty printing at this point.
+				assertEquals("Due date not matched", eDueDate, rDueDate);
+
 			}
 		} else {
 			logger.error("No books found");
 		}
 		//TODO: fix
 		
-		/*
+
 		logger.debug("Getting the book again, to see if the correct user has it checked out");
 		List<Book> bList2 = bookController.getBookByTitle("Test Book 1");
 		if (bList2 != null && !bList.isEmpty()) {
-			for (Book b : bList ) {
+			for (Book b : bList2 ) {
 				if (b == null) {
 					logger.error("Book found to be null");
 					continue;
 				}
 				logger.debug("Found Book, with Title: " + b.getTitle() + " and id: " + b.getId());
-				assertEquals("Correct User not found", p,b.getCheckedOutBy());
+				assertEquals("Correct User not found", p.getUserName(),b.getCheckedOutBy().getUserName());
 			}
-		}*/
+		}
 	}
+	
 	@Test
 	public void testCheckoutFail() throws Exception {
 		//Setup auth

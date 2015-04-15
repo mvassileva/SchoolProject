@@ -4,6 +4,7 @@ import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.Book;
 import edu.spsu.swe2313.group7.library.model.BookStatus;
 import edu.spsu.swe2313.group7.library.model.User;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -117,10 +118,30 @@ public class BookMapper {
 	}
 	
 	public List<Book> getOverDueBooks() {
-	//TODO: wire up by author search
-	List<Book> bList = em.createQuery("select b from Book b where b.dueDate < CURRENT_DATE ", Book.class).getResultList();
-	logger.error("LIST LENGTH " + bList.size());
-	return bList;
+		//TODO: wire up by author search
+		List<Book> bList = em.createQuery("select b from Book b where b.dueDate < CURRENT_DATE ", Book.class).getResultList();
+		logger.error("LIST LENGTH " + bList.size());
+		return bList;
 	}
-
+	@Transactional
+	public boolean checkOut(Book b, User u) {
+		Book managedB = em.merge(b);
+		User managedU = em.merge(u);
+		
+		
+		//Make a new date for right now, add the number of 
+		//days for the book's checkout duration to it, and then set it.
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, b.getCheckOutDuration());
+	
+		managedB.setDueDate(cal.getTime());
+		managedB.setStatus(BookStatus.CHECKEDOUT);
+		managedB.setCheckedOutBy(managedU);
+		if (!managedU.getBooksCheckedOut().contains(managedB)) {
+			managedU.getBooksCheckedOut().add(managedB);
+		}
+		em.persist(managedU);
+		em.persist(managedB);
+		return true;
+	}
 }

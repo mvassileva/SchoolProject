@@ -171,18 +171,16 @@ public class BookController {
 				// Book and user are valid
 				if (b.getStatus() == BookStatus.CHECKEDIN
 					&& u.checkCheckoutStatus()) {
-								//Book is checked in
-					//User is allowed to check out
-					b.setStatus(BookStatus.CHECKEDOUT);
-					b.setCheckedOutBy(u);
-					u.setBookCheckedOutCount(u.getBookCheckedOutCount()+1);
-
-					//Make a new date for right now, add the number of 
-					//days for the book's checkout duration to it, and then set it.
-					Calendar cal = Calendar.getInstance();
-					cal.add(Calendar.DATE, b.getCheckOutDuration());
-					b.setDueDate(cal.getTime());
-					return b.getDueDate();
+					if ( bookMapper.checkOut(b, u) ) {
+						//Since checkout was successful, the object has been updated,
+						//however since we are working with detached objects, we must update
+						//it explicitly to find out the due date.
+						b = bookMapper.getBookById(bookId);
+						return b.getDueDate();
+					} else {
+						logger.error("Checkout Failed");
+					}
+					
 				} else {
 					logger.debug("Book Status is " + b.getStatus());
 					logger.debug("User Checkout Status is " + u.checkCheckoutStatus());

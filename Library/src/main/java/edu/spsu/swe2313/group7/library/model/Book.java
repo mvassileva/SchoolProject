@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -45,22 +46,25 @@ public class Book {
 	private String ISBN13;
 	private Date publishDate;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name="BOOK_AUTHORS", joinColumns = { @JoinColumn(name= "BOOK_id") }, inverseJoinColumns = {@JoinColumn(name="AUTHOR_id") })
 	private List<Author> authors;
 	
 	private int checkOutDuration;
 	private BookStatus status;
 	
-	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="PATRON_ID")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name="USER_BOOKS",
+		joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
+		inverseJoinColumns={ @JoinColumn(name="BOOK_ID", referencedColumnName="ID", unique=true) } )
 	private User checkedOutBy;
 	
 	
 	private Date dueDate;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name="BOOK_WAITING_PATRONS", joinColumns = { @JoinColumn(name= "BOOK_ID") }, inverseJoinColumns = {@JoinColumn(name="PATRON_ID") })
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name="BOOK_WAITING_USERS",
+		joinColumns = { @JoinColumn(name= "BOOK_ID") }, inverseJoinColumns = {@JoinColumn(name="USER_ID") })
 	private List<User> waitingList;
 
 	
@@ -137,6 +141,9 @@ public class Book {
 
 	public void setCheckedOutBy(User checkedOutBy) {
 		this.checkedOutBy = checkedOutBy;
+		/*if (!checkedOutBy.getBooksCheckedOut().contains(this)) {
+			checkedOutBy.getBooksCheckedOut().add(this);
+		}*/
 	}
 
 	public Date getDueDate() {

@@ -9,6 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import edu.spsu.swe2313.group7.library.util.PasswordHash;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import org.apache.log4j.Logger;
 
 /**
@@ -20,7 +26,7 @@ import org.apache.log4j.Logger;
 public class User {
 	private static final Logger logger = Logger.getLogger(User.class);
 	@Id
-	@Column(name="id")
+	@Column(name="ID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
@@ -35,6 +41,10 @@ public class User {
 	private String userName;
 	private String passwordHash;
 
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="BOOK_ID", referencedColumnName="ID")
+	private List<Book> BooksCheckedOut;
+	
 	public UserLevel getUserLevel() {
 		return userLevel;
 	}
@@ -45,6 +55,14 @@ public class User {
 
 	public String getUserName() {
 		return userName;
+	}
+
+	public List<Book> getBooksCheckedOut() {
+		return BooksCheckedOut;
+	}
+
+	public void setBooksCheckedOut(List<Book> BooksCheckedOut) {
+		this.BooksCheckedOut = BooksCheckedOut;
 	}
 
 	public void setUserName(String userName) {
