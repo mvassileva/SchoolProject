@@ -47,7 +47,7 @@ public class AuthenticationMapper {
 	public AuthenticationToken userLogin(String username, String password) throws Exception {
 		if (username != null && password != null) {
 			//Fetch user info and auth
-			User u = userMapper.getUserByName(username);
+			User u = userMapper.getUserByUserName(username);
 			if (u != null) {
 				if (u.getPasswordHash().equals(hashFunc.passwordToHash(password))) {
 					// Everything looks legit, lets make a token.

@@ -1,5 +1,6 @@
 package edu.spsu.swe2313.group7.library.MapperTest;
 
+import edu.spsu.swe2313.group7.library.controllerTest.BookControllerTest;
 import edu.spsu.swe2313.group7.library.dao.AuthenticationMapper;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -29,9 +30,13 @@ import edu.spsu.swe2313.group7.library.model.Book;
 import edu.spsu.swe2313.group7.library.model.BookStatus;
 import edu.spsu.swe2313.group7.library.model.User;
 import edu.spsu.swe2313.group7.library.model.UserLevel;
+import java.util.Calendar;
 import java.util.Date;
+import org.apache.log4j.Logger;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -42,7 +47,7 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration("classpath:spring/library-context.xml")
 public class BookMapperTest
 {
-
+	private static final Logger logger = Logger.getLogger(BookMapperTest.class);
 	private static SimpleDateFormat format;
 
 	@Autowired
@@ -140,42 +145,169 @@ public class BookMapperTest
 
 	}
 	
+	/* This test is called in a specific order
+	 *  junit doesn't guarantee the test call order
+	 *  but here we kind of need to checkout before 
+	 *  we can check in.
+	 */
 	@Test
-	public void testCheckOut() throws ParseException{
+	public void testCheckoutCheckIn() throws ParseException {
+		
 		//Preload Data
 		preload();
-		User pat = userMapper.getUserByName("patron1");
+		testCheckOut();
+		testAddWaitList();
+		testCheckIn();
+		testRemoveWaitList();
+		
+	} 
+	
+	
+	private void testCheckOut() {
+		User pat = userMapper.getUserByUserName("patron2");
 		List<Book> b1 = bookMapper.getBookByTitle("Pride and Prejudice");
 		assertNotNull("Couldn't find any books named Pride and Prejudice", b1);
 		
 		for (Book b : b1) {
 			assertNotNull("Book was null!",b);
 			assertTrue("Checkout Failed, bookMapper returned false", bookMapper.checkOut(b, pat));
+			//Refresh object to pickup checkout status
+			Book responseBook = bookMapper.getBookById(b.getId());
+			assertEquals("Checkout User did not match expected", pat.getUserName(), responseBook.getCheckedOutBy().getUserName());
+			
+			
+			//This is kind of goofy so bear with me.
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, b.getCheckOutDuration());
+			//Convert both dates to epoch seconds
+			//Then use integer division to fix any time discrepancies
+			long returnedDueDate = responseBook.getDueDate().getTime();
+			long expectedDueDate = cal.getTime().getTime();
+
+			//This converts both to the nearest day(in days since epoch)
+			long rDueDate = returnedDueDate/86400000;
+			long eDueDate = expectedDueDate/86400000;
+			//Now we just assert that the longs are equal, we could convert back to Dates and they should match
+			//but it's extra work, and doesn't get you much but pretty printing at this point.
+			assertEquals("Due date not matched", eDueDate, rDueDate);
+			
+			assertTrue("Book not found in Users checkedout list", responseBook.getCheckedOutBy().getBooksCheckedOut().contains(responseBook));
+
+			
 		}
 		
 	}
 	
-	@Test
-	public void testCheckIn() throws ParseException {
-		preload();
+	private void testCheckIn() {
 		List<Book> b1 = bookMapper.getBookByTitle("Pride and Prejudice");
 		assertNotNull("Couldn't find any books named Pride and Prejudice", b1);
 		
 		for (Book b : b1) {
 			assertNotNull("Book was null!",b);
+			//Get the checkedout by user, and make sure they have the book checked out
+			User checkedOutUser = b.getCheckedOutBy();
+			assertNotNull("checkedOutBy returned null", checkedOutUser);
+			assertNotNull("checkedOutBy User has no books checked out",checkedOutUser.getBooksCheckedOut());
+			assertTrue("Book not found in user's checkout list",checkedOutUser.getBooksCheckedOut().contains(b) );
+			
+			//Do the check in
 			assertTrue("CheckIn Failed, bookMapper returned false", bookMapper.checkIn(b));
+			
+			//Refresh object to pickup checkout status
+			Book responseBook = bookMapper.getBookById(b.getId());
+			assertNull("CheckIn Failed, book still checked out", responseBook.getCheckedOutBy());
+			assertNull("CheckIn Failed, book still has due date", responseBook.getDueDate());
+			
+			//Refresh the user to ensure that checkin was successful for them
+			User u = userMapper.getUserById(checkedOutUser.getId());
+			assertNotNull("getUserById returned null", u);
+			assertNotNull("getBooksCheckedOut() returned null", u.getBooksCheckedOut());
+			assertFalse("Book still found in user's checkout list",u.getBooksCheckedOut().contains(b) );
+			assertFalse("Book still found in user's checkout list",u.getBooksCheckedOut().contains(responseBook) );
+			
+			
+			
+		}
+	}
+	
+	private void testAddWaitList() {
+		List<Book> b1 = bookMapper.getBookByTitle("Pride and Prejudice");
+		assertNotNull("Couldn't find any books named Pride and Prejudice", b1);
+		User pat2 = userMapper.getUserByUserName("patron2");
+		User pat3 = userMapper.getUserByUserName("patron3");
+		for (Book b : b1) {
+			//At this point, the book should be checked out to pat1;
+			assertEquals("Book not checkedOut to the correct user", pat2.getUserName(), b.getCheckedOutBy().getUserName());
+			assertTrue("Unabled to add user to book's waitinglist", bookMapper.addToWaitlist(b, pat3));
+			
+			//Refresh book
+			Book responseBook = bookMapper.getBookById(b.getId());
+			assertNotNull("Book response was null", responseBook);
+			assertNotNull("Book's waitinglist is null", responseBook.getWaitingList());
+			//Refresh User
+			User responseUser = userMapper.getUserById(pat3.getId());
+			assertNotNull("User response was null", responseUser);
+			
+			//TODO: look into contains issue here
+			//assertTrue("User not found in waiting list", responseBook.getWaitingList().contains(responseUser));
+			boolean foundUser = false;
+			for ( User u : responseBook.getWaitingList() ) {
+				if ( u.getUserName() == responseUser.getUserName()) {
+					foundUser = true;
+				}
+			}
+			
+			assertTrue("User not found in waiting list", foundUser);
+		}
+	}
+	
+		private void testRemoveWaitList() {
+		List<Book> b1 = bookMapper.getBookByTitle("Pride and Prejudice");
+		assertNotNull("Couldn't find any books named Pride and Prejudice", b1);
+		User pat3 = userMapper.getUserByUserName("patron3");
+		for (Book b : b1) {
+			assertTrue("Unabled to add user to book's waitinglist", bookMapper.removeFromWaitlist(b, pat3));
+			
+			//Refresh book
+			Book responseBook = bookMapper.getBookById(b.getId());
+			assertNotNull("Book response was null", responseBook);
+			assertNotNull("Book's waitinglist is null", responseBook.getWaitingList());
+			//Refresh User
+			User responseUser = userMapper.getUserById(pat3.getId());
+			assertNotNull("User response was null", responseUser);
+			
+			//TODO: look into contains issue here
+			//assertTrue("User not found in waiting list", responseBook.getWaitingList().contains(responseUser));
+			boolean foundUser = false;
+			for ( User u : responseBook.getWaitingList() ) {
+				if ( u.getUserName() == responseUser.getUserName()) {
+					foundUser = true;
+				}
+			}
+			
+			assertFalse("User found in waiting list, something went wrong trying to remove", foundUser);
 		}
 	}
 	
 	private void preload() throws ParseException {
 		
-		User patron1 = new User();
-		patron1.setUserName("patron1");
-		patron1.setLastName("One");
-		patron1.setFirstName("Patron");
-		patron1.setEmailAddress("test@example.com");
-		patron1.setUserLevel(UserLevel.PATRON);
-		userMapper.addUser(patron1);
+		User patron2 = new User();
+		patron2.setUserName("patron2");
+		patron2.setLastName("Two");
+		patron2.setFirstName("Patron");
+		patron2.setEmailAddress("patron2@example.com");
+		patron2.setUserLevel(UserLevel.PATRON);
+		patron2.setAllowedCheckout(true);
+		userMapper.addUser(patron2);
+		
+		User patron3 = new User();
+		patron3.setUserName("patron3");
+		patron3.setLastName("Three");
+		patron3.setFirstName("Patron");
+		patron3.setEmailAddress("patron3@example.com");
+		patron3.setUserLevel(UserLevel.PATRON);
+		patron3.setAllowedCheckout(true);
+		userMapper.addUser(patron3);
 		
 		Author auth1 = new Author();
 		auth1.setFirstName("Jane");

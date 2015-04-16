@@ -71,13 +71,13 @@ public class UserMapper {
 		
 	}
 	
-	public User getUserByName(String name) {
-		List<User> ulist = em.createQuery("select u from User u where u.userName = :custName").setParameter("custName", name).getResultList();
+	public User getUserByUserName(String userName) {
+		List<User> ulist = em.createQuery("select u from User u where u.userName = :userName").setParameter("userName", userName).getResultList();
 		for (User u : ulist) {
 			logger.info("User loaded successfully, " + u.getLastName() + ", " + u.getFirstName());
 			return u;
 		}
-		logger.error("User with name, " + name + " not found.");
+		logger.error("User with name, " + userName + " not found.");
 		return null;
 	}
 }

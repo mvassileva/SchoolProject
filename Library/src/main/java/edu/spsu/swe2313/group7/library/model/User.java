@@ -46,7 +46,7 @@ public class User {
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="checkedOutBy")
 	private List<Book> booksCheckedOut;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="waitingList")
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="waitingList")
 	private List<Book> waitingListBooks;
 	
 	public UserLevel getUserLevel() {

@@ -189,7 +189,7 @@ public class BookControllerTest {
 		
 		//Find user id
 		logger.debug("Attempting to load user by name");
-		User p = userMapper.getUserByName("patron1");	
+		User p = userMapper.getUserByUserName("patron1");	
 		logger.debug("Getting Books with the title 'Test Book 1'");
 		List<Book> bList = bookController.getBookByTitle("Test Book 1");
 		if (bList != null && !bList.isEmpty()) {
@@ -249,7 +249,7 @@ public class BookControllerTest {
 		assertNotNull("Token recieved is null", token);
 		
 		//Find user id
-		User p = userMapper.getUserByName("patron1");	
+		User p = userMapper.getUserByUserName("patron1");	
 		Date d = bookController.checkOutBook("lib1", token.getToken(), 12, p.getId());
 		//This should fail
 		assertTrue("Checkout Succeeded when it should have failed, check book id 12?", d == null);

@@ -135,9 +135,15 @@ public class BookMapper {
 	}
 	@Transactional
 	public boolean checkOut(Book b, User u) {
+		logger.debug("Starting Checkout process");
 		Book managedB = em.merge(b);
 		User managedU = em.merge(u);
-		
+		if (managedB == null || managedU == null ) {
+			//unable to move book or user to this
+			//persistence context
+			logger.error("Unable to locate User or book in this persistence context");
+			return false;
+		}
 		
 		//Make a new date for right now, add the number of 
 		//days for the book's checkout duration to it, and then set it.
@@ -152,14 +158,23 @@ public class BookMapper {
 		}
 		em.persist(managedU);
 		em.persist(managedB);
+		logger.debug("Successfully completed Checkout");
 		return true;
 	}
 	
 	@Transactional
 	public boolean checkIn(Book b) {
-		
+		logger.debug("Starting CheckIn process");
 		Book managedB = em.merge(b);
 		User managedU = managedB.getCheckedOutBy();
+		
+		if (managedB == null ) {
+			//unable to move book to this
+			//persistence context
+			logger.error("Unable to locate book in this persistence context");
+			return false;
+		}
+		
 		//remove book from user's checkout list
 		if (managedU != null && managedU.getBooksCheckedOut() != null 
 			&& managedU.getBooksCheckedOut().size() > 0) {
@@ -171,8 +186,72 @@ public class BookMapper {
 		//Notify Waitling list?
 		em.persist(managedB);
 		if (managedB.getCheckedOutBy() == null) {
+			logger.debug("Successfully completed CheckIn");
 			return true;
 		}
+		logger.debug("Checkin Failed");
+		return false;
+	}
+	
+	@Transactional
+	public boolean addToWaitlist(Book b, User u) {
+		logger.debug("Starting Add to Waitlist");
+		Book managedB = em.merge(b);
+		User managedU = em.merge(u);
+		
+		if (managedB == null || managedU == null ) {
+			//unable to move book or user to this
+			//persistence context
+			logger.error("Unable to locate User or book in this persistence context");
+			return false;
+		}
+		
+		if (managedB.getWaitingList() != null) {
+			managedB.getWaitingList().add(managedU);
+			if (!managedU.getWaitingListBooks().contains(managedB)) {
+				managedU.getWaitingListBooks().add(managedB);
+			}
+			em.persist(managedB);
+			em.persist(managedU);
+			logger.debug("Successfully completed WaitList addition");
+			return true;
+		}
+		//something went wrong
+		logger.debug("Failed to add user to waitling list");
+		return false;
+	} 
+	
+	@Transactional
+	public boolean removeFromWaitlist(Book b, User u) {
+		logger.debug("Starting Remove From waitlist");
+		Book managedB = em.merge(b);
+		User managedU = em.merge(u);
+		
+		if (managedB == null || managedU == null ) {
+			//unable to move book or user to this
+			//persistence context
+			logger.error("Unable to locate User or book in this persistence context");
+			return false;
+		}
+		
+		if (managedB.getWaitingList() != null) {
+			if (managedB.getWaitingList().contains(managedU)) {
+				managedB.getWaitingList().remove(managedU);
+				em.persist(managedB);
+				
+				if (managedU.getWaitingListBooks().contains(managedB)) {
+					managedU.getWaitingListBooks().remove(managedB);
+				}
+				
+				logger.debug("Successfully completed WaitList removal");
+				return true;
+			} else {
+				logger.debug("User wasn't found on waiting list, unable to remove, method returning true as user is not on the waiting list");
+				return true;
+			}
+		}
+		//something went wrong
+		logger.debug("Failed to remove user from waitling list");
 		return false;
 	}
 }
