@@ -13,6 +13,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import org.apache.log4j.Logger;
@@ -34,16 +35,19 @@ public class User {
 	private String firstName;
 	private Date dateOfBirth;
 	private int bookCheckoutLimit;
-	private int bookCheckedOutCount;
 	private int lateFees;
 	private boolean allowedCheckout;
 	private UserLevel userLevel;
 	private String userName;
 	private String passwordHash;
+	private String emailAddress;
+	
 
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="BOOK_ID", referencedColumnName="ID")
-	private List<Book> BooksCheckedOut;
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="checkedOutBy")
+	private List<Book> booksCheckedOut;
+	
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="waitingList")
+	private List<Book> waitingListBooks;
 	
 	public UserLevel getUserLevel() {
 		return userLevel;
@@ -57,12 +61,20 @@ public class User {
 		return userName;
 	}
 
-	public List<Book> getBooksCheckedOut() {
-		return BooksCheckedOut;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
-	public void setBooksCheckedOut(List<Book> BooksCheckedOut) {
-		this.BooksCheckedOut = BooksCheckedOut;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public List<Book> getWaitingListBooks() {
+		return waitingListBooks;
+	}
+
+	public List<Book> getBooksCheckedOut() {
+		return booksCheckedOut;
 	}
 
 	public void setUserName(String userName) {
@@ -129,13 +141,9 @@ public class User {
 	}
 
 	public int getBookCheckedOutCount() {
-		return bookCheckedOutCount;
+		return booksCheckedOut.size();
 	}
-
-	public void setBookCheckedOutCount(int bookCheckedOutCount) {
-		this.bookCheckedOutCount = bookCheckedOutCount;
-	}
-
+	
 	public int getLateFees() {
 		return lateFees;
 	}

@@ -46,25 +46,28 @@ public class Book {
 	private String ISBN13;
 	private Date publishDate;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name="BOOK_AUTHORS", joinColumns = { @JoinColumn(name= "BOOK_id") }, inverseJoinColumns = {@JoinColumn(name="AUTHOR_id") })
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name="BOOK_AUTHORS", 
+		joinColumns = { @JoinColumn(name= "BOOK_id") }, 
+		inverseJoinColumns = {@JoinColumn(name="AUTHOR_id") } )
 	private List<Author> authors;
 	
 	private int checkOutDuration;
 	private BookStatus status;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name="USER_BOOKS",
+	@JoinTable(name="USERS_BOOKS",
 		joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
-		inverseJoinColumns={ @JoinColumn(name="BOOK_ID", referencedColumnName="ID", unique=true) } )
+		inverseJoinColumns={ @JoinColumn(name="BOOK_ID", referencedColumnName="ID") } )
 	private User checkedOutBy;
 	
 	
 	private Date dueDate;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name="BOOK_WAITING_USERS",
-		joinColumns = { @JoinColumn(name= "BOOK_ID") }, inverseJoinColumns = {@JoinColumn(name="USER_ID") })
+		joinColumns = { @JoinColumn(name= "BOOK_ID") }, 
+		inverseJoinColumns = {@JoinColumn(name="USER_ID")})
 	private List<User> waitingList;
 
 	

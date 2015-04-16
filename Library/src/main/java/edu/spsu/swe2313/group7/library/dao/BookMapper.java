@@ -5,9 +5,11 @@ import edu.spsu.swe2313.group7.library.model.Book;
 import edu.spsu.swe2313.group7.library.model.BookStatus;
 import edu.spsu.swe2313.group7.library.model.User;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transaction;
 import javax.transaction.Transactional;
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
@@ -28,19 +30,25 @@ public class BookMapper {
 	@PersistenceContext
 	private EntityManager em;
 	
+	@Transactional
 	public Long addBook(Book b) {
+		/*
 		if (b.getAuthors() != null ) {
 			for (Author a : b.getAuthors() ) {
-				a.setId(0);
+				//TODO Fix up many to many in both directions
+				Author managedA = em.merge(a);
+				managedAuthors.add(managedA);
+				//a.setId(0);
 				em.persist(a);
 			}
 		}
 		if (b.getWaitingList() != null) {
+			//TODO Fix up many to many in both directions
 			for (User p : b.getWaitingList()) {
 				em.persist(p);
 			}
 		}
-		
+		*/
 		if (b.getCheckedOutBy()!= null) {
 			em.persist(b.getCheckedOutBy());
 		}
@@ -50,9 +58,11 @@ public class BookMapper {
 		if (b.getCheckOutDuration() == 0) {
 			b.setCheckOutDuration(defaultCheckoutDuration);
 		}
-		em.persist(b);
-		logger.info("Book saved successfuly, " + b.getTitle());
-		return 	b.getId();
+		//em.persist(b);
+		
+		Book savedB = em.merge(b);
+		logger.info("Book saved successfuly, " + savedB.getTitle());
+		return 	savedB.getId();
 	}
 
 	public void updateBook(Book b) {
@@ -143,5 +153,26 @@ public class BookMapper {
 		em.persist(managedU);
 		em.persist(managedB);
 		return true;
+	}
+	
+	@Transactional
+	public boolean checkIn(Book b) {
+		
+		Book managedB = em.merge(b);
+		User managedU = managedB.getCheckedOutBy();
+		//remove book from user's checkout list
+		if (managedU != null && managedU.getBooksCheckedOut() != null 
+			&& managedU.getBooksCheckedOut().size() > 0) {
+			managedU.getBooksCheckedOut().remove(managedB);
+		}
+		managedB.setCheckedOutBy(null);
+		managedB.setDueDate(null);
+		managedB.setStatus(BookStatus.CHECKEDIN);
+		//Notify Waitling list?
+		em.persist(managedB);
+		if (managedB.getCheckedOutBy() == null) {
+			return true;
+		}
+		return false;
 	}
 }

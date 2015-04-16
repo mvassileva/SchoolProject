@@ -3,6 +3,7 @@ package edu.spsu.swe2313.group7.library.dao;
 import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.Book;
 import edu.spsu.swe2313.group7.library.model.User;
+import edu.spsu.swe2313.group7.library.model.UserLevel;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,6 +25,11 @@ public class UserMapper {
 	private EntityManager em;
 	
 	public Long addUser(User u) {
+		if (u.getBookCheckoutLimit() == 0 
+			&& u.getUserLevel() == UserLevel.PATRON
+			&& u.isAllowedCheckout()) {
+			u.setBookCheckoutLimit(5);
+		}
 		em.persist(u);
 		logger.info("User saved successfuly, " + u.getLastName() + ", " + u.getFirstName());
 		return 	u.getId();

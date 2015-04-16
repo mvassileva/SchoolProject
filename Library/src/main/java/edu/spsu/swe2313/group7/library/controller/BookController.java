@@ -207,7 +207,6 @@ public class BookController {
 					if (b.getStatus() == BookStatus.CHECKEDOUT) {
 						b.setStatus(BookStatus.CHECKEDIN);
 						b.setCheckedOutBy(null);
-						u.setBookCheckedOutCount(u.getBookCheckedOutCount()-1);
 						return u.getLateFees();
 					}
 				}

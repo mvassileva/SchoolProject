@@ -2,12 +2,16 @@ package edu.spsu.swe2313.group7.library.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -42,6 +46,10 @@ public class Author {
 	@JsonIgnore
 	private Date dateOfDeath;
 
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="authors")
+	private List<Book> booksbyAuthor;
+	
+	
 	public long getId() {
 		return id;
 	}

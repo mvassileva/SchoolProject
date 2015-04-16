@@ -80,7 +80,6 @@ public class AuthenticationMapperTest {
 		u.setFirstName("Maria");
 		u.setDateOfBirth(format.parse("1989-09-01"));
 		u.setAllowedCheckout(true);
-		u.setBookCheckedOutCount(1);
 		u.setBookCheckoutLimit(5);
 		u.setLateFees(0);
 		u.setUserLevel(UserLevel.LIBRARIAN);

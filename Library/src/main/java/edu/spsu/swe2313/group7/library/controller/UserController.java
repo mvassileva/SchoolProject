@@ -47,7 +47,6 @@ public class UserController {
 		p.setDateOfBirth(new Date());
 		p.setLateFees(2);
 		p.setBookCheckoutLimit(12);
-		p.setBookCheckedOutCount(0);
 		p.setAllowedCheckout(true);
 		p.setUserLevel(UserLevel.ADMINISTRATOR);
 		p.setUserName("test1");

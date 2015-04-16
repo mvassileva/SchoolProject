@@ -116,7 +116,6 @@ public class BookControllerTest {
 			logger.error("Unable to parse Date", ex);
 		}
 		lib1.setAllowedCheckout(true);
-		lib1.setBookCheckedOutCount(1);
 		lib1.setBookCheckoutLimit(5);
 		lib1.setLateFees(0);
 		lib1.setUserLevel(UserLevel.LIBRARIAN);
@@ -130,7 +129,6 @@ public class BookControllerTest {
 		patron1.setLastName("Patron1");
 		patron1.setFirstName("Patron1");
 		patron1.setBookCheckoutLimit(8);
-		patron1.setBookCheckedOutCount(0);
 		patron1.setAllowedCheckout(true);
 		patron1.setUserLevel(UserLevel.PATRON);
 		patron1.setUserName("patron1");
