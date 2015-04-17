@@ -1,6 +1,10 @@
 package edu.spsu.swe2313.group7.library.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import edu.spsu.swe2313.group7.library.model.serializers.JsonDateDeserializer;
+import edu.spsu.swe2313.group7.library.model.serializers.JsonDateSerializer;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -81,19 +85,23 @@ public class Author {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
-
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
+	@JsonDeserialize(using = JsonDateDeserializer.class)
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDateOfDeath() {
 		return dateOfDeath;
 	}
-
+	
+	@JsonDeserialize(using = JsonDateDeserializer.class)
 	public void setDateOfDeath(Date dateOfDeath) {
 		this.dateOfDeath = dateOfDeath;
 	}

@@ -1,5 +1,9 @@
 package edu.spsu.swe2313.group7.library.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import edu.spsu.swe2313.group7.library.model.serializers.JsonDateDeserializer;
+import edu.spsu.swe2313.group7.library.model.serializers.JsonDateSerializer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -115,10 +119,12 @@ public class Book {
 		this.title = title;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getPublishDate() {
 		return publishDate;
 	}
-
+	
+	@JsonDeserialize(using = JsonDateDeserializer.class)
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
 	}
@@ -157,11 +163,13 @@ public class Book {
 			checkedOutBy.getBooksCheckedOut().add(this);
 		}*/
 	}
-
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDueDate() {
 		return dueDate;
 	}
-
+	
+	@JsonDeserialize(using = JsonDateDeserializer.class)
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}

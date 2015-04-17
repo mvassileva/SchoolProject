@@ -1,6 +1,10 @@
 package edu.spsu.swe2313.group7.library.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import edu.spsu.swe2313.group7.library.dao.UserMapper;
+import edu.spsu.swe2313.group7.library.model.serializers.JsonDateDeserializer;
+import edu.spsu.swe2313.group7.library.model.serializers.JsonDateSerializer;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -123,15 +127,17 @@ public class User {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
-
+	
+	@JsonDeserialize(using = JsonDateDeserializer.class)
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-
+	
 	public int getBookCheckoutLimit() {
 		return bookCheckoutLimit;
 	}

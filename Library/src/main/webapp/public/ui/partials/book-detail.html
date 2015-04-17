@@ -1,4 +1,4 @@
-<h1>{{book.title}} - ISBN: {{book.isbn}}</h1>
+<!--<h1>{{book.title}} - ISBN: {{book.isbn}}</h1>
 
 <div ng-show="book.authors">
     Authors
@@ -25,4 +25,54 @@
             {{patron.lastName}}, {{patron.firstName}}
         </li>
     </ul>
+</div>
+<div> -->
+
+    <form class="pure-form pure-form-aligned" ng-submit="submitBook()">
+        <fieldset>
+            <legend>Book {{book.id}}:</legend>
+            <div class="pure-control-group">
+                <label for="title">Title:</label>
+                <input id="title" type=text ng-model="book.title"/>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="publishdate">Publish Date:</label>
+                <input id="publishdate" type=text data-ng-model="book.publishDate" ui-date/>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="status">Status:</label>
+                <select id="userlevel" ng-model="book.status" ng-options="l for l in bookStatus">
+                    <option value="">Select Status</option>
+                </select>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="shelf">Shelf Location:</label>
+                <input id="shelf" type=text ng-model="book.shelf"/>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="isbn10">ISBN10:</label>
+                <input id="isbn10" type=text ng-model="book.ISBN10"/>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="isbn13">ISBN13:</label>
+                <input id="isbn13" type=text ng-model="book.ISBN13"/>
+            </div>
+            
+            <div class="pure-control-group">
+                <label for="duedate">Due Date:</label>
+                <input id="duedate" type=text data-ng-model="book.dueDate" ui-date/>
+            </div>
+            
+    <div ng-show="authentiated && userLevel == LIBRARIAN" class="pure-controls">
+        <button ng-hide="user.id" class="pure-button pure-button-primary" type="submit">Create Book</button>
+        <button ng-show="user.id" class="pure-button pure-button-primary" type="submit">Update Update</button>
+        <button class="pure-button pure-button-primary" type="reset">Reset</button>
+    </div>
+</fieldset>
+</form>
 </div>
