@@ -78,8 +78,32 @@ a {
 .odd {
     background-color: white;
     padding: 20px;
-}
+}   
 .even {
   background-color: #cccccc;
   padding: 20px;
 }
+.button-error {
+    background: rgb(247, 48, 48); /* this is a maroon */
+    font-size: 85%;
+}
+
+.button-secondary {
+    background: rgb(66, 184, 221); /* this is a light blue */
+    font-size: 85%;
+}
+
+.rcorners2 {
+    border-radius: 5px;
+    border: 1px solid #454545;
+    padding: 20px;
+}
+
+.box {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 1px solid #454545;
+        padding: 20px; 
+    }
+    

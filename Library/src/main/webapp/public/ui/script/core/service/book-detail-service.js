@@ -3,24 +3,28 @@
 
     angular.module('app.core').service('BookDetailService', BookDetailService);
 
-    BookDetailService.$inject = ['$resource'];
+    BookDetailService.$inject = ['$resource', '$rootScope'];
 
-    function BookDetailService($resource) {
+    function BookDetailService($resource, $rootScope) {
         return $resource('/library/api/book/:id', {}, {
             get: {
                 method: 'GET',
                 isArray: false,
                 headers: {Accept: 'application/json'}
             },
-            update: {
+           update: {
                 method: 'PUT',
                 isArray: false,
-                headers: {Accept: 'application/json'}
+                headers: {Accept: 'application/json',
+                         'API-User': $rootScope.userName,
+                         'API-Key':  $rootScope.userToken}
             },
             remove: {
                 method: 'DELETE',
                 isArray: false,
-                headers: {Accept: 'application/json'}
+                headers: {Accept: 'application/json',
+                         'API-User': $rootScope.userName,
+                         'API-Key':  $rootScope.userToken}
             }
         });
     }

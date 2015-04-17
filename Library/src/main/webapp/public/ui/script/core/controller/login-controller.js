@@ -22,6 +22,7 @@
                         $rootScope.userToken = auth.token;
                         $rootScope.userName = auth.userName;
                         $rootScope.authenticated = true;
+                        $rootScope.userLevel = auth.userLevel;
                         $location.path("/");
                     }
                 });

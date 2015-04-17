@@ -23,7 +23,7 @@
             }).
             when('/books/new', {
                 controller: 'BookController',
-                templateUrl: 'partials/book-new.html',
+                templateUrl: 'partials/book-detail.html',
                 resolve: {
                     factory: checkRouting
                 }
