@@ -37,6 +37,11 @@ public class AuthenticationMapper {
 	public void init() throws ParseException {
 		authMap = new HashMap<>();
 		hashFunc = new PasswordHash();
+				
+		User test1 = new User();
+		test1.setUserName("test1");
+		test1.setPassword("test");
+		userMapper.addUser(test1);
 	}
 
 	public void setUserMapper(UserMapper mapper) {

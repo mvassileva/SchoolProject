@@ -40,7 +40,8 @@ public class AuthenticationController {
 	
 	
 	@RequestMapping( value="/login",
-			 method = RequestMethod.POST)
+			 method = RequestMethod.POST,
+			 produces = "application/json")
 	@ResponseBody
 	public String login(@RequestBody NameAndPassword nameAndPassword) {
 		if ( nameAndPassword != null) {
@@ -48,16 +49,14 @@ public class AuthenticationController {
 			String password = nameAndPassword.getPassWord();
 			try {
 				AuthenticationToken token = authMapper.userLogin(username, password);
-				return token.getToken();
+				return "{ \"token\": \"" + token.getToken() + "\"}";
 			} catch (Exception ex) {
 				Logger.getLogger(AuthenticationController.class.getName()).log(Level.SEVERE, null, ex);
-				return "{ Error: login Failed }";
+				return "{ \"token\": \"-1\"}";
 			}
 			
 		}
-		return "{ Error: parse error }";
+		return "{ \"token\": \"-1\"}";
 	}
-	
-	
 	
 }

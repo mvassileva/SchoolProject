@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="app" lang="en" class="no-js">
+<html ng-app="app.core" lang="en" class="no-js">
 
 
 
@@ -24,22 +24,26 @@
 </main>
 
 <!-- external dependencies -->
-<script src="script/vendor/angular/angular.min.js"></script>
-<script src="script/vendor/angular-route/angular-route.min.js"></script>
-<script src="script/vendor/angular-resource/angular-resource.min.js"></script>
+<script src="script/vendor/angular/angular.js"></script>
+<script src="script/vendor/angular-route/angular-route.js"></script>
+<script src="script/vendor/angular-resource/angular-resource.js"></script>
 
 <!-- core modules and services -->
 <script src="script/app.js"></script>
 <script src="script/core/core-module.js"></script>
 <script src="script/core/config.js"></script>
-<script src="script/core/author-service.js"></script>
-<script src="script/core/book-service.js"></script>
-<script src="script/core/book-detail-service.js"></script>
+
+<!-- Data Services -->
+<script src="script/core/service/author-service.js"></script>
+<script src="script/core/service/auth-service.js"></script>
+<script src="script/core/service/book-service.js"></script>
+<script src="script/core/service/book-detail-service.js"></script>
 
 <!-- controllers -->
-<script src="script/core/author-controller.js"></script>
-<script src="script/core/book-controller.js"></script>
-<script src="script/core/book-detail-controller.js"></script>
+<script src="script/core/controller/author-controller.js"></script>
+<script src="script/core/controller/book-controller.js"></script>
+<script src="script/core/controller/book-detail-controller.js"></script>
+<script src="script/core/controller/login-controller.js"></script>
 
 
 

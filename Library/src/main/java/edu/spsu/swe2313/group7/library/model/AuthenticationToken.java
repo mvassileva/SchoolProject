@@ -16,7 +16,16 @@ public class AuthenticationToken {
 	private long experation;
 	private String token;
 	private UserLevel level;
+	private boolean error;
 
+	public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+	
 	public UserLevel getLevel() {
 		return level;
 	}
@@ -49,5 +58,7 @@ public class AuthenticationToken {
 	public String getToken() {
 		return token;
 	}
+	
+	
 
 }

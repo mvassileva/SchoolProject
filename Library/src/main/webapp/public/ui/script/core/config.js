@@ -25,8 +25,15 @@
                 controller: 'BookController',
                 templateUrl: 'partials/book-new.html'
             }).
+            when('/login', {
+                controller: 'LoginController',
+                templateUrl: 'partials/login.html'
+                
+            }).
             otherwise({
                 redirectTo: '/books'
             });
+        //$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+        
     }
 }());
