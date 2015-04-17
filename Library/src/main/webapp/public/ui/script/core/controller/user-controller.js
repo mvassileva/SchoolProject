@@ -8,11 +8,11 @@
     function UserController($scope, UserService) {
         $scope.users = UserService.query();
 
-        $scope.userData = {};
+        $scope.user = {};
 
-        $scope.newUser = function newUser() {
-            var user = new UserService($scope.userData);
-            user.$save();
+        $scope.submitUser = function submitUser() {
+            var userServ = new UserService($scope.user);
+            userServ.$save();
         };
         $scope.orderProperty = 'username';
     }

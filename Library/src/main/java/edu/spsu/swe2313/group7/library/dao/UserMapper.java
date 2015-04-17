@@ -36,8 +36,9 @@ public class UserMapper {
 	}
 
 	public void updateUser(User u) {
-		em.refresh(u);
-		logger.info("User updated successfuly, " + u.getLastName() + ", " + u.getFirstName());
+		User managedU = em.merge(u);
+		em.persist(managedU);
+		logger.info("User updated successfuly, " + managedU.getLastName() + ", " + managedU.getFirstName());
 	}
 	
 	public User getUserById(long id) {   

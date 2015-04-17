@@ -1,0 +1,58 @@
+<div>
+
+<form class="pure-form pure-form-aligned" ng-submit="submitUser()">
+<fieldset>
+    <legend>User {{user.id}}:</legend>
+    <div class="pure-control-group">
+        <label for="username">User Name:</label>
+        <input id="username" type=text ng-model="user.userName"/>
+    </div>
+
+    <div class="pure-control-group">
+        <label for="firstname">First Name:</label>
+        <input id="firstname" type=text ng-model="user.firstName"/>
+    </div>
+    
+        <div class="pure-control-group">
+        <label for="lastname">Last Name:</label>
+        <input id="lastname" type=text ng-model="user.lastName"/>
+    </div>
+
+    <div class="pure-control-group">
+        <label for="emailAddress">Email Address:</label>
+        <input id="emailAddress" type=text ng-model="user.emailAddress"/>
+    </div>
+    
+    <div class="pure-control-group">
+    <label for="userlevel">Privilege Level:</label>
+    <input id="userlevel" type=text ng-model="user.userLevel"/>
+    </div>
+    
+    <div class="pure-control-group">
+    <label for="dateofbirth">Date of Birth:</label>
+    <input id="dateofbirth" type=text ng-model="user.dateOfBirth"/>
+    </div>
+    
+    <div class="pure-control-group">
+    <label for="numBooksAllowed">Number of Books Allowed:</label>
+    <input id="numBooksAllowed" type=text ng-model="user.bookCheckoutLimit"/>
+    </div>
+    
+    <div class="pure-control-group">
+    <label for="latefees">Late Fees:</label>
+    <input id="latefees" type=text ng-model="user.lateFees"/>
+    </div>
+
+    <div class="pure-controls">
+    <label for="cb" class="pure-checkbox">
+        Allow Login: <input id="cb" type="checkbox" ng-model="user.allowedCheckout">
+    </label>
+    </div>
+    
+    <div class="pure-controls">
+        <button ng-hide="user.id" class="pure-button pure-button-primary" type="submit">Create User</button>
+        <button ng-show="user.id" class="pure-button pure-button-primary" type="submit">Update User</button>
+    </div>
+</fieldset>
+</form>
+</div>

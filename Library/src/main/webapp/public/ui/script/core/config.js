@@ -33,8 +33,8 @@
                 templateUrl: 'partials/login.html'
                 
             }).
-            when('/user', {
-                controller: 'LoginController',
+            when('/user/:userId', {
+                controller: 'UserDetailController',
                 templateUrl: 'partials/user-detail.html',
                  resolve: {
                     factory: checkRouting
@@ -49,7 +49,7 @@
             }).
             when('/users/new', {
                 controller: 'UserController',
-                templateUrl: 'partials/user-new.html', 
+                templateUrl: 'partials/user-detail.html', 
                 resolve: {
                     factory: checkRouting
                 }

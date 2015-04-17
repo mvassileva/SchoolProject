@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	private static final Logger logger = Logger.getLogger(BookController.class);
+	private static final Logger logger = Logger.getLogger(UserController.class);
 	
 	@Autowired
 	@Qualifier("userMapper")
@@ -57,6 +57,7 @@ public class UserController {
 		p.setUserLevel(UserLevel.ADMINISTRATOR);
 		p.setUserName("test12");
 		p.setPassword("test12");
+		p.setEmailAddress("test12@admin.com");
 		createUser(p);
 	}
    
@@ -81,15 +82,18 @@ public class UserController {
 
 		Long id = userMapper.addUser(u);
 		logger.info("Saved User with id " + id);
-		return u;	
+		User responseUser = userMapper.getUserById(id);
+		return responseUser;	
 	}
 	
 	@RequestMapping( value="{userId}",
 			 method = RequestMethod.PUT,
 			 produces = "application/json")
 	@ResponseBody
-	public void updateUser(@PathVariable long userId, @RequestBody User u) {
-		userMapper.updateUser(u);
+	public void updateUser(@RequestHeader("API-User") String userName, @RequestHeader("API-Key") String key, @PathVariable long userId, @RequestBody User u) {
+		if (authMapper.verifyUserAccessLevel(userName, key, UserLevel.ADMINISTRATOR)) {
+			userMapper.updateUser(u);
+		}
 	}
 	
 	
@@ -97,16 +101,20 @@ public class UserController {
 	@RequestMapping( value="{userId}",
 			 method = RequestMethod.GET,
 			 produces = "application/json")
-	public @ResponseBody User findBookById(@PathVariable long userId) {
-		logger.debug("Called Find User By Id");
-		return userMapper.getUserById(userId);
+	public @ResponseBody User findBookById(@RequestHeader("API-User") String userName, @RequestHeader("API-Key") String key, @PathVariable long userId) {
+		if (authMapper.verifyUserAccessLevel(userName, key, UserLevel.ADMINISTRATOR)) {
+			logger.debug("Called Find User By Id");
+			return userMapper.getUserById(userId);
+		} else {
+			return (new User());
+		}
 	}
 	
 	@RequestMapping (value="",
 			 method = RequestMethod.GET,
 			 produces = "application/json")
 	public @ResponseBody List<User> getUsers(@RequestHeader("API-User") String userName, @RequestHeader("API-Key") String key) {
-		if (authMapper.verifyUserAccessLevel(userName, key, UserLevel.LIBRARIAN)) {
+		if (authMapper.verifyUserAccessLevel(userName, key, UserLevel.ADMINISTRATOR)) {
 		
 			return userMapper.getUsers();
 		} else {
