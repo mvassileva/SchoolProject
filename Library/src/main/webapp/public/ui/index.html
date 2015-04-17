@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="style/vendor/normalize-css/normalize.css"/>
 <link rel="stylesheet" href="style/vendor/pure-css/pure-min.css"/>
 <link rel="stylesheet" href="style/main.css"/>
+<link rel="stylesheet" href="script/vendor/jquery-ui/jquery-ui.css"/>
 </head>
 
 
@@ -21,27 +22,42 @@
 <header class="header"><h1>Library Inventory Control</h1></header>
 
 <!-- Menu -->
-<div class="container">
-<div ng-controller="NavigationController">
-    <ul id="navlist" class="menu">
-    <li ng-class="menuClass('books')"><a href="#/books">Books</a></li>
-    <li ng-class="menuClass('author')"><a href="#/author">Author</a></li>
-    <li ng-class="menuClass('users')"><a href="#/users">Users</a></li>
-    <li ng-class="menuClass('login')"><a href="#/login">Login</a></li>
-    </ul>
+<div class="pure-g">
+    <div class="pure-u-4-5">
+        <div class="pure-menu pure-menu-horizontal" ng-controller="NavigationController">
+            <a href="#" class="pure-menu-heading pure-menu-link">Library System</a>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item" ng-class="menuClass('books')"><a href="#/books">Books</a></li>
+                <li class="pure-menu-item" ng-class="menuClass('author')"><a href="#/author">Author</a></li>
+                <li class="pure-menu-item" ng-class="menuClass('users')"><a href="#/users">Users</a></li>
+                <li class="pure-menu-item" ng-class="menuClass('login')"><a href="#/login">Login</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="pure-u-1-5" ng-show="authenticated && userName">
+        Logged in as: {{userName}}
+    </div>
 </div>
-<div class="right" ng-show="authenticated && userName">
-    Logged in as: {{userName}}</div>
-</div>
+
+
 
 <main class="wrapper">
     <div ng-view></div>
 </main>
 
 <!-- external dependencies -->
+
+<!-- Jquery -->
+<script src="script/vendor/jquery/jquery-1.11.2.min.js"></script>
+<script src="script/vendor/jquery-ui/jquery-ui.js"></script>
+
+<!-- angular -->
 <script src="script/vendor/angular/angular.js"></script>
 <script src="script/vendor/angular-route/angular-route.js"></script>
 <script src="script/vendor/angular-resource/angular-resource.js"></script>
+
+
+
 
 <!-- core modules and services -->
 <script src="script/app.js"></script>
@@ -55,8 +71,10 @@
 <script src="script/core/service/book-detail-service.js"></script>
 <script src="script/core/service/user-service.js"></script>
 <script src="script/core/service/user-detail-service.js"></script>
+<script src="script/core/service/user-level-service.js"></script>
 
 <!-- controllers -->
+<script src="script/core/controller/custom-directives.js"></script>
 <script src="script/core/controller/navigation-controller.js"></script>
 <script src="script/core/controller/author-controller.js"></script>
 <script src="script/core/controller/book-controller.js"></script>

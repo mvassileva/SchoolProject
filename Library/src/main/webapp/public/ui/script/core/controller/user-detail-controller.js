@@ -3,9 +3,11 @@
 
     angular.module('app.core').controller('UserDetailController', UserDetailController);
 
-    UserDetailController.$inject = ['$scope', '$routeParams', 'UserDetailService'];
+    UserDetailController.$inject = ['$scope', '$routeParams', 'UserDetailService', 'UserLevelService'];
 
-    function UserDetailController($scope, $routeParams, UserDetailService) {
+    function UserDetailController($scope, $routeParams, UserDetailService, UserLevelService) {
+        $scope.userLevels = UserLevelService.query();
+        
         UserDetailService.get({id: $routeParams.userId}, function (data) {
             $scope.user = data;
         });

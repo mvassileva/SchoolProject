@@ -24,13 +24,15 @@
     </div>
     
     <div class="pure-control-group">
-    <label for="userlevel">Privilege Level:</label>
-    <input id="userlevel" type=text ng-model="user.userLevel"/>
+        <label for="userlevel">Privilege Level:</label>
+        <select id="userlevel" ng-model="user.userLevel" ng-options="l for l in userLevels">
+            <option value="">Select Level</option>
+        </select>
     </div>
-    
+
     <div class="pure-control-group">
     <label for="dateofbirth">Date of Birth:</label>
-    <input id="dateofbirth" type=text ng-model="user.dateOfBirth"/>
+    <input id="dateofbirth" type=text data-ng-model="user.dateOfBirth" ui-date/>
     </div>
     
     <div class="pure-control-group">

@@ -12,12 +12,29 @@
         </div>
         <div>
             <!--Body content-->
-            <ul>
-                <li ng-repeat="user in users | filter:query | orderBy:orderProperty">
-                    <a href="#/user/{{user.id}}">{{user.userName}}</a>
-                    <p>{{user.snippet}}</p>
-                </li>
-            </ul>
+            <div class="even"> <!-- set to even so that the grid will alternate properly -->
+                <div class="pure-g" >
+                    <div class="pure-u-1-5"> User Id</div>
+                    <div class="pure-u-1-5"> User Name</div>
+                    <div class="pure-u-1-5"> Email Address</div>
+                    <div class="pure-u-1-5"> User Level</div>
+                    <div class="pure-u-1-5"> Allowed Checkout</div>
+                </div>
+            </div>
+
+            <div ng-repeat="user in users | filter:query | orderBy:orderProperty">
+                <div ng-class-odd="'odd'" ng-class-even="'even'">
+                    <a href="#/user/{{user.id}}">
+                        <div class="pure-g">
+                            <div class="pure-u-1-5">{{user.id}}</div>
+                            <div class="pure-u-1-5">{{user.userName}}</div>
+                            <div class="pure-u-1-5">{{user.emailAddress}}</div>
+                            <div class="pure-u-1-5">{{user.userLevel}}</div>
+                            <div class="pure-u-1-5">{{user.allowedCheckout}}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

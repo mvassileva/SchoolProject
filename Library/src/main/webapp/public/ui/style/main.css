@@ -75,19 +75,11 @@ a {
     padding: 20px;
 }
 
-#navlist li
-{
-display: inline;
-list-style-type: none;
-padding-right: 20px;
+.odd {
+    background-color: white;
+    padding: 20px;
 }
-
-.container {
-    position: relative;
-    width: 100%;
-}
-.right {
-    position: absolute;
-    right: 0px;
-    width: 300px;
+.even {
+  background-color: #cccccc;
+  padding: 20px;
 }
