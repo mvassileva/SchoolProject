@@ -1,5 +1,6 @@
 package edu.spsu.swe2313.group7.library.controller;
 
+import edu.spsu.swe2313.group7.library.dao.AuthenticationMapper;
 import edu.spsu.swe2313.group7.library.dao.BookMapper;
 import edu.spsu.swe2313.group7.library.dao.UserMapper;
 import edu.spsu.swe2313.group7.library.model.Author;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 /**
  *
@@ -35,6 +37,10 @@ public class UserController {
 	@Qualifier("userMapper")
 	private UserMapper userMapper;
 
+	@Autowired
+	@Qualifier("authMapper")
+	private AuthenticationMapper authMapper;
+	
 	public void setUserMapper(UserMapper mapper) {
 		this.userMapper = mapper;
 	}
@@ -68,31 +74,44 @@ public class UserController {
 	@RequestMapping( value="",
 			 method = RequestMethod.POST)
 	@ResponseBody
-	public User createUser(@RequestBody User p) {
+	public User createUser(@RequestBody User u) {
 		logger.debug("Found User:");
-		logger.debug("Last Name: " + p.getLastName());
-		logger.debug("First Name: " + p.getFirstName());
+		logger.debug("Last Name: " + u.getLastName());
+		logger.debug("First Name: " + u.getFirstName());
 
-		Long id = userMapper.addUser(p);
+		Long id = userMapper.addUser(u);
 		logger.info("Saved User with id " + id);
-		return p;	
+		return u;	
 	}
 	
-	@RequestMapping( value="{patronId}",
+	@RequestMapping( value="{userId}",
 			 method = RequestMethod.PUT,
 			 produces = "application/json")
 	@ResponseBody
-	public void updateUser(@PathVariable long patronId, @RequestBody User p) {
-		userMapper.updateUser(p);
+	public void updateUser(@PathVariable long userId, @RequestBody User u) {
+		userMapper.updateUser(u);
 	}
 	
 	
 	
-	@RequestMapping( value="{patronId}",
+	@RequestMapping( value="{userId}",
 			 method = RequestMethod.GET,
 			 produces = "application/json")
-	public @ResponseBody User findBookById(@PathVariable long patronId) {
+	public @ResponseBody User findBookById(@PathVariable long userId) {
 		logger.debug("Called Find User By Id");
-		return userMapper.getUserById(patronId);
+		return userMapper.getUserById(userId);
+	}
+	
+	@RequestMapping (value="",
+			 method = RequestMethod.GET,
+			 produces = "application/json")
+	public @ResponseBody List<User> getUsers(@RequestHeader("API-User") String userName, @RequestHeader("API-Key") String key) {
+		if (authMapper.verifyUserAccessLevel(userName, key, UserLevel.LIBRARIAN)) {
+		
+			return userMapper.getUsers();
+		} else {
+			return (new ArrayList<User>());
+		}
+		
 	}
 }

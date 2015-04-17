@@ -33,6 +33,27 @@
                 templateUrl: 'partials/login.html'
                 
             }).
+            when('/user', {
+                controller: 'LoginController',
+                templateUrl: 'partials/user-detail.html',
+                 resolve: {
+                    factory: checkRouting
+                }
+            }).
+            when('/users', {
+                controller: 'UserController',
+                templateUrl: 'partials/user-list.html',
+                 resolve: {
+                    factory: checkRouting
+                }
+            }).
+            when('/users/new', {
+                controller: 'UserController',
+                templateUrl: 'partials/user-new.html', 
+                resolve: {
+                    factory: checkRouting
+                }
+            }).     
             otherwise({
                 redirectTo: '/books'
             });

@@ -1,0 +1,23 @@
+<div>
+    <div>
+        <div>
+            <!--Sidebar content-->
+            Search:
+            <input ng-model="query">
+            Sort by:
+            <select ng-model="orderProp">
+                <option value="title">Alphabetical</option>
+            </select>
+            <a ng-show="{{authenticated}}" href="#/users/new">Add New User</a>
+        </div>
+        <div>
+            <!--Body content-->
+            <ul>
+                <li ng-repeat="user in users | filter:query | orderBy:orderProperty">
+                    <a href="#/user/{{user.id}}">{{user.userName}}</a>
+                    <p>{{user.snippet}}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
