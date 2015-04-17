@@ -44,6 +44,7 @@ public class Book {
 	private String title;
 	private String ISBN10;
 	private String ISBN13;
+	private String shelf;
 	private Date publishDate;
 	
 	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
@@ -88,6 +89,14 @@ public class Book {
 			authors = new ArrayList<>();
 			authors.add(author);
 		}	
+	}
+
+	public String getShelf() {
+		return shelf;
+	}
+
+	public void setShelf(String shelf) {
+		this.shelf = shelf;
 	}
 	
 	public long getId() {
