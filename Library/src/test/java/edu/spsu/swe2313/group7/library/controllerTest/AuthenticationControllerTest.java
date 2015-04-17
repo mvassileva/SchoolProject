@@ -1,9 +1,11 @@
 package edu.spsu.swe2313.group7.library.controllerTest;
 
 import edu.spsu.swe2313.group7.library.controller.AuthenticationController;
+import edu.spsu.swe2313.group7.library.model.AuthenticationToken;
 import edu.spsu.swe2313.group7.library.model.NameAndPassword;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -61,8 +63,9 @@ public class AuthenticationControllerTest {
 		NameAndPassword testLogin = new NameAndPassword();
 		testLogin.setUserName("lib1");
 		testLogin.setUserName("TEST1");
-		String token = authController.login(testLogin);
+		AuthenticationToken token = authController.login(testLogin);
 		assertNotNull("Token recieved is null", token);
+		assertFalse("Token Error", token.isError());
 		
 	}
 

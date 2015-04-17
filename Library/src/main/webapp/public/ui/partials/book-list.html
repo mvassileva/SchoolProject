@@ -9,7 +9,7 @@
                 <option value="title">Alphabetical</option>
                 <option value="isbn">ISBN</option>
             </select>
-            <a href="#/books/new">Add New Book</a>
+            <a ng-show="{{authenticated}}" href="#/books/new">Add New Book</a>
         </div>
         <div>
             <!--Body content-->

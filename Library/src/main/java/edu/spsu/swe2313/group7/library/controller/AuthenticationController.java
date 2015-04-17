@@ -43,20 +43,23 @@ public class AuthenticationController {
 			 method = RequestMethod.POST,
 			 produces = "application/json")
 	@ResponseBody
-	public String login(@RequestBody NameAndPassword nameAndPassword) {
+	public AuthenticationToken login(@RequestBody NameAndPassword nameAndPassword) {
 		if ( nameAndPassword != null) {
 			String username = nameAndPassword.getUserName();
 			String password = nameAndPassword.getPassWord();
 			try {
 				AuthenticationToken token = authMapper.userLogin(username, password);
-				return "{ \"token\": \"" + token.getToken() + "\"}";
+				//return "{ \"token\": \"" + token.getToken() + "\"}";
+				return token;
 			} catch (Exception ex) {
 				Logger.getLogger(AuthenticationController.class.getName()).log(Level.SEVERE, null, ex);
-				return "{ \"token\": \"-1\"}";
+				//return "{ \"token\": \"-1\"}";
 			}
 			
 		}
-		return "{ \"token\": \"-1\"}";
+		AuthenticationToken token = new AuthenticationToken();
+		token.setError(true);
+		return token;
 	}
 	
 }

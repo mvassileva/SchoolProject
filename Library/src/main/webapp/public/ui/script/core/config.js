@@ -23,7 +23,10 @@
             }).
             when('/books/new', {
                 controller: 'BookController',
-                templateUrl: 'partials/book-new.html'
+                templateUrl: 'partials/book-new.html',
+                resolve: {
+                    factory: checkRouting
+                }
             }).
             when('/login', {
                 controller: 'LoginController',
@@ -37,3 +40,11 @@
         
     }
 }());
+
+var checkRouting= function ($q, $rootScope, $location) {
+    if ($rootScope.authenticated && $rootScope.userName) {
+        return true;
+    } else {
+        $location.path("/login");
+    }
+};

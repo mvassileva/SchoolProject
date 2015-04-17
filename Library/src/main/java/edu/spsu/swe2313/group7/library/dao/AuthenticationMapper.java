@@ -50,17 +50,23 @@ public class AuthenticationMapper {
 
 
 	public AuthenticationToken userLogin(String username, String password) throws Exception {
+		AuthenticationToken tok = new AuthenticationToken();
 		if (username != null && password != null) {
 			//Fetch user info and auth
 			User u = userMapper.getUserByUserName(username);
 			if (u != null) {
 				if (u.getPasswordHash().equals(hashFunc.passwordToHash(password))) {
 					// Everything looks legit, lets make a token.
-					AuthenticationToken tok = new AuthenticationToken();
+					logger.debug("Setting up token for user:" + username);
 					tok.setUserName(username);
 					String tokenValue = tok.generateToken();
 					tok.setLevel(u.getUserLevel());
-					tok.setExperation(System.currentTimeMillis() + sessionDuration);
+					logger.debug("Setting userlevel to " + u.getUserLevel());
+					long expire = System.currentTimeMillis() + sessionDuration;
+					tok.setExperation(expire);
+					logger.debug("Setting Expiration to " + expire);
+					tok.setError(false);
+					logger.debug("Saving token");
 					authMap.put(tokenValue, tok);
 					return tok;
 				}
@@ -68,7 +74,12 @@ public class AuthenticationMapper {
 		}
 		//Something was incorrect
 		//TODO make friendly
-		throw new Exception();
+		//throw new Exception();
+		//Instead of throwing, send back an errored token:
+		tok.setError(true);
+		tok.setLevel(UserLevel.NOACCESS);
+		return tok;
+		
 	}
 	
 	public AuthenticationToken getAuthToken(String token) {
@@ -137,17 +148,20 @@ public class AuthenticationMapper {
 
 	private UserLevel checkLogin(String user, String token) {
 		AuthenticationToken testToken = this.getAuthToken(token);
+		logger.debug("Token Recieved from user:" + user + "Token: " + token);
 		if (testToken == null) {
 			//Token invalid
 			logger.error("Invalid token recieved, User: " + user + ", token = " + token);
 			return null;
 		}
+		logger.debug("Token is valid, matching usernames");
 		//Check UserNames
 		if (!user.equalsIgnoreCase(testToken.getUserName())) {
 			//User name on token doesn't match token key
 			logger.error("Invalid user name specified, User: " + user + ", doesn't match token user:" + testToken.getUserName());
 			return null;
 		}
+		logger.debug("User names match, checking expiration");
 		//Check Expiration
 		if (testToken.getExperation() < System.currentTimeMillis()) {
 			//Token Expired
@@ -157,7 +171,7 @@ public class AuthenticationMapper {
 			return null;
 		}
 		//Everything looks good, return the user level
-		logger.debug("Returning user level");
+		logger.debug("Returning user level:" +testToken.getLevel());
 		return testToken.getLevel();
 	}
 

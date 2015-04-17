@@ -18,6 +18,8 @@
 
 <body>
 <header class="header"><h1>Library Inventory Control</h1></header>
+<div ng-show="authenticated && userName">
+    Logged in as: {{userName}}</div>
 
 <main class="wrapper">
     <div ng-view></div>

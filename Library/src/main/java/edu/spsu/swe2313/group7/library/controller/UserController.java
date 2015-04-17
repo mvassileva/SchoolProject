@@ -49,8 +49,8 @@ public class UserController {
 		p.setBookCheckoutLimit(12);
 		p.setAllowedCheckout(true);
 		p.setUserLevel(UserLevel.ADMINISTRATOR);
-		p.setUserName("test1");
-		p.setPassword("test1");
+		p.setUserName("test12");
+		p.setPassword("test12");
 		createUser(p);
 	}
    

@@ -5,9 +5,9 @@
 
     angular.module('app.core').controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', 'AuthService'];
+    LoginController.$inject = ['$rootScope', '$scope', 'AuthService', '$location'];
 
-    function LoginController($scope, AuthService) {
+    function LoginController($rootScope, $scope, AuthService, $location) {
         
         $scope.authData = {};
         
@@ -15,14 +15,16 @@
             var auth = new AuthService($scope.authData);
             auth.$save(function(){
                     console.log(arguments);
-                    if (auth.token != "-1") {
-                        $scope.userToken = auth.token;
-                        $scope.userName = $scope.authData.userName;
-                    }}
-                );
-              
-
-            
+                    if (auth.error) {
+                        $scope.error = true;
+                    } else {                    
+                        $scope.error = false;
+                        $rootScope.userToken = auth.token;
+                        $rootScope.userName = auth.userName;
+                        $rootScope.authenticated = true;
+                        $location.path("/");
+                    }
+                });
         }
     }
 }());
