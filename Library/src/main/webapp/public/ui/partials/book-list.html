@@ -13,32 +13,32 @@ Search: <input ng-model="query">
 <thead>
 <tr class="stopselect nowrap">
     <th>
-        <span ng-click="orderByField='title'; reverseSort = !reverseSort">
+        <span ng-click="orderByField = 'title'; reverseSort = !reverseSort">
             Book Title <span ng-show="orderByField == 'title'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
-        <span ng-click="orderByField='authors[author.lastName]'; reverseSort = !reverseSort">
-            Author Name <span ng-show="orderByField == 'authors[author.lastName]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        <span ng-click="orderByField = 'authors'; reverseSort = !reverseSort">
+            Author Name <span ng-show="orderByField == 'authors'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
-        <span ng-click="orderByField='ISBN10'; reverseSort = !reverseSort">
+        <span ng-click="orderByField = 'ISBN10'; reverseSort = !reverseSort">
             ISBN10 <span ng-show="orderByField == 'ISBN10'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
-        <span ng-click="orderByField='ISBN13'; reverseSort = !reverseSort">
+        <span ng-click="orderByField = 'ISBN13'; reverseSort = !reverseSort">
             ISBN13 <span ng-show="orderByField == 'ISBN13'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
-        <span ng-click="orderByField='status'; reverseSort = !reverseSort">
+        <span ng-click="orderByField = 'status'; reverseSort = !reverseSort">
             Status <span ng-show="orderByField == 'status'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
-        <span ng-click="orderByField='shelf'; reverseSort = !reverseSort">
+        <span ng-click="orderByField = 'shelf'; reverseSort = !reverseSort">
             Shelf <span ng-show="orderByField == 'shelf'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
@@ -47,12 +47,12 @@ Search: <input ng-model="query">
 
 <tbody>
 <tr ng-repeat="book in books|orderBy:orderByField:reverseSort">
-    <td>{{book.title}}</td>
-    <td><div ng-repeat="author in book.authors">{{author.lastName}}, {{author.firstName}}</div></td>
-    <td>{{book.ISBN10}}</td>
-    <td>{{book.ISBN13}}</td>
-    <td>{{book.status}}</td>
-    <td class="nowrap">{{book.shelf}}</td>
+    <td><a href="#/book/{{book.id}}">{{book.title}}</a></td>
+    <td><a href="#/book/{{book.id}}"><div ng-repeat="author in book.authors">{{author.lastName}}, {{author.firstName}}</div></a></td>
+    <td><a href="#/book/{{book.id}}">{{book.ISBN10}}</a></td>
+    <td><a href="#/book/{{book.id}}">{{book.ISBN13}}</a></td>
+    <td><a href="#/book/{{book.id}}">{{book.status}}</a></td>
+    <td class="nowrap"><a href="#/book/{{book.id}}">{{book.shelf}}</a></td>
 </tr>
 </tbody>
 </table>

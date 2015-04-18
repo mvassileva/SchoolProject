@@ -33,6 +33,7 @@
             }
         };
 
+        /* set default sort order */
         $scope.orderByField = 'title';
         $scope.reverseSort = false;
     }
