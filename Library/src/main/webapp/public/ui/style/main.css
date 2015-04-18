@@ -78,9 +78,9 @@ a {
 .odd {
     background-color: white;
     padding: 20px;
-}   
+}
 .even {
-  background-color: #cccccc;
+  background-color: #ccc;
   padding: 20px;
 }
 .button-error {
@@ -100,10 +100,13 @@ a {
 }
 
 .box {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        border: 1px solid #454545;
-        padding: 20px; 
-    }
-    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #454545;
+    padding: 20px;
+}
+
+.error {
+    color: #f00;
+}
