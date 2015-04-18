@@ -1,6 +1,14 @@
 (function () {
     'use strict';
 
+    var checkRouting = function ($q, $rootScope, $location) {
+        if ($rootScope.isAuthenticated && $rootScope.userName) {
+            return true;
+        } else {
+            $location.path('/login');
+        }
+    };
+
     angular.module('app.core').config(config);
 
     /**
@@ -42,42 +50,34 @@
             }).
             when('/author/new', {
                 controller: 'AuthorController',
-                templateUrl: 'partials/author-detail.html', 
+                templateUrl: 'partials/author-detail.html',
                 resolve: {
                     factory: checkRouting
                 }
-            }).     
+            }).
             when('/user/:userId', {
                 controller: 'UserDetailController',
                 templateUrl: 'partials/user-detail.html',
-                 resolve: {
+                resolve: {
                     factory: checkRouting
                 }
             }).
             when('/users', {
                 controller: 'UserController',
                 templateUrl: 'partials/user-list.html',
-                 resolve: {
+                resolve: {
                     factory: checkRouting
                 }
             }).
             when('/users/new', {
                 controller: 'UserController',
-                templateUrl: 'partials/user-detail.html', 
+                templateUrl: 'partials/user-detail.html',
                 resolve: {
                     factory: checkRouting
                 }
-            }).     
+            }).
             otherwise({
                 redirectTo: '/books'
             });
     }
 }());
-
-var checkRouting= function ($q, $rootScope, $location) {
-    if ($rootScope.isAuthenticated && $rootScope.userName) {
-        return true;
-    } else {
-        $location.path("/login");
-    }
-};
