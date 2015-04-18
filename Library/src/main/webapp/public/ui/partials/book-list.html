@@ -42,6 +42,16 @@ Search: <input ng-model="query">
             Shelf <span ng-show="orderByField == 'shelf'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
+    <th>
+        <span ng-click="orderByField = 'checkedOutBy'; reverseSort = !reverseSort">
+            Checked Out By <span ng-show="orderByField == 'checkedOutBy'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+    <th>
+        <span ng-click="orderByField = 'dueDate'; reverseSort = !reverseSort">
+            Due Date <span ng-show="orderByField == 'dueDate'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
 </tr>
 </thead>
 
@@ -53,6 +63,8 @@ Search: <input ng-model="query">
     <td><a href="#/book/{{book.id}}">{{book.ISBN13}}</a></td>
     <td><a href="#/book/{{book.id}}">{{book.status}}</a></td>
     <td class="nowrap"><a href="#/book/{{book.id}}">{{book.shelf}}</a></td>
+    <td><a href="#/book/{{book.id}}">{{book.checkedOutBy}}</a></td>
+    <td><a href="#/book/{{book.id}}">{{book.dueDate}}</a></td>
 </tr>
 </tbody>
 </table>
