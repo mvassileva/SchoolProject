@@ -31,8 +31,22 @@
             when('/login', {
                 controller: 'LoginController',
                 templateUrl: 'partials/login.html'
-                
             }).
+            when('/author/:authorId', {
+                controller: 'AuthorDetailController',
+                templateUrl: 'partials/author-detail.html'
+            }).
+            when('/author', {
+                controller: 'AuthorController',
+                templateUrl: 'partials/author-list.html'
+            }).
+            when('/author/new', {
+                controller: 'AuthorController',
+                templateUrl: 'partials/author-detail.html', 
+                resolve: {
+                    factory: checkRouting
+                }
+            }).     
             when('/user/:userId', {
                 controller: 'UserDetailController',
                 templateUrl: 'partials/user-detail.html',
@@ -57,8 +71,6 @@
             otherwise({
                 redirectTo: '/books'
             });
-        //$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-        
     }
 }());
 

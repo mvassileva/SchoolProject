@@ -1,0 +1,37 @@
+<div>
+
+<form class="pure-form pure-form-aligned" ng-submit="submitAuthor()">
+<fieldset>
+    <legend>Author {{author.id}}:</legend>
+    <div class="pure-control-group">
+        <label for="firstName">First Name:</label>
+        <input id="firstName" type=text ng-model="author.firstName"/>
+    </div>
+        <div class="pure-control-group">
+        <label for="lastname">Last Name:</label>
+        <input id="lastname" type=text ng-model="author.lastName"/>
+    </div>
+    <div class="pure-control-group">
+    <label for="dateofbirth">Date of Birth:</label>
+    <input id="dateofbirth" type=text data-ng-model="author.dateOfBirth" ui-date/>
+    </div>
+    
+    <div class="pure-control-group">
+    <label for="dateofDeath">Date of Death:</label>
+    <input id="dateofDeath" type=text data-ng-model="author.dateOfDeath" ui-date/>
+    </div>
+    
+    <div class="pure-control-group">
+    <label for="bio">Biography:</label>
+    <input id="bio" type=text ng-model="author.bio"/>
+    </div>
+    
+    
+    <div class="pure-controls">
+        <button ng-hide="author.id" class="pure-button pure-button-primary" type="submit">Create User</button>
+        <button ng-show="author.id" class="pure-button pure-button-primary" type="submit">Update User</button>
+        <button class="pure-button pure-button-primary" type="reset">Reset</button>
+    </div>
+</fieldset>
+</form>
+</div>

@@ -1,0 +1,38 @@
+<div>
+    <div>
+        <div>
+            <!--Sidebar content-->
+            Search:
+            <input ng-model="query">
+            Sort by:
+            <select ng-model="orderProp">
+                <option value="title">Alphabetical</option>
+            </select>
+            <a ng-show="{{authenticated}}" href="#/author/new">Add New Author</a>
+        </div>
+        <div>
+            <!--Body content-->
+            <div class="even"> <!-- set to even so that the grid will alternate properly -->
+                <div class="pure-g" >
+                    <div class="pure-u-1-5"> Last Name,</div>
+                    <div class="pure-u-1-5"> First Name</div>
+                    <div class="pure-u-1-5"> Date of Birth</div>
+                    <div class="pure-u-2-5"> Bio</div>
+                </div>
+            </div>
+
+            <div ng-repeat="author in authors | filter:query | orderBy:orderProperty">
+                <div ng-class-odd="'odd'" ng-class-even="'even'">
+                    <a href="#/author/{{author.id}}">
+                        <div class="pure-g">
+                            <div class="pure-u-1-5">{{author.lastName}}</div>
+                            <div class="pure-u-1-5">{{author.firstName}}</div>
+                            <div class="pure-u-1-5">{{author.dateOfBirth}}</div>
+                            <div class="pure-u-1-5">{{author.bio}}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

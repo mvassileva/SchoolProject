@@ -3,19 +3,20 @@
 
     angular.module('app.core').controller('AuthorController', AuthorController);
 
-    AuthorController.$inject = ['$scope', 'Author'];
+    AuthorController.$inject = ['$scope', 'AuthorService',];
 
-    function AuthorController($scope, Author) {
-        $scope.authors = Author.query();
+    function AuthorController($scope, AuthorService) {
+        $scope.authors = AuthorService.query();
 
-        $scope.authorData = {};
-        $scope.newAuthor = function () {
-            var author = new Author($scope.authorData);
+        $scope.author = {};
+        $scope.submitAuthor = function submitAuthor() {
+            var author = new AuthorService($scope.author);
             author.$save();
         };
 
         $scope.orderProp = 'lastName';
 
-        $scope.author = $scope.authors[1];
+        //$scope.author = $scope.authors[1];
+       
     }
 }());

@@ -3,19 +3,21 @@
 
     angular.module('app.core').service('AuthorService', AuthorService);
 
-    AuthorService.$inject = ['$resource'];
+    AuthorService.$inject = ['$resource', "$rootScope"];
 
-    function AuthorService($resource) {
+    function AuthorService($resource, $rootScope) {
         return $resource('/library/api/author', {}, {
             query: {
                 method: 'GET',
                 isArray: true,
                 headers: {Accept: 'application/json'}
             },
-            add: {
+            save: {
                 method: 'POST',
                 isArray: false,
-                headers: {Accept: 'application/json'}
+                headers: {Accept: 'application/json',
+                         'API-User': $rootScope.userName,
+                         'API-Key':  $rootScope.userToken}
             }
         });
     }
