@@ -1,44 +1,44 @@
 <div>
-    <div>
-        <div style="padding-bottom: 1em;">
-            <!--Sidebar content-->
-            Search:
-            <input ng-model="query">
-            Sort by:
-            <select ng-model="orderProp">
-                <option value="title">Alphabetical</option>
-                <option value="isbn">ISBN</option>
-            </select>
-            <a ng-show="{{isLibrarian}}" href="#/books/new" class="pure-button pure-button-primary">Add New Book</a>
-        </div>
-        <div>
-            <!--Body content-->
-            <div class="even"> <!-- set to even so that the grid will alternate properly -->
-                <div class="pure-g" >
-                    <div class="pure-u-1-5"> Book Title</div>
-                    <div class="pure-u-1-5"> Author Name</div>
-                    <div class="pure-u-1-5"> ISBN-10, ISBN-13</div>
-                    <div class="pure-u-1-5"> Status</div>
-                    <div class="pure-u-1-5"> Shelf Location</div>
-                </div>
-            </div>
-            <div ng-repeat="book in books | filter:query | orderBy:orderProperty">
-                 <div ng-class-odd="'odd'" ng-class-even="'even'">
-                      <a href="#/book/{{book.id}}">
-                     <div class="pure-g">
-                            <div class="pure-u-1-5">{{book.title}}</div>
-                            <div class="pure-u-1-5">
-                                <div ng-repeat="author in book.authors">
-                                    {{author.lastName}}, {{author.firstName}}
-                                </div>
-                            </div>
-                            <div class="pure-u-1-5">{{book.ISBN10}},{{book.ISBN13}}</div>
-                            <div class="pure-u-1-5">{{book.status}}</div>
-                            <div class="pure-u-1-5">{{book.shelf}}</div>
-                        </div>
-                    </a>
-                 </div>
-            </div>
+<div>
+<div style="padding-bottom: 1em;">
+    <!--Sidebar content-->
+    Search:
+    <input ng-model="query">
+    Sort by:
+    <select ng-model="orderProp">
+        <option value="title">Alphabetical</option>
+        <option value="isbn">ISBN</option>
+    </select>
+    <a ng-show="{{isLibrarian}}" href="#/books/new" class="pure-button pure-button-primary">Add New Book</a>
+</div>
+<div>
+    <!--Body content-->
+    <div class="even"> <!-- set to even so that the grid will alternate properly -->
+        <div class="pure-g" >
+            <div class="pure-u-1-5"> Book Title</div>
+            <div class="pure-u-1-5"> Author Name</div>
+            <div class="pure-u-1-5"> ISBN-10, ISBN-13</div>
+            <div class="pure-u-1-5"> Status</div>
+            <div class="pure-u-1-5"> Shelf Location</div>
         </div>
     </div>
+    <div ng-repeat="book in books | filter:query | orderBy:orderProperty">
+         <div ng-class-odd="'odd'" ng-class-even="'even'">
+              <a href="#/book/{{book.id}}">
+             <div class="pure-g">
+                    <div class="pure-u-1-5">{{book.title}}</div>
+                    <div class="pure-u-1-5">
+                        <div ng-repeat="author in book.authors">
+                            {{author.lastName}}, {{author.firstName}}
+                        </div>
+                    </div>
+                    <div class="pure-u-1-5">{{book.ISBN10}},{{book.ISBN13}}</div>
+                    <div class="pure-u-1-5">{{book.status}}</div>
+                    <div class="pure-u-1-5">{{book.shelf}}</div>
+                </div>
+            </a>
+         </div>
+    </div>
+</div>
+</div>
 </div>
