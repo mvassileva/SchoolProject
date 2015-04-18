@@ -22,12 +22,12 @@
             $scope.author = $scope.bookData.author;
             $scope.book.authors.push($scope.author);
         };
-     
-         $scope.removeAuthor = function (author) {
-             var index = $scope.book.authors.indexOf(author);
-             if (index != -1) {
-                 $scope.book.authors.splice(index,1);
-             }
+
+        $scope.removeAuthor = function (author) {
+            var index = $scope.book.authors.indexOf(author);
+            if (index != -1) {
+                $scope.book.authors.splice(index, 1);
+            }
         };
     }   
 }());

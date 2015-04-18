@@ -31,6 +31,8 @@
                         }
                         $rootScope.userLevel = auth.level;
                         
+                        $rootScope.$broadcast('userUpdate', auth.userName, auth.token, auth.level);
+                        
                         $location.path("/");
                     }
                 });

@@ -44,12 +44,12 @@
                             <div class="pure-u-1 pure-u-md-1-5">
                                 {{author.lastName}}, {{author.firstName}}
                             </div>
-                            <div class="pure-u-2 pure-u-md-1-5">
+                            <div ng-show="isLibrarian" class="pure-u-2 pure-u-md-1-5">
                                 <button type="button" class="pure-button button-error" ng-click="removeAuthor(author)">Remove</button>
                             </div>
                         </div>
             </div>
-            <div class="pure-u-1 pure-u-md-1-1">
+            <div ng-show="isLibrarian" class="pure-u-1 pure-u-md-1-1">
                 <label for="addAuthors">Add Author:</label>
                 <select id="addAuthors" ng-model="bookData.author" ng-options="i.lastName+', '+i.firstName for i in authors">
                     <option value="">Select Author</option>
@@ -92,7 +92,7 @@
 
         <div ng-show="isLibrarian" class="pure-controls">
             <button ng-hide="book.id" class="pure-button pure-button-primary" type="submit">Create Book</button>
-            <button ng-show="book.id" class="pure-button pure-button-primary" type="submit">Update Update</button>
+            <button ng-show="book.id" class="pure-button pure-button-primary" type="submit">Update Book</button>
             <button class="pure-button pure-button-primary" type="reset">Reset</button>
         </div>
     </fieldset>

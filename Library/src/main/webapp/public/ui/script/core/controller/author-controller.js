@@ -9,9 +9,10 @@
         $scope.authors = AuthorService.query();
 
         $scope.author = {};
+        
         $scope.submitAuthor = function submitAuthor() {
-            var author = new AuthorService($scope.author);
-            author.$save();
+            var authorDAO = new AuthorService($scope.author);
+            authorDAO.$save();
         };
 
         $scope.orderProp = 'lastName';
