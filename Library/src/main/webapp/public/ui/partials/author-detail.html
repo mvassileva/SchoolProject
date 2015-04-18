@@ -27,9 +27,9 @@
     </div>
     
     
-    <div class="pure-controls">
-        <button ng-hide="author.id" class="pure-button pure-button-primary" type="submit">Create User</button>
-        <button ng-show="author.id" class="pure-button pure-button-primary" type="submit">Update User</button>
+    <div class="pure-controls" ng-show="isLibrarian">
+        <button ng-hide="author.id" class="pure-button pure-button-primary" type="submit">Create Author</button>
+        <button ng-show="author.id" class="pure-button pure-button-primary" type="submit">Update Author</button>
         <button class="pure-button pure-button-primary" type="reset">Reset</button>
     </div>
 </fieldset>

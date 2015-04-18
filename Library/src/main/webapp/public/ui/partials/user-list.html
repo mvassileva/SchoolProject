@@ -8,7 +8,7 @@
             <select ng-model="orderProp">
                 <option value="title">Alphabetical</option>
             </select>
-            <a ng-show="{{authenticated}}" href="#/users/new">Add New User</a>
+            <a ng-show="{{isAdmin}}" href="#/users/new">Add New User</a>
         </div>
         <div>
             <!--Body content-->

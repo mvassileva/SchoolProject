@@ -28,8 +28,9 @@ public class AuthorMapper {
 	}
 
 	public void updateAuthor(Author a) {
-		em.refresh(a);
-		logger.info("Author updated successfuly, " + a.getLastName() + ", " + a.getFirstName());
+		Author managedA = em.merge(a);
+		em.persist(managedA);
+		logger.info("Author updated successfuly, " + managedA.getLastName() + ", " + managedA.getFirstName());
 	}
 	
 	public Author getAuthorById(long id) {   

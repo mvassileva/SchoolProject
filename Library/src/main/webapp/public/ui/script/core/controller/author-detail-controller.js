@@ -13,7 +13,8 @@
         
         $scope.submitAuthor = function submitAuthor() {
                  var authorDAO = new AuthorDetailService($scope.author);
-                authorDAO.$update({id: $scope.author.id});
+                 authorDAO.$update({id: $scope.author.id});
+                 
             }
         };
 }());

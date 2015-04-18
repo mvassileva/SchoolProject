@@ -90,9 +90,9 @@
             <input id="duedate" class="pure-u-23-24" type=text data-ng-model="book.dueDate" ui-date/>
         </div>
 
-        <div ng-show="authentiated && (userLevel === LIBRARIAN || userLevel === ADMINISTRATOR || userLevel === JRLIBRARIAN)" class="pure-controls">
-            <button ng-hide="user.id" class="pure-button pure-button-primary" type="submit">Create Book</button>
-            <button ng-show="user.id" class="pure-button pure-button-primary" type="submit">Update Update</button>
+        <div ng-show="isLibrarian" class="pure-controls">
+            <button ng-hide="book.id" class="pure-button pure-button-primary" type="submit">Create Book</button>
+            <button ng-show="book.id" class="pure-button pure-button-primary" type="submit">Update Update</button>
             <button class="pure-button pure-button-primary" type="reset">Reset</button>
         </div>
     </fieldset>

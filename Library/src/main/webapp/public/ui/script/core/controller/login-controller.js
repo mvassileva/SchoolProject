@@ -21,8 +21,16 @@
                         $scope.error = false;
                         $rootScope.userToken = auth.token;
                         $rootScope.userName = auth.userName;
-                        $rootScope.authenticated = true;
-                        $rootScope.userLevel = auth.userLevel;
+                        $rootScope.isAuthenticated = true;
+                        if (auth.level === "ADMINISTRATOR") {
+                            $rootScope.isAdmin = true;
+                            $rootScope.isLibrarian = true;
+                        }
+                        if (auth.level === "LIBRARIAN") {
+                            $rootScope.isLibrarian = 1;
+                        }
+                        $rootScope.userLevel = auth.level;
+                        
                         $location.path("/");
                     }
                 });

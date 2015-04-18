@@ -50,7 +50,7 @@
         <input id="allowCheckout" type="checkbox" ng-model="user.allowedCheckout">
     </div>
     
-    <div class="pure-controls">
+     <div ng-show="isAdmin" class="pure-controls">
         <button ng-hide="user.id" class="pure-button pure-button-primary" type="submit">Create User</button>
         <button ng-show="user.id" class="pure-button pure-button-primary" type="submit">Update User</button>
         <button class="pure-button pure-button-primary" type="reset">Reset</button>

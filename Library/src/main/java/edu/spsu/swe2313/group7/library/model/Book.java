@@ -1,5 +1,6 @@
 package edu.spsu.swe2313.group7.library.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import edu.spsu.swe2313.group7.library.model.serializers.JsonDateDeserializer;
@@ -75,7 +76,7 @@ public class Book {
 		inverseJoinColumns = {@JoinColumn(name="USER_ID")})
 	private List<User> waitingList;
 
-	
+	@JsonIgnore
 	public Author getAuthor() {
 		if (this.authors != null) {
 			if (authors.get(0) != null) {

@@ -10,11 +10,11 @@
                 
         $scope.books = BookService.query();
 
-        $scope.bookData = {};
+        $scope.book = {};
 
-        $scope.newBook = function newBook() {
-            var book = new BookService($scope.bookData);
-            book.$save();
+        $scope.submitBook = function submitBook() {
+            var bookDAO = new BookService($scope.book);
+            bookDAO.$save();
         };
 
         $scope.authors = AuthorService.query();

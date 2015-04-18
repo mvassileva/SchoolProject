@@ -66,8 +66,9 @@ public class BookMapper {
 	}
 
 	public void updateBook(Book b) {
-		em.refresh(b);
-		logger.info("Book updated successfuly, " + b.getTitle());
+		Book managedB = em.merge(b);
+		em.persist(managedB);
+		logger.info("Book updated successfuly, " + managedB.getTitle());
 	}
 	
 	public Book getBookById(long id) {

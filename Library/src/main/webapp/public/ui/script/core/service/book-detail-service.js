@@ -12,7 +12,7 @@
                 isArray: false,
                 headers: {Accept: 'application/json'}
             },
-           update: {
+            update: {
                 method: 'PUT',
                 isArray: false,
                 headers: {Accept: 'application/json',

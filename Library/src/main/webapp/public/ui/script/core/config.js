@@ -75,7 +75,7 @@
 }());
 
 var checkRouting= function ($q, $rootScope, $location) {
-    if ($rootScope.authenticated && $rootScope.userName) {
+    if ($rootScope.isAuthenticated && $rootScope.userName) {
         return true;
     } else {
         $location.path("/login");

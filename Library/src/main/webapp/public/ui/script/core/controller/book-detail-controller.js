@@ -9,6 +9,11 @@
         $scope.bookStatus = BookStatusService.query();
         $scope.authors = AuthorService.query();
         
+        $scope.submitBook = function submitBook() {
+            var bookDAO = new BookDetailService($scope.book);
+            bookDAO.$update({id: $scope.book.id});
+        };
+        
         BookDetailService.get({id: $routeParams.bookId}, function (data) {
             $scope.book = data;
         });
