@@ -1,44 +1,61 @@
 <div>
 <div>
+
+<!--Sidebar content-->
 <div style="padding-bottom: 1em;">
-    <!--Sidebar content-->
-    Search:
-    <input ng-model="query">
-    Sort by:
-    <select ng-model="orderProp">
-        <option value="title">Alphabetical</option>
-        <option value="isbn">ISBN</option>
-    </select>
-    <a ng-show="{{isLibrarian}}" href="#/books/new" class="pure-button pure-button-primary">Add New Book</a>
+Search: <input ng-model="query">
+<a ng-show="{{isLibrarian}}" href="#/books/new" class="pure-button pure-button-primary">Add New Book</a>
 </div>
+
+<!--Body content-->
 <div>
-    <!--Body content-->
-    <div class="even"> <!-- set to even so that the grid will alternate properly -->
-        <div class="pure-g" >
-            <div class="pure-u-1-5"> Book Title</div>
-            <div class="pure-u-1-5"> Author Name</div>
-            <div class="pure-u-1-5"> ISBN-10, ISBN-13</div>
-            <div class="pure-u-1-5"> Status</div>
-            <div class="pure-u-1-5"> Shelf Location</div>
-        </div>
-    </div>
-    <div ng-repeat="book in books | filter:query | orderBy:orderProperty">
-         <div ng-class-odd="'odd'" ng-class-even="'even'">
-              <a href="#/book/{{book.id}}">
-             <div class="pure-g">
-                    <div class="pure-u-1-5">{{book.title}}</div>
-                    <div class="pure-u-1-5">
-                        <div ng-repeat="author in book.authors">
-                            {{author.lastName}}, {{author.firstName}}
-                        </div>
-                    </div>
-                    <div class="pure-u-1-5">{{book.ISBN10}},{{book.ISBN13}}</div>
-                    <div class="pure-u-1-5">{{book.status}}</div>
-                    <div class="pure-u-1-5">{{book.shelf}}</div>
-                </div>
-            </a>
-         </div>
-    </div>
+<table class="pure-table pure-table-bordered pure-table-striped">
+<thead>
+<tr class="stopselect nowrap">
+    <th>
+        <span ng-click="orderByField='title'; reverseSort = !reverseSort">
+            Book Title <span ng-show="orderByField == 'title'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+    <th>
+        <span ng-click="orderByField='authors[author.lastName]'; reverseSort = !reverseSort">
+            Author Name <span ng-show="orderByField == 'authors[author.lastName]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+    <th>
+        <span ng-click="orderByField='ISBN10'; reverseSort = !reverseSort">
+            ISBN10 <span ng-show="orderByField == 'ISBN10'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+    <th>
+        <span ng-click="orderByField='ISBN13'; reverseSort = !reverseSort">
+            ISBN13 <span ng-show="orderByField == 'ISBN13'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+    <th>
+        <span ng-click="orderByField='status'; reverseSort = !reverseSort">
+            Status <span ng-show="orderByField == 'status'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+    <th>
+        <span ng-click="orderByField='shelf'; reverseSort = !reverseSort">
+            Shelf <span ng-show="orderByField == 'shelf'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+</tr>
+</thead>
+
+<tbody>
+<tr ng-repeat="book in books|orderBy:orderByField:reverseSort">
+    <td>{{book.title}}</td>
+    <td><div ng-repeat="author in book.authors">{{author.lastName}}, {{author.firstName}}</div></td>
+    <td>{{book.ISBN10}}</td>
+    <td>{{book.ISBN13}}</td>
+    <td>{{book.status}}</td>
+    <td class="nowrap">{{book.shelf}}</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>

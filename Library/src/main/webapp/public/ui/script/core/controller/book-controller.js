@@ -32,5 +32,8 @@
                 $scope.book.authors.splice(index, 1);
             }
         };
+
+        $scope.orderByField = 'title';
+        $scope.reverseSort = false;
     }
 }());
