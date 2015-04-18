@@ -40,6 +40,10 @@
                 controller: 'LoginController',
                 templateUrl: 'partials/login.html'
             }).
+            when('/logout', {
+                controller: 'LogoutController',
+                templateUrl: 'partials/login.html'
+            }).
             when('/author/:authorId', {
                 controller: 'AuthorDetailController',
                 templateUrl: 'partials/author-detail.html'

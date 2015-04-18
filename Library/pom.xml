@@ -191,5 +191,44 @@
             </plugins>
             </build>
         </profile>
+        
+        <profile>
+            <id>mysql</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.mortbay.jetty</groupId>
+                        <artifactId>maven-jetty-plugin</artifactId>
+                        <version>6.1.10</version>
+                        <configuration>
+                                <scanIntervalSeconds>10</scanIntervalSeconds>
+                                <stopKey>foo</stopKey>
+                                <stopPort>9999</stopPort>
+                        </configuration>
+                        <executions>
+                               <execution>
+                                       <id>start-jetty</id>
+                                       <phase>pre-integration-test</phase>
+                                       <goals>
+                                               <goal>run</goal>
+                                       </goals>
+                                       <configuration>
+                                               <webAppSourceDirectory>${basedir}/src/main/webapp/public</webAppSourceDirectory>
+                                               <scanIntervalSeconds>0</scanIntervalSeconds>
+                                               <daemon>true</daemon>
+                                       </configuration>
+                               </execution>
+                               <execution>
+                                       <id>stop-jetty</id>
+                                       <phase>post-integration-test</phase>
+                                       <goals>
+                                               <goal>stop</goal>
+                                       </goals>
+                               </execution>
+                        </executions>
+                    </plugin>
+            </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>
