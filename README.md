@@ -23,11 +23,20 @@ this [README.md](/Library/src/main/webapp/public/ui/README.md)
 --------------------------------------------------------------------------------
 
 
-## How to start the backend API Server
+## How to start the backend API Server (with in-memory datastore)
 
 ```shell
 $ cd Library
 $ mvn clean -P jetty jetty:run
+```
+
+
+## How to start the backend API Server (with MySQL datastore)
+Assumes you have MySQL installed and working.
+
+```shell
+$ cd Library
+$ mvn clean -P jettymysql jetty:run
 ```
 
 
