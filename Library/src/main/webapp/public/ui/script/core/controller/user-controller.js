@@ -3,9 +3,9 @@
 
     angular.module('app.core').controller('UserController', UserController);
 
-    UserController.$inject = ['$scope', 'UserService', 'UserLevelService'];
+    UserController.$inject = ['$scope', '$location', 'UserService', 'UserLevelService'];
 
-    function UserController($scope, UserService, UserLevelService) {
+    function UserController($scope, $location, UserService, UserLevelService) {
         $scope.userLevels = UserLevelService.query();
 
         $scope.users = UserService.query();
@@ -15,6 +15,7 @@
         $scope.submitUser = function submitUser() {
             var userServ = new UserService($scope.user);
             userServ.$save();
+            $location.path('/users');
         };
 
         /* set default sort order */
