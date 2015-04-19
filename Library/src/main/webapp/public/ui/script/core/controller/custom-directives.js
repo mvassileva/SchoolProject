@@ -1,32 +1,44 @@
-angular.module('app.core').directive('uiDate', function() {
+(function () {
+    'use strict';
+
+    angular.module('app.core').directive('uiDate', function () {
         return {
-                require: '?ngModel',
-                link: function ($scope, element, attrs, controller) {
-                    var originalRender, updateModel, usersOnSelectHandler;
-                    if ($scope.uiDate == null)
-                        $scope.uiDate = {};
-                    if (controller != null) {
-                        updateModel = function (value, picker) {
-                            return $scope.$apply(function () {
-                                return controller.$setViewValue(element.datepicker("getDate"));
-                            });
-                        };
-                        if ($scope.uiDate.onSelect != null) {
-                            usersOnSelectHandler = $scope.uiDate.onSelect;
-                            $scope.uiDate.onSelect = function (value, picker) {
-                                updateModel(value);
-                                return usersOnSelectHandler(value, picker);
-                            };
-                        } else {
-                            $scope.uiDate.onSelect = updateModel;
-                        }
-                        originalRender = controller.$render;
-                        controller.$render = function () {
-                            originalRender();
-                            return element.datepicker("setDate", controller.$viewValue);
-                        };
-                    }
-                    return element.datepicker($scope.uiDate);
+            require: '?ngModel',
+            link: function ($scope, element, attrs, controller) {
+                var originalRender, updateModel, usersOnSelectHandler;
+
+                // if ($scope.uiDate == null) {
+                if (typeof $scope.uiDate === 'undefined') {
+                    $scope.uiDate = {};
                 }
-            };
-        });
+
+                if (typeof controller !== 'undefined') {
+                    updateModel = function (value, picker) {
+                        return $scope.$apply(function () {
+                            return controller.$setViewValue(element.datepicker('getDate'));
+                        });
+                    };
+
+                    if (typeof $scope.uiDate.onSelect !== 'undefined') {
+                        usersOnSelectHandler = $scope.uiDate.onSelect;
+                        $scope.uiDate.onSelect = function (value, picker) {
+                            updateModel(value);
+                            return usersOnSelectHandler(value, picker);
+                        };
+                    } else {
+                        $scope.uiDate.onSelect = updateModel;
+                    }
+
+                    originalRender = controller.$render;
+
+                    controller.$render = function () {
+                        originalRender();
+                        return element.datepicker('setDate', controller.$viewValue);
+                    };
+                }
+
+                return element.datepicker($scope.uiDate);
+            }
+        };
+    });
+}());

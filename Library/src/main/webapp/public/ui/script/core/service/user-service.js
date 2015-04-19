@@ -7,7 +7,6 @@
 
     function UserService($resource, $rootScope) {
         $rootScope.$on('userUpdate', function (event, userName, token, authLevel) {
-            console.log("user Update Recieved" + userName + ", " + token + ", " + authLevel);
             $rootScope.userName = userName;
             $rootScope.userToken = token;
             $rootScope.userLevel = authLevel;
@@ -24,23 +23,29 @@
             get: {
                 method: 'GET',
                 isArray: true,
-                headers: {Accept: 'application/json',
-                         'API-User': getApiUserName,
-                         'API-Key':  getApiToken}
+                headers: {
+                    Accept: 'application/json',
+                    'API-User': getApiUserName,
+                    'API-Key':  getApiToken
+                }
             },
             query: {
                 method: 'GET',
                 isArray: true,
-                headers: {Accept: 'application/json',
-                         'API-User': getApiUserName,
-                         'API-Key':  getApiToken}
+                headers: {
+                    Accept: 'application/json',
+                    'API-User': getApiUserName,
+                    'API-Key':  getApiToken
+                }
             },
             save: {
                 method: 'POST',
                 isArray: false,
-                headers: {Accept: 'application/json',
-                         'API-User': getApiUserName,
-                         'API-Key':  getApiToken}
+                headers: {
+                    Accept: 'application/json',
+                    'API-User': getApiUserName,
+                    'API-Key':  getApiToken
+                }
             }
         });
     }

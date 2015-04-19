@@ -8,32 +8,31 @@
     LoginController.$inject = ['$rootScope', '$scope', 'AuthService', '$location'];
 
     function LoginController($rootScope, $scope, AuthService, $location) {
-        
+
         $scope.authData = {};
-        
+
         $scope.login = function login() {
             var auth = new AuthService($scope.authData);
-            auth.$save(function(){
-                    console.log(arguments);
+            auth.$save(function () {
                     if (auth.error) {
                         $scope.error = true;
-                    } else {                    
+                    } else {
                         $scope.error = false;
                         $rootScope.userToken = auth.token;
                         $rootScope.userName = auth.userName;
                         $rootScope.isAuthenticated = true;
-                        if (auth.level === "ADMINISTRATOR") {
+                        if (auth.level === 'ADMINISTRATOR') {
                             $rootScope.isAdmin = true;
                             $rootScope.isLibrarian = true;
                         }
-                        if (auth.level === "LIBRARIAN") {
+                        if (auth.level === 'LIBRARIAN') {
                             $rootScope.isLibrarian = 1;
                         }
                         $rootScope.userLevel = auth.level;
-                        
+
                         $rootScope.$broadcast('userUpdate', auth.userName, auth.token, auth.level);
-                        
-                        $location.path("/");
+
+                        $location.path('/');
                     }
                 });
         }

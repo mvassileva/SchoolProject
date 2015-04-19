@@ -7,9 +7,9 @@
 
     function UserController($scope, UserService, UserLevelService) {
         $scope.userLevels = UserLevelService.query();
-        
+
         $scope.users = UserService.query();
-        
+
         $scope.user = {};
 
         $scope.submitUser = function submitUser() {

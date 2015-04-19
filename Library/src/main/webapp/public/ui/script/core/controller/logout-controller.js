@@ -13,7 +13,7 @@
         $rootScope.userLevel = null;
         $rootScope.isLibrarian = false;
         $rootScope.$broadcast('userUpdate', null, null, null);
-        $location.path("/");
+        $location.path('/');
 
     }
 }());

@@ -7,9 +7,9 @@
 
 
     function NavigationController($scope, $rootScope, $location) {
-        $scope.menuClass = function(page) {
-        var current = $location.path().substring(1);
-        return page === current ? "pure-menu-active" : "";
+        $scope.menuClass = function (page) {
+            var current = $location.path().substring(1);
+            return page === current ? 'pure-menu-active' : '';
         };
     }
 }());

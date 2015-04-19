@@ -6,9 +6,8 @@
     BookDetailService.$inject = ['$resource', '$rootScope'];
 
     function BookDetailService($resource, $rootScope) {
-               
-       $rootScope.$on('userUpdate', function(event, userName, token, authLevel) {
-               console.log("user Update Recieved" + userName + ", " + token + ", " + authLevel);
+
+        $rootScope.$on('userUpdate', function (event, userName, token, authLevel) {
                $rootScope.userName = userName;
                $rootScope.userToken = token;
                $rootScope.userLevel = authLevel;
@@ -17,11 +16,11 @@
         function getApiUserName(){
             return $rootScope.userName;
         }
-        
+
         function getApiToken() {
             return $rootScope.userToken;
         }
-        
+
         return $resource('/library/api/book/:id', {}, {
             get: {
                 method: 'GET',
@@ -31,16 +30,20 @@
             update: {
                 method: 'PUT',
                 isArray: false,
-                headers: {Accept: 'application/json',
-                         'API-User': getApiUserName,
-                         'API-Key':  getApiToken}
+                headers: {
+                    Accept: 'application/json',
+                    'API-User': getApiUserName,
+                    'API-Key':  getApiToken
+                }
             },
             remove: {
                 method: 'DELETE',
                 isArray: false,
-                headers: {Accept: 'application/json',
-                         'API-User': getApiUserName,
-                         'API-Key':  getApiToken}
+                headers: {
+                    Accept: 'application/json',
+                    'API-User': getApiUserName,
+                    'API-Key':  getApiToken
+                }
             }
         });
 

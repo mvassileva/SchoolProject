@@ -3,11 +3,10 @@
 
     angular.module('app.core').service('AuthorService', AuthorService);
 
-    AuthorService.$inject = ['$resource', "$rootScope"];
+    AuthorService.$inject = ['$resource', '$rootScope'];
 
     function AuthorService($resource, $rootScope) {
         $rootScope.$on('userUpdate', function (event, userName, token, authLevel) {
-            console.log("user Update Recieved" + userName + ", " + token + ", " + authLevel);
             $rootScope.userName = userName;
             $rootScope.userToken = token;
             $rootScope.userLevel = authLevel;
@@ -29,9 +28,11 @@
             save: {
                 method: 'POST',
                 isArray: false,
-                headers: {Accept: 'application/json',
-                         'API-User': getApiUserName,
-                         'API-Key':  getApiToken}
+                headers: {
+                    Accept: 'application/json',
+                    'API-User': getApiUserName,
+                    'API-Key':  getApiToken
+                }
             }
         });
     }

@@ -7,12 +7,12 @@
 
     function AuthService($resource) {
         return $resource('/library/api/auth/login', {}, {
-             save: {
+            save: {
                 method: 'POST',
                 isArray: false,
                 headers: {Accept: 'application/json'}
             }
         });
     }
-    
+
 }());
