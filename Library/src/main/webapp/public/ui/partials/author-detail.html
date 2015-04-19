@@ -1,6 +1,6 @@
 <div>
 
-<form class="pure-form pure-form-aligned" ng-submit="submitAuthor()">
+<form class="pure-form pure-form-aligned" ng-submit="form.$valid && submitAuthor()">
 <fieldset>
     <legend>Author {{author.id}}:</legend>
     <div class="pure-control-group">
@@ -15,18 +15,18 @@
     <label for="dateofbirth">Date of Birth:</label>
     <input id="dateofbirth" type=text data-ng-model="author.dateOfBirth" ui-date/>
     </div>
-    
+
     <div class="pure-control-group">
     <label for="dateofDeath">Date of Death:</label>
     <input id="dateofDeath" type=text data-ng-model="author.dateOfDeath" ui-date/>
     </div>
-    
+
     <div class="pure-control-group">
     <label for="bio">Biography:</label>
     <input id="bio" type=text ng-model="author.bio"/>
     </div>
-    
-    
+
+
     <div class="pure-controls" ng-show="isLibrarian">
         <button ng-hide="author.id" class="pure-button pure-button-primary" type="submit">Create Author</button>
         <button ng-show="author.id" class="pure-button pure-button-primary" type="submit">Update Author</button>

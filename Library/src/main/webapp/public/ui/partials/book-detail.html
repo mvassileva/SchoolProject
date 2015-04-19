@@ -1,4 +1,4 @@
-<form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="submitBook()">
+<form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="form.$valid && submitBook()">
 <fieldset>
     <legend>Book {{book.id}}:</legend>
 

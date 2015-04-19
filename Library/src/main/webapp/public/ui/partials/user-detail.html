@@ -1,6 +1,6 @@
 <div>
 
-<form class="pure-form pure-form-aligned" ng-submit="submitUser()">
+<form class="pure-form pure-form-aligned" ng-submit="form.$valid && submitUser()">
 <fieldset>
     <legend>User {{user.id}}:</legend>
     <div class="pure-control-group">
@@ -12,7 +12,7 @@
         <label for="firstname">First Name:</label>
         <input id="firstname" type=text ng-model="user.firstName"/>
     </div>
-    
+
         <div class="pure-control-group">
         <label for="lastname">Last Name:</label>
         <input id="lastname" type=text ng-model="user.lastName"/>
@@ -22,7 +22,7 @@
         <label for="emailAddress">Email Address:</label>
         <input id="emailAddress" type=text ng-model="user.emailAddress"/>
     </div>
-    
+
     <div class="pure-control-group">
         <label for="userlevel">Privilege Level:</label>
         <select id="userlevel" ng-model="user.userLevel" ng-options="l for l in userLevels">
@@ -34,12 +34,12 @@
     <label for="dateofbirth">Date of Birth:</label>
     <input id="dateofbirth" type=text data-ng-model="user.dateOfBirth" ui-date/>
     </div>
-    
+
     <div class="pure-control-group">
     <label for="numBooksAllowed">Number of Books Allowed:</label>
     <input id="numBooksAllowed" type=text ng-model="user.bookCheckoutLimit"/>
     </div>
-    
+
     <div class="pure-control-group">
     <label for="latefees">Late Fees:</label>
     <input id="latefees" type=text ng-model="user.lateFees"/>
@@ -49,7 +49,7 @@
         <label for="allowCheckout" class="pure-checkbox">Allow Checkout:</label>
         <input id="allowCheckout" type="checkbox" ng-model="user.allowedCheckout">
     </div>
-    
+
      <div ng-show="isAdmin" class="pure-controls">
         <button ng-hide="user.id" class="pure-button pure-button-primary" type="submit">Create User</button>
         <button ng-show="user.id" class="pure-button pure-button-primary" type="submit">Update User</button>
