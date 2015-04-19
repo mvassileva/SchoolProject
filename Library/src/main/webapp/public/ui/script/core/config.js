@@ -44,10 +44,6 @@
                 controller: 'LogoutController',
                 templateUrl: 'partials/login.html'
             }).
-            when('/author/:authorId', {
-                controller: 'AuthorDetailController',
-                templateUrl: 'partials/author-detail.html'
-            }).
             when('/author', {
                 controller: 'AuthorController',
                 templateUrl: 'partials/author-list.html'
@@ -58,6 +54,10 @@
                 resolve: {
                     factory: checkRouting
                 }
+            }).
+            when('/author/:authorId', {
+                controller: 'AuthorDetailController',
+                templateUrl: 'partials/author-detail.html'
             }).
             when('/user/:userId', {
                 controller: 'UserDetailController',
