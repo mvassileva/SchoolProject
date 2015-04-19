@@ -43,23 +43,10 @@ public class AuthorController {
 	
 	@PostConstruct
 	public void init() {
-		//throw around some test books
-		//authorList = new ArrayList(300);
-		dummyDataLoad();
 	}
 
 	public void setAuthorMapper(AuthorMapper mapper) {
 		this.authorMapper = mapper;
-	}
-
-	private void dummyDataLoad() {
-		for (int i = 0; i < 300; i++) {
-			Author a = new Author();
-			a.setLastName("Last" + i);
-			a.setFirstName("First" + i);
-			authorMapper.addAuthor(a);
-
-		}
 	}
 
 	@RequestMapping(value = "",
