@@ -27,11 +27,6 @@ Search: <input ng-model="query">
             Date of Birth <span ng-show="orderByField == '[dateOfBirth, lastName, firstName]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
-    <th>
-        <span ng-click="orderByField = '[bio, lastName, firstName]'; reverseSort = !reverseSort">
-            Bio <span ng-show="orderByField == '[bio, lastName, firstName]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-        </span>
-    </th>
 </tr>
 </thead>
 
@@ -40,10 +35,10 @@ Search: <input ng-model="query">
     <td><a href="#/author/{{author.id}}">{{author.firstName}}</a></td>
     <td><a href="#/author/{{author.id}}">{{author.lastName}}</a></td>
     <td><a href="#/author/{{author.id}}">{{author.dateOfBirth}}</a></td>
-    <td><a href="#/author/{{author.id}}">{{author.bio}}</a></td>
 </tr>
 </tbody>
 </table>
 </div>
+
 </div>
 </div>

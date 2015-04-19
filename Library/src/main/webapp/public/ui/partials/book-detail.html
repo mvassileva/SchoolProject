@@ -1,5 +1,4 @@
-<!--<form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="form.$valid && submitBook()"> -->
-<form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="submitBook()">
+<form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="form.$valid && submitBook()">
 <fieldset>
     <legend>Book {{book.id}}:</legend>
 
@@ -9,7 +8,7 @@
             <label for="title">Title:</label>
             <input name="title" required="" id="title" class="pure-u-23-24" type="text" ng-model="book.title"/>
             <div ng-show="form.$submitted || form.title.$touched">
-                <span class="error" ng-show="form.title.$error.required">A title is required</span>
+                <div class="error" ng-show="form.title.$error.required">Title is required</div>
             </div>
         </div>
 
@@ -37,7 +36,12 @@
 
     <div class="pure-u-2 pure-u-md-1-3">
         <label for="publishdate">Publish Date:</label>
-        <input id="publishdate" class="pure-u-23-24" type="text" data-ng-model="book.publishDate" ui-date/>
+        <input name="publishdate" id="publishdate" ng-pattern="/^\d{2}-\d{2}-\d{4}$/" class="pure-u-23-24" type="text" data-ng-model="book.publishDate"/>
+        <div ng-show="form.$submitted || form.publishdate.$touched">
+            <div class="error" ng-show="form.publishdate.$error.pattern">
+                Format should be mm-dd-yyyy
+            </div>
+        </div>
     </div>
 
     <div class="pure-u-2 pure-u-md-1-3">
@@ -52,7 +56,6 @@
         <input id="shelf" class="pure-u-23-24" type="text" ng-model="book.shelf"/>
     </div>
 
-    <!--
     <div class="pure-u-3 pure-u-md-1-3">
         <label for="isbn10">ISBN10:</label>
         <input name="isbn10" ng-pattern="/^ISBN\s(?=[-0-9xX ]{13}$)(?:[0-9]+[- ]){3}[0-9]*[xX0-9]$/" id="isbn10" class="pure-u-23-24" type="text" ng-model="book.isbn10"/>
@@ -71,20 +74,16 @@
                 ISBN 13 numbers should look like this: ISBN 978-1-4028-9462-6
             </div>
         </div>
-    </div> -->
-        <div class="pure-u-3 pure-u-md-1-3">
-        <label for="isbn10">ISBN10:</label>
-        <input name="isbn10" class="pure-u-23-24" type="text" ng-model="book.isbn10"/>
-    </div>
-
-    <div class="pure-u-3 pure-u-md-1-3">
-        <label for="isbn13">ISBN13:</label>
-        <input name="isbn13" class="pure-u-23-24" type="text" ng-model="book.isbn13"/>
     </div>
 
     <div ng-show="isLibrarian" class="pure-u-3 pure-u-md-1-3">
         <label for="duedate">Due Date:</label>
-        <input id="duedate" class="pure-u-23-24" type="text" data-ng-model="book.dueDate" </>
+        <input name="duedate" id="duedate" ng-pattern="/^\d{2}-\d{2}-\d{4}$/" class="pure-u-23-24" type="text" data-ng-model="book.dueDate"/>
+        <div ng-show="form.$submitted || form.duedate.$touched">
+            <div class="error" ng-show="form.duedate.$error.pattern">
+                Format should be mm-dd-yyyy
+            </div>
+        </div>
     </div>
 
     <div ng-show="isLibrarian" class="pure-controls">

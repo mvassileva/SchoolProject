@@ -19,13 +19,13 @@ Search: <input ng-model="query">
     </th>
     <th>Author(s)</th>
     <th>
-        <span ng-click="orderByField = '[ISBN10, title]'; reverseSort = !reverseSort">
-            ISBN10 <span ng-show="orderByField == '[ISBN10, title]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        <span ng-click="orderByField = '[isbn10, title]'; reverseSort = !reverseSort">
+            isbn10 <span ng-show="orderByField == '[isbn10, title]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
-        <span ng-click="orderByField = '[ISBN13, title]'; reverseSort = !reverseSort">
-            ISBN13 <span ng-show="orderByField == '[ISBN13, title]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        <span ng-click="orderByField = '[isbn13, title]'; reverseSort = !reverseSort">
+            isbn13 <span ng-show="orderByField == '[isbn13, title]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
@@ -55,8 +55,8 @@ Search: <input ng-model="query">
 <tr ng-repeat="book in books|orderBy:orderByField:reverseSort|filter:query">
     <td><a href="#/book/{{book.id}}">{{book.title}}</a></td>
     <td><a href="#/book/{{book.id}}"><div class="nowrap" ng-repeat="author in book.authors">{{author.lastName}}, {{author.firstName}}</div></a></td>
-    <td><a href="#/book/{{book.id}}">{{book.ISBN10}}</a></td>
-    <td><a href="#/book/{{book.id}}">{{book.ISBN13}}</a></td>
+    <td class="nowrap"><a href="#/book/{{book.id}}">{{book.isbn10}}</a></td>
+    <td class="nowrap"><a href="#/book/{{book.id}}">{{book.isbn13}}</a></td>
     <td><a href="#/book/{{book.id}}">{{book.status}}</a></td>
     <td class="nowrap"><a href="#/book/{{book.id}}">{{book.shelf}}</a></td>
     <td><a href="#/book/{{book.id}}">{{book.checkedOutBy}}</a></td>
@@ -65,5 +65,6 @@ Search: <input ng-model="query">
 </tbody>
 </table>
 </div>
+
 </div>
 </div>

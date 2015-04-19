@@ -1,27 +1,41 @@
-<form class="pure-form pure-form-aligned" ng-submit="submitAuthor()">
+<form name="form" novalidate class="pure-form pure-form-aligned" ng-submit="form.$valid && submitAuthor()">
 <fieldset>
     <legend>Author {{author.id}}:</legend>
+
     <div class="pure-control-group">
-        <label for="firstName">First Name:</label>
-        <input id="firstName" type=text ng-model="author.firstName"/>
+        <label for="firstname">First Name:</label>
+        <input name="firstname" required="" id="firstName" type="text" ng-model="author.firstName"/>
+        <div ng-show="form.$submitted || form.firstname.$touched">
+            <div class="error" ng-show="form.firstname.$error.required">First name is required</div>
+        </div>
     </div>
-        <div class="pure-control-group">
+
+    <div class="pure-control-group">
         <label for="lastname">Last Name:</label>
-        <input id="lastname" type=text ng-model="author.lastName"/>
-    </div>
-    <div class="pure-control-group">
-    <label for="dateofbirth">Date of Birth:</label>
-    <input id="dateofbirth" type=text data-ng-model="author.dateOfBirth" ui-date/>
-    </div>
-
-    <div class="pure-control-group">
-    <label for="dateofDeath">Date of Death:</label>
-    <input id="dateofDeath" type=text data-ng-model="author.dateOfDeath" ui-date/>
+        <input name="lastname" required="" id="lastname" type="text" ng-model="author.lastName"/>
+        <div ng-show="form.$submitted || form.lastname.$touched">
+            <div class="error" ng-show="form.lastname.$error.required">Last name is required</div>
+        </div>
     </div>
 
     <div class="pure-control-group">
-    <label for="bio">Biography:</label>
-    <input id="bio" type=text ng-model="author.bio"/>
+        <label for="dateofbirth">Date of Birth:</label>
+        <input name="dateofbirth" id="dateofbirth" ng-pattern="/^\d{2}-\d{2}-\d{4}$/" type="text" data-ng-model="author.dateOfBirth"/>
+        <div ng-show="form.$submitted || form.dateofbirth.$touched">
+            <div class="error" ng-show="form.dateofbirth.$error.pattern">
+                Format should be mm-dd-yyyy
+            </div>
+        </div>
+    </div>
+
+    <div class="pure-control-group">
+        <label for="dateofdeath">Date of Death:</label>
+        <input name="dateofdeath" id="dateofdeath" ng-pattern="/^\d{2}-\d{2}-\d{4}$/" type="text" data-ng-model="author.dateOfDeath"/>
+        <div ng-show="form.$submitted || form.dateofdeath.$touched">
+            <div class="error" ng-show="form.dateofdeath.$error.pattern">
+                Format should be mm-dd-yyyy
+            </div>
+        </div>
     </div>
 
 
@@ -32,4 +46,3 @@
     </div>
 </fieldset>
 </form>
-
