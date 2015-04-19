@@ -17,11 +17,7 @@ Search: <input ng-model="query">
             Book Title <span ng-show="orderByField == 'title'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
-    <th>
-        <span ng-click="orderByField = 'authors'; reverseSort = !reverseSort">
-            Author Name <span ng-show="orderByField == 'authors'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-        </span>
-    </th>
+    <th>Author(s)</th>
     <th>
         <span ng-click="orderByField = '[ISBN10, title]'; reverseSort = !reverseSort">
             ISBN10 <span ng-show="orderByField == 'ISBN10'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
@@ -58,7 +54,7 @@ Search: <input ng-model="query">
 <tbody>
 <tr ng-repeat="book in books|orderBy:orderByField:reverseSort|filter:query">
     <td><a href="#/book/{{book.id}}">{{book.title}}</a></td>
-    <td><a href="#/book/{{book.id}}"><div ng-repeat="author in book.authors">{{author.lastName}}, {{author.firstName}}</div></a></td>
+    <td><a href="#/book/{{book.id}}"><div class="nowrap" ng-repeat="author in book.authors">{{author.lastName}}, {{author.firstName}}</div></a></td>
     <td><a href="#/book/{{book.id}}">{{book.ISBN10}}</a></td>
     <td><a href="#/book/{{book.id}}">{{book.ISBN13}}</a></td>
     <td><a href="#/book/{{book.id}}">{{book.status}}</a></td>

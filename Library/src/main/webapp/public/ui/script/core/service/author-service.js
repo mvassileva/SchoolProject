@@ -19,6 +19,7 @@
         function getApiToken() {
             return $rootScope.userToken;
         }
+
         return $resource('/library/api/author', {}, {
             query: {
                 method: 'GET',
