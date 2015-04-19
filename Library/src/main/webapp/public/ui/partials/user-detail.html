@@ -32,23 +32,18 @@
     </div>
 
     <div class="pure-control-group">
-    <label for="dateofbirth">Date of Birth:</label>
-    <input name="dateofbirth" id="dateofbirth" ng-pattern="/^\d{2}-\d{2}-\d{4}$/" type="text" data-ng-model="user.dateOfBirth"/>
-    <div ng-show="form.$submitted || form.dateofbirth.$touched">
-        <div class="error" ng-show="form.dateofbirth.$error.pattern">
-            Format should be mm-dd-yyyy
-        </div>
-    </div>
+        <label for="dateofbirth">Date of Birth:</label>
+        <input id="dateofbirth" type="text" data-ng-model="user.dateOfBirth" ui-date/>
     </div>
 
     <div class="pure-control-group">
-    <label for="numBooksAllowed">Number of Books Allowed:</label>
-    <input id="numBooksAllowed" type="text" ng-model="user.bookCheckoutLimit"/>
+        <label for="numBooksAllowed">Number of Books Allowed:</label>
+        <input id="numBooksAllowed" type="text" ng-model="user.bookCheckoutLimit"/>
     </div>
 
     <div class="pure-control-group">
-    <label for="latefees">Late Fees:</label>
-    <input id="latefees" type="text" ng-model="user.lateFees"/>
+        <label for="latefees">Late Fees:</label>
+        <input id="latefees" type="text" ng-model="user.lateFees"/>
     </div>
 
     <div class="pure-control-group">
