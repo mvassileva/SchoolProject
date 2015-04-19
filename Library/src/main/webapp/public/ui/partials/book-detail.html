@@ -36,10 +36,10 @@
 
     <div class="pure-u-2 pure-u-md-1-3">
         <label for="publishdate">Publish Date:</label>
-        <input name="publishdate" id="publishdate" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" class="pure-u-23-24" type="text" data-ng-model="book.publishDate"/>
+        <input name="publishdate" id="publishdate" ng-pattern="/^\d{2}-\d{2}-\d{4}$/" class="pure-u-23-24" type="text" data-ng-model="book.publishDate"/>
         <div ng-show="form.$submitted || form.publishdate.$touched">
             <div class="error" ng-show="form.publishdate.$error.pattern">
-                Format should be mm/dd/yyyy
+                Format should be mm-dd-yyyy
             </div>
         </div>
     </div>
@@ -78,10 +78,10 @@
 
     <div ng-show="isLibrarian" class="pure-u-3 pure-u-md-1-3">
         <label for="duedate">Due Date:</label>
-        <input name="duedate" id="duedate" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/" class="pure-u-23-24" type="text" data-ng-model="book.dueDate"/>
+        <input name="duedate" id="duedate" ng-pattern="/^\d{2}-\d{2}-\d{4}$/" class="pure-u-23-24" type="text" data-ng-model="book.dueDate"/>
         <div ng-show="form.$submitted || form.duedate.$touched">
             <div class="error" ng-show="form.duedate.$error.pattern">
-                Format should be mm/dd/yyyy
+                Format should be mm-dd-yyyy
             </div>
         </div>
     </div>
@@ -93,4 +93,3 @@
     </div>
 </fieldset>
 </form>
-{{book}}
