@@ -250,8 +250,8 @@ public class BookControllerTest {
 		
 		//Find user id
 		User p = userMapper.getUserByUserName("patron1");	
-		Date d = bookController.checkOutBook("lib1", token.getToken(), 12, p.getId());
+		Date d = bookController.checkOutBook("lib1", token.getToken(), 9032, p.getId());
 		//This should fail
-		assertTrue("Checkout Succeeded when it should have failed, check book id 12?", d == null);
+		assertTrue("Checkout Succeeded when it should have failed, check book id 9032?", d == null);
 	}
 }

@@ -96,16 +96,15 @@
         </dependency>
     </dependencies>
     <build>
-        <!--
-        <resources>
-            <resource>
-                <targetPath>publicweb</targetPath>
-                <directory>src/main/resources/public</directory>
-                <includes>
-                    <include>*</include>
-                </includes>
-            </resource>
-        </resources> -->
+    <filters>
+        <filter>src/main/resources/config/hsql/config.properties</filter>
+    </filters>
+    <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+        </resource>
+    </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
@@ -189,45 +188,24 @@
                         </executions>
                     </plugin>
             </plugins>
+            <filters>
+                <filter>src/main/resources/config/jetty/config.properties</filter>
+            </filters>
             </build>
         </profile>
-        
         <profile>
             <id>mysql</id>
+            <dependencies>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>5.1.6</version>
+                </dependency>
+            </dependencies>
             <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.mortbay.jetty</groupId>
-                        <artifactId>maven-jetty-plugin</artifactId>
-                        <version>6.1.10</version>
-                        <configuration>
-                                <scanIntervalSeconds>10</scanIntervalSeconds>
-                                <stopKey>foo</stopKey>
-                                <stopPort>9999</stopPort>
-                        </configuration>
-                        <executions>
-                               <execution>
-                                       <id>start-jetty</id>
-                                       <phase>pre-integration-test</phase>
-                                       <goals>
-                                               <goal>run</goal>
-                                       </goals>
-                                       <configuration>
-                                               <webAppSourceDirectory>${basedir}/src/main/webapp/public</webAppSourceDirectory>
-                                               <scanIntervalSeconds>0</scanIntervalSeconds>
-                                               <daemon>true</daemon>
-                                       </configuration>
-                               </execution>
-                               <execution>
-                                       <id>stop-jetty</id>
-                                       <phase>post-integration-test</phase>
-                                       <goals>
-                                               <goal>stop</goal>
-                                       </goals>
-                               </execution>
-                        </executions>
-                    </plugin>
-            </plugins>
+                <filters>
+                    <filter>src/main/resources/config/mysql/config.properties</filter>
+                </filters>
             </build>
         </profile>
     </profiles>
