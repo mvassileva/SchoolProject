@@ -5,11 +5,14 @@ import edu.spsu.swe2313.group7.library.dao.AuthorMapper;
 import edu.spsu.swe2313.group7.library.dao.UserMapper;
 import edu.spsu.swe2313.group7.library.model.Author;
 import edu.spsu.swe2313.group7.library.model.UserLevel;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +31,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AuthorController {
 
 	private static final Logger logger = Logger.getLogger(AuthorController.class);
-
+	private static SimpleDateFormat format;
+	
 	@Autowired
 	@Qualifier("authorMapper")
 	private AuthorMapper authorMapper;
@@ -41,8 +45,15 @@ public class AuthorController {
 	@Qualifier("authMapper")
 	private AuthenticationMapper authMapper;
 	
+	@Value("${preload.test.data}")
+	boolean preloadData;
+	
 	@PostConstruct
-	public void init() {
+	public void init() throws ParseException {
+		format = new SimpleDateFormat("yyyy-MM-DD");
+		if (preloadData) {
+			preload();
+		}
 	}
 
 	public void setAuthorMapper(AuthorMapper mapper) {
@@ -92,5 +103,14 @@ public class AuthorController {
 		logger.debug("Author ID = " + a.getId());
 
 		return (a);
+	}
+	
+	private void preload() throws ParseException {
+		Author a = new Author();
+		a.setLastName("Tsui");
+		a.setFirstName("Frank");
+		a.setDateOfBirth(format.parse("1960-01-01")); //just a bogus date for testing
+		authorMapper.addAuthor(a);
+		
 	}
 }

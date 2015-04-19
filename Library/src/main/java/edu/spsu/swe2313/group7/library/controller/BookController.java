@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +47,9 @@ public class BookController {
 	@Autowired
 	@Qualifier("authMapper")
 	private AuthenticationMapper authMapper;
+	
+	@Value("${preload.test.data}")
+	boolean preloadData;
 
 	public void setBookMapper(BookMapper mapper) {
 		this.bookMapper = mapper;
@@ -58,7 +62,9 @@ public class BookController {
 	@PostConstruct
 	private void init() throws ParseException {
 		format = new SimpleDateFormat("yyyy-MM-DD");
-		preload();
+		if (preloadData) {
+			preload();
+		}
 	}
    
 	@RequestMapping( value = "",
@@ -206,6 +212,8 @@ public class BookController {
 		Author auth1 = new Author();
 		auth1.setFirstName("Jane");
 		auth1.setLastName("Austen");
+		auth1.setDateOfBirth(format.parse("1775-12-16"));
+		auth1.setDateOfDeath(format.parse("1817-07-18"));
 		Book book1 = new Book();
 		book1.setAuthor(auth1);
 		book1.setTitle("Pride and Prejudice");
@@ -216,6 +224,7 @@ public class BookController {
 		Author auth2 = new Author();
 		auth2.setFirstName("Harper");
 		auth2.setLastName("Lee");
+		auth2.setDateOfBirth(format.parse("1926-04-28"));
 		Book book2 = new Book();
 		book2.setAuthor(auth2);
 		book2.setTitle("To Kill a Mockingbird");
@@ -226,6 +235,8 @@ public class BookController {
 		Author auth3 = new Author();
 		auth3.setFirstName("F. Scott");
 		auth3.setLastName("Fitzgerald");
+		auth3.setDateOfBirth(format.parse("1896-09-24"));
+		auth3.setDateOfDeath(format.parse("1940-12-21"));
 		Book book3 = new Book();
 		book3.setAuthor(auth3);
 		book3.setTitle("The Great Gatsby");
@@ -236,6 +247,8 @@ public class BookController {
 		Author auth4 = new Author();
 		auth4.setFirstName("Charlotte");
 		auth4.setLastName("Bronte");
+		auth4.setDateOfBirth(format.parse("1816-04-21"));
+		auth4.setDateOfDeath(format.parse("1855-03-31"));
 		Book book4 = new Book();
 		book4.setAuthor(auth4);
 		book4.setTitle("Jane Eyre");
@@ -246,6 +259,8 @@ public class BookController {
 		Author auth5 = new Author();
 		auth5.setFirstName("George");
 		auth5.setLastName("Orwell");
+		auth5.setDateOfBirth(format.parse("1903-06-25"));
+		auth5.setDateOfDeath(format.parse("1950-01-21"));
 		Book book5 = new Book();
 		book5.setAuthor(auth5);
 		book5.setTitle("1984");
@@ -256,6 +271,8 @@ public class BookController {
 		Author auth6 = new Author();
 		auth6.setFirstName("J.D.");
 		auth6.setLastName("Salinger");
+		auth6.setDateOfBirth(format.parse("1919-01-01"));
+		auth6.setDateOfDeath(format.parse("2010-01-27"));
 		Book book6 = new Book();
 		book6.setAuthor(auth6);
 		book6.setTitle("The Catcher in the Rye");
@@ -273,6 +290,8 @@ public class BookController {
 		Author auth8 = new Author();
 		auth8.setFirstName("Emily");
 		auth8.setLastName("Bronte");
+		auth8.setDateOfBirth(format.parse("1818-07-30"));
+		auth8.setDateOfDeath(format.parse("1848-12-19"));
 		Book book8 = new Book();
 		book8.setAuthor(auth8);
 		book8.setTitle("Wuthering Heights");
@@ -283,6 +302,8 @@ public class BookController {
 		Author auth9 = new Author();
 		auth9.setFirstName("Louisa May");
 		auth9.setLastName("Alcott");
+		auth9.setDateOfBirth(format.parse("1832-11-29"));
+		auth9.setDateOfDeath(format.parse("1888-03-06"));
 		Book book9 = new Book();
 		book9.setAuthor(auth9);
 		book9.setTitle("Little Women");
@@ -293,6 +314,8 @@ public class BookController {
 		Author auth10 = new Author();
 		auth10.setFirstName("William");
 		auth10.setLastName("Golding");
+		auth10.setDateOfBirth(format.parse("1911-09-19"));
+		auth10.setDateOfDeath(format.parse("1993-06-19"));
 		Book book10 = new Book();
 		book10.setAuthor(auth10);
 		book10.setTitle("Lord of the Flies");

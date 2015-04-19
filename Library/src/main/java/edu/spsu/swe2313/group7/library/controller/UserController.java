@@ -8,6 +8,8 @@ import edu.spsu.swe2313.group7.library.model.Book;
 import edu.spsu.swe2313.group7.library.model.BookStatus;
 import edu.spsu.swe2313.group7.library.model.User;
 import edu.spsu.swe2313.group7.library.model.UserLevel;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @RequestMapping("/user")
 public class UserController {
 	private static final Logger logger = Logger.getLogger(UserController.class);
+	private static SimpleDateFormat format;
 	
 	@Autowired
 	@Qualifier("userMapper")
@@ -44,21 +48,58 @@ public class UserController {
 	public void setUserMapper(UserMapper mapper) {
 		this.userMapper = mapper;
 	}
+	@Value("${preload.test.data}")
+	boolean preloadData;
 	
 	@PostConstruct
-	private void init() {
+	public void init() throws ParseException {
+		if (preloadData) {
+			preload();
+		}
+	}
+	
+
+	private void preload() throws ParseException {
+		format = new SimpleDateFormat("yyyy-MM-DD");
+		
+		User a = new User();
+		a.setFirstName("Bob");
+		a.setLastName("Jones");
+		a.setDateOfBirth(format.parse("1963-12-11"));
+		a.setLateFees(0);
+		a.setBookCheckoutLimit(12);
+		a.setAllowedCheckout(true);
+		a.setUserLevel(UserLevel.ADMINISTRATOR);
+		a.setUserName("test12");
+		a.setPassword("test12");
+		a.setEmailAddress("test12@admin.com");
+		createUser(a);
+		
 		User p = new User();
-		p.setFirstName("Bob");
+		p.setFirstName("Stephen");
 		p.setLastName("Jones");
-		p.setDateOfBirth(new Date());
+		p.setDateOfBirth(format.parse("1983-01-29"));
 		p.setLateFees(2);
-		p.setBookCheckoutLimit(12);
+		p.setBookCheckoutLimit(4);
 		p.setAllowedCheckout(true);
-		p.setUserLevel(UserLevel.ADMINISTRATOR);
-		p.setUserName("test12");
-		p.setPassword("test12");
-		p.setEmailAddress("test12@admin.com");
+		p.setUserLevel(UserLevel.PATRON);
+		p.setUserName("sJones");
+		p.setPassword("test");
+		p.setEmailAddress("test12@patron.com");
 		createUser(p);
+		
+		User l = new User();
+		l.setFirstName("Stephen");
+		l.setLastName("Brown");
+		l.setDateOfBirth(format.parse("1981-01-29"));
+		l.setLateFees(0);
+		l.setBookCheckoutLimit(8);
+		l.setAllowedCheckout(true);
+		l.setUserLevel(UserLevel.LIBRARIAN);
+		l.setUserName("sBrown");
+		l.setPassword("test");
+		l.setEmailAddress("test12@librarian.com");
+		createUser(l);
 	}
    
 	/**
