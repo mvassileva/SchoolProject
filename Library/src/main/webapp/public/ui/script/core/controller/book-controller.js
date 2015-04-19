@@ -15,7 +15,6 @@
 
         $scope.submitBook = function submitBook() {
             var bookDAO = new BookService($scope.book);
-
             bookDAO.$save();
             $location.path('/library/public/ui/#/books');
         };
