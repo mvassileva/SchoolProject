@@ -9,7 +9,9 @@
         $scope.bookStatus = BookStatusService.query();
         $scope.authors = AuthorService.query();
         $scope.books = BookService.query();
+        
         $scope.book = {};
+        $scope.book.authors = [];
 
         $scope.submitBook = function submitBook() {
             var bookDAO = new BookService($scope.book);

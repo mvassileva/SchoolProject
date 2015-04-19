@@ -1,4 +1,5 @@
-<form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="form.$valid && submitBook()">
+<!--<form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="form.$valid && submitBook()"> -->
+<form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="submitBook()">
 <fieldset>
     <legend>Book {{book.id}}:</legend>
 
@@ -36,12 +37,12 @@
 
     <div class="pure-u-2 pure-u-md-1-3">
         <label for="publishdate">Publish Date:</label>
-        <input id="publishdate" class="pure-u-23-24" type="date" data-ng-model="book.publishDate" ui-date/>
+        <input id="publishdate" class="pure-u-23-24" type="text" data-ng-model="book.publishDate" ui-date/>
     </div>
 
     <div class="pure-u-2 pure-u-md-1-3">
         <label for="status">Status:</label>
-        <select id="userlevel" ng-model="book.status" ng-options="l for l in bookStatus">
+        <select id="status" ng-model="book.status" ng-options="l for l in bookStatus">
             <option value="">Select Status</option>
         </select>
     </div>
@@ -51,9 +52,10 @@
         <input id="shelf" class="pure-u-23-24" type="text" ng-model="book.shelf"/>
     </div>
 
+    <!--
     <div class="pure-u-3 pure-u-md-1-3">
         <label for="isbn10">ISBN10:</label>
-        <input name="isbn10" ng-pattern="/^ISBN\s(?=[-0-9xX ]{13}$)(?:[0-9]+[- ]){3}[0-9]*[xX0-9]$/" id="isbn10" class="pure-u-23-24" type="text" ng-model="book.ISBN10"/>
+        <input name="isbn10" ng-pattern="/^ISBN\s(?=[-0-9xX ]{13}$)(?:[0-9]+[- ]){3}[0-9]*[xX0-9]$/" id="isbn10" class="pure-u-23-24" type="text" ng-model="book.isbn10"/>
         <div ng-show="form.$submitted || form.isbn10.$touched">
             <div class="error" ng-show="form.isbn10.$error.pattern">
                 ISBN 10 numbers should look like this: ISBN 90-70002-34-5
@@ -63,17 +65,31 @@
 
     <div class="pure-u-3 pure-u-md-1-3">
         <label for="isbn13">ISBN13:</label>
-        <input name="isbn13" ng-pattern="/^ISBN\s(?=[-0-9xX ]{17}$)(?:[0-9]+[- ]){4}[0-9]*[xX0-9]$/" id="isbn13" class="pure-u-23-24" type="text" ng-model="book.ISBN13"/>
+        <input name="isbn13" ng-pattern="/^ISBN\s(?=[-0-9xX ]{17}$)(?:[0-9]+[- ]){4}[0-9]*[xX0-9]$/" id="isbn13" class="pure-u-23-24" type="text" ng-model="book.isbn13"/>
         <div ng-show="form.$submitted || form.isbn13.$touched">
             <div class="error" ng-show="form.isbn13.$error.pattern">
                 ISBN 13 numbers should look like this: ISBN 978-1-4028-9462-6
             </div>
         </div>
+    </div> -->
+        <div class="pure-u-3 pure-u-md-1-3">
+        <label for="isbn10">ISBN10:</label>
+        <input name="isbn10" class="pure-u-23-24" type="text" ng-model="book.isbn10"/>
     </div>
 
     <div class="pure-u-3 pure-u-md-1-3">
+        <label for="isbn13">ISBN13:</label>
+        <input name="isbn13" class="pure-u-23-24" type="text" ng-model="book.isbn13"/>
+    </div>
+
+    <div ng-show="isLibrarian" class="pure-u-3 pure-u-md-1-3">
         <label for="duedate">Due Date:</label>
-        <input id="duedate" class="pure-u-23-24" type="text" data-ng-model="book.dueDate" ui-date/>
+        <input id="duedate" class="pure-u-23-24" type="text" data-ng-model="book.dueDate" </>
+    </div>
+    
+    <div ng-show="isLibrarian" class="pure-u-3 pure-u-md-1-3">
+        <label for="checkedoutBy"> Checked Out By:</label>
+        <label id="checkedoutBy">{{book.checkedOutBy.id}}</label>
     </div>
 
     <div ng-show="isLibrarian" class="pure-controls">
