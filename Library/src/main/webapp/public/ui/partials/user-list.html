@@ -1,40 +1,55 @@
 <div>
-    <div>
-        <div>
-            <!--Sidebar content-->
-            Search:
-            <input ng-model="query">
-            Sort by:
-            <select ng-model="orderProp">
-                <option value="title">Alphabetical</option>
-            </select>
-            <a ng-show="{{isAdmin}}" href="#/users/new">Add New User</a>
-        </div>
-        <div>
-            <!--Body content-->
-            <div class="even"> <!-- set to even so that the grid will alternate properly -->
-                <div class="pure-g" >
-                    <div class="pure-u-1-5"> User Id</div>
-                    <div class="pure-u-1-5"> User Name</div>
-                    <div class="pure-u-1-5"> Email Address</div>
-                    <div class="pure-u-1-5"> User Level</div>
-                    <div class="pure-u-1-5"> Allowed Checkout</div>
-                </div>
-            </div>
+<div>
 
-            <div ng-repeat="user in users | filter:query | orderBy:orderProperty">
-                <div ng-class-odd="'odd'" ng-class-even="'even'">
-                    <a href="#/user/{{user.id}}">
-                        <div class="pure-g">
-                            <div class="pure-u-1-5">{{user.id}}</div>
-                            <div class="pure-u-1-5">{{user.userName}}</div>
-                            <div class="pure-u-1-5">{{user.emailAddress}}</div>
-                            <div class="pure-u-1-5">{{user.userLevel}}</div>
-                            <div class="pure-u-1-5">{{user.allowedCheckout}}</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--Sidebar content-->
+<div style="padding-bottom: 1em;">
+Search: <input ng-model="query">
+<a ng-show="{{isLibrarian}}" href="#/users/new" class="pure-button pure-button-primary">Add New User</a>
+</div>
+
+<!--Body content-->
+<div>
+<table class="pure-table pure-table-bordered pure-table-striped">
+<thead>
+<tr class="stopselect nowrap">
+    <th>
+        <span ng-click="orderByField = 'id'; reverseSort = !reverseSort">
+            User ID <span ng-show="orderByField == 'id'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+    <th>
+        <span ng-click="orderByField = 'userName'; reverseSort = !reverseSort">
+            User Name <span ng-show="orderByField == 'userName'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+    <th>
+        <span ng-click="orderByField = 'emailAddress'; reverseSort = !reverseSort">
+            Email <span ng-show="orderByField == 'emailAddress'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+    <th>
+        <span ng-click="orderByField = '[userLevel, userName]'; reverseSort = !reverseSort">
+            User Level <span ng-show="orderByField == '[userLevel, userName]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+    <th>
+        <span ng-click="orderByField = '[allowedCheckout, userName]'; reverseSort = !reverseSort">
+            Allowed Checkout <span ng-show="orderByField == '[allowedCheckout, userName]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+        </span>
+    </th>
+</tr>
+</thead>
+
+<tbody>
+<tr ng-repeat="user in users|orderBy:orderByField:reverseSort|filter:query">
+    <td><a href="#/user/{{user.id}}">{{user.id}}</a></td>
+    <td><a href="#/user/{{user.id}}">{{user.userName}}</a></td>
+    <td><a href="#/user/{{user.id}}">{{user.emailAddress}}</a></td>
+    <td><a href="#/user/{{user.id}}">{{user.userLevel}}</a></td>
+    <td><a href="#/user/{{user.id}}">{{user.allowedCheckout}}</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>

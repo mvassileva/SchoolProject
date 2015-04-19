@@ -16,6 +16,9 @@
             var userServ = new UserService($scope.user);
             userServ.$save();
         };
-        $scope.orderProperty = 'username';
+
+        /* set default sort order */
+        $scope.orderByField = 'title';
+        $scope.reverseSort = false;
     }
 }());
