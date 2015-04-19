@@ -1,28 +1,3 @@
-
-    alter table BOOK_AUTHORS 
-        drop 
-        foreign key FK_pospwn3uekp1cixbowtbimky6;
-
-    alter table BOOK_AUTHORS 
-        drop 
-        foreign key FK_j4a2b5hgm0qg4arpohbdfxrdo;
-
-    alter table BOOK_WAITING_USERS 
-        drop 
-        foreign key FK_epqmppa2qrm17q1o9qft4ek30;
-
-    alter table BOOK_WAITING_USERS 
-        drop 
-        foreign key FK_1dq0vfkd576dc4so4jodpas8f;
-
-    alter table USERS_BOOKS 
-        drop 
-        foreign key FK_sv2rjvmhjabuf8sqoiw76n2ty;
-
-    alter table USERS_BOOKS 
-        drop 
-        foreign key FK_bqnmno9e9vab4431hpm6kd8bi;
-
     drop table if exists AUTHOR;
 
     drop table if exists BOOK;
