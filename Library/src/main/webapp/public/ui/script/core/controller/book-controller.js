@@ -13,6 +13,7 @@
 
         $scope.submitBook = function submitBook() {
             var bookDAO = new BookService($scope.book);
+
             bookDAO.$save();
             $location.path('/library/public/ui/#/books');
         };
@@ -34,6 +35,7 @@
 
         $scope.removeAuthor = function (author) {
             var index = $scope.book.authors.indexOf(author);
+
             if (index !== -1) {
                 $scope.book.authors.splice(index, 1);
             }
