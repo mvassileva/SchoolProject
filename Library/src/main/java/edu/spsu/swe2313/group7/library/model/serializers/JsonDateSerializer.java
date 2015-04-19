@@ -18,7 +18,7 @@ public class JsonDateSerializer extends JsonSerializer<Date> {
 	private static final ThreadLocal<SimpleDateFormat> dateFormat = new ThreadLocal<SimpleDateFormat>() {
 		@Override
 		protected SimpleDateFormat initialValue() {
-			SimpleDateFormat gmt = new SimpleDateFormat("MM-dd-yyyy");
+			SimpleDateFormat gmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 			// Setting the timezone on the serializer forces the output string
 			// to always be in GMT. Having a consistent timezone across
 			// different messages is not required, but makes them easier for

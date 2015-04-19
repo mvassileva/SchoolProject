@@ -16,14 +16,14 @@ public class JsonDateDeserializer extends JsonDeserializer<Date> {
 	private static final ThreadLocal<SimpleDateFormat> dateFormatNoTimeZone = new ThreadLocal<SimpleDateFormat>() {
 		@Override
 		protected SimpleDateFormat initialValue() {
-			return new SimpleDateFormat("yyyy-MM-dd");
+			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		}
 	};
 
 	private static final ThreadLocal<SimpleDateFormat> dateFormatRFC822TimeZone = new ThreadLocal<SimpleDateFormat>() {
 		@Override
 		protected SimpleDateFormat initialValue() {
-			return new SimpleDateFormat("yyyy-MM-dd");
+			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		}
 	};
 
