@@ -1,5 +1,4 @@
-<!--<form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="form.$valid && submitBook()"> -->
-<form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="submitBook()">
+<form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="form.$valid && submitBook()">
 <fieldset>
     <legend>Book {{book.id}}:</legend>
 
@@ -52,7 +51,6 @@
         <input id="shelf" class="pure-u-23-24" type="text" ng-model="book.shelf"/>
     </div>
 
-    <!--
     <div class="pure-u-3 pure-u-md-1-3">
         <label for="isbn10">ISBN10:</label>
         <input name="isbn10" ng-pattern="/^ISBN\s(?=[-0-9xX ]{13}$)(?:[0-9]+[- ]){3}[0-9]*[xX0-9]$/" id="isbn10" class="pure-u-23-24" type="text" ng-model="book.isbn10"/>
@@ -71,15 +69,6 @@
                 ISBN 13 numbers should look like this: ISBN 978-1-4028-9462-6
             </div>
         </div>
-    </div> -->
-        <div class="pure-u-3 pure-u-md-1-3">
-        <label for="isbn10">ISBN10:</label>
-        <input name="isbn10" class="pure-u-23-24" type="text" ng-model="book.isbn10"/>
-    </div>
-
-    <div class="pure-u-3 pure-u-md-1-3">
-        <label for="isbn13">ISBN13:</label>
-        <input name="isbn13" class="pure-u-23-24" type="text" ng-model="book.isbn13"/>
     </div>
 
     <div ng-show="isLibrarian" class="pure-u-3 pure-u-md-1-3">
