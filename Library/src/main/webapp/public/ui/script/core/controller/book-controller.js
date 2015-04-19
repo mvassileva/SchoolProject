@@ -7,9 +7,8 @@
 
     function BookController($scope, $location, BookService, AuthorService, BookStatusService) {
         $scope.bookStatus = BookStatusService.query();
-
+        $scope.authors = AuthorService.query();
         $scope.books = BookService.query();
-
         $scope.book = {};
 
         $scope.submitBook = function submitBook() {
@@ -17,8 +16,6 @@
             bookDAO.$save();
             $location.path('/library/public/ui/#/books');
         };
-
-        $scope.authors = AuthorService.query();
 
         $scope.addAuthor = function () {
             $scope.author = $scope.bookData.author;

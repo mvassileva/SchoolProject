@@ -9,15 +9,15 @@
         $scope.bookStatus = BookStatusService.query();
         $scope.authors = AuthorService.query();
 
+        BookDetailService.get({id: $routeParams.bookId}, function (data) {
+            $scope.book = data;
+        });
+
         $scope.submitBook = function submitBook() {
             var bookDAO = new BookDetailService($scope.book);
             bookDAO.$update({id: $scope.book.id});
             $location.path('/library/public/ui/#/books');
         };
-
-        BookDetailService.get({id: $routeParams.bookId}, function (data) {
-            $scope.book = data;
-        });
 
         $scope.addAuthor = function () {
             $scope.author = $scope.bookData.author;
@@ -26,6 +26,7 @@
 
         $scope.removeAuthor = function (author) {
             var index = $scope.book.authors.indexOf(author);
+
             if (index !== -1) {
                 $scope.book.authors.splice(index, 1);
             }
