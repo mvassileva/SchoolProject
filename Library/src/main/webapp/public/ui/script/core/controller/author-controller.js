@@ -15,6 +15,8 @@
             authorDAO.$save();
         };
 
-        $scope.orderProp = 'lastName';
+        /* set default sort order */
+        $scope.orderByField = 'lastName';
+        $scope.reverseSort = false;
     }
 }());

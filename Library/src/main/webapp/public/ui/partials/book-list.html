@@ -20,32 +20,32 @@ Search: <input ng-model="query">
     <th>Author(s)</th>
     <th>
         <span ng-click="orderByField = '[ISBN10, title]'; reverseSort = !reverseSort">
-            ISBN10 <span ng-show="orderByField == 'ISBN10'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+            ISBN10 <span ng-show="orderByField == '[ISBN10, title]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
         <span ng-click="orderByField = '[ISBN13, title]'; reverseSort = !reverseSort">
-            ISBN13 <span ng-show="orderByField == 'ISBN13'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+            ISBN13 <span ng-show="orderByField == '[ISBN13, title]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
         <span ng-click="orderByField = '[status, title]'; reverseSort = !reverseSort">
-            Status <span ng-show="orderByField == 'status'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+            Status <span ng-show="orderByField == '[status, title]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
         <span ng-click="orderByField = '[shelf, title]'; reverseSort = !reverseSort">
-            Shelf <span ng-show="orderByField == 'shelf'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+            Shelf <span ng-show="orderByField == '[shelf, title]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
         <span ng-click="orderByField = '[checkedOutBy, dueDate, title]'; reverseSort = !reverseSort">
-            Checked Out By <span ng-show="orderByField == 'checkedOutBy'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+            Checked Out By <span ng-show="orderByField == '[checkedOutBy, dueDate, title]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
     <th>
         <span ng-click="orderByField = '[dueDate, checkedOutBy, title]'; reverseSort = !reverseSort">
-            Due Date <span ng-show="orderByField == 'dueDate'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+            Due Date <span ng-show="orderByField == '[dueDate, checkedOutBy, title]'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
         </span>
     </th>
 </tr>

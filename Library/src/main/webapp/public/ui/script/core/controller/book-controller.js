@@ -19,7 +19,6 @@
         };
 
         $scope.authors = AuthorService.query();
-        $scope.orderProperty = 'title';
 
         $scope.addAuthor = function () {
             $scope.author = $scope.bookData.author;
