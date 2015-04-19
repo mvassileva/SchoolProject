@@ -15,6 +15,7 @@
 
         $scope.submitBook = function submitBook() {
             var bookDAO = new BookService($scope.book);
+
             bookDAO.$save();
             $location.path('/library/public/ui/#/books');
         };
@@ -24,7 +25,7 @@
          * $scope.book is only an empty object when creating a book in this
          * controller.  See line 12 above.  Due to this
          * $scope.book.authors.push() does not exist when it is called in the
-         * function below.  Same goes for $scope.book.authros.splice().
+         * function below.  Same goes for $scope.book.authors.splice().
          *
          * Compare this to how these are setup in the book-detail-controller to
          * see the differences.
@@ -36,6 +37,7 @@
 
         $scope.removeAuthor = function (author) {
             var index = $scope.book.authors.indexOf(author);
+
             if (index !== -1) {
                 $scope.book.authors.splice(index, 1);
             }

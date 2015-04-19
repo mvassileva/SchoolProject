@@ -1,13 +1,11 @@
-/* global angular */
-
 (function () {
     'use strict';
 
     angular.module('app.core').controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$rootScope', '$scope', 'AuthService', '$location'];
+    LoginController.$inject = ['$rootScope', '$scope', '$location', 'AuthService'];
 
-    function LoginController($rootScope, $scope, AuthService, $location) {
+    function LoginController($rootScope, $scope, $location, AuthService) {
 
         $scope.authData = {};
 
