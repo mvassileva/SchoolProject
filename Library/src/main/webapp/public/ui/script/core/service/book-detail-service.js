@@ -13,7 +13,7 @@
                $rootScope.userLevel = authLevel;
            });
 
-        function getApiUserName(){
+        function getApiUserName() {
             return $rootScope.userName;
         }
 
