@@ -14,7 +14,7 @@
         $scope.submitAuthor = function submitAuthor() {
             var authorDAO = new AuthorDetailService($scope.author);
             authorDAO.$update({id: $scope.author.id});
-            $location.path('#/author');
+            $location.path('/author');
         };
     }
 }());

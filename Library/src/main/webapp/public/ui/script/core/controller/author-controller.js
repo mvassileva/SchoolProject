@@ -13,7 +13,7 @@
         $scope.submitAuthor = function submitAuthor() {
             var authorDAO = new AuthorService($scope.author);
             authorDAO.$save();
-            $location.path('#/author');
+            $location.path('/author');
         };
 
         /* set default sort order */
