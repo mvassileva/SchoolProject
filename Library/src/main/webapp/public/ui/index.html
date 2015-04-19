@@ -20,7 +20,19 @@
 
 
 <body>
-<header class="header"><h1>Library Inventory Control</h1></header>
+<header class="header nowrap">
+    <div style="width: 50%; float: left;">
+        <h1>Library Inventory Control</h1>
+    </div>
+    <div style="width: 25%; float: right;" ng-show="isAuthenticated && userName">
+        <ul>
+            <li>Logged in as: {{userName}}</li>
+            <li>Level: {{userLevel}}</li>
+            <li ng-class="menuClass('login')"><a href="#/logout">Logout</a></li>
+        </ul>
+    </div>
+    <div class="cf"></div>
+</header>
 
 <!-- Menu -->
 <div class="pure-g">
@@ -30,28 +42,10 @@
             <ul class="pure-menu-list">
                 <li class="pure-menu-item" ng-class="menuClass('books')"><a href="#/books">Books</a></li>
                 <li class="pure-menu-item" ng-class="menuClass('author')"><a href="#/author">Authors</a></li>
-                <!-- <li class="pure-menu-item" ng-class="menuClass('search')"><a href="#/author">Search</a></li> -->
                 <li ng-show="isLibrarian" class="pure-menu-item" ng-class="menuClass('users')"><a href="#/users">Users</a></li>
                 <li ng-hide="isAuthenticated" class="pure-menu-item" ng-class="menuClass('login')"><a href="#/login">Login</a></li>
             </ul>
         </div>
-    </div>
-    <div class="pure-u-1-5" ng-show="isAuthenticated && userName">
-        <div class="pure-g">
-        <div class="pure-u-1 pure-u-1-2">
-        <ul class="pure-menu-list">
-            <li class="pure-menu-item">Logged in as: {{userName}}</li>
-            <li class="pure-menu-item">Level: {{userLevel}}</li>
-        </ul>
-        </div>
-            
-        <div class="pure-u-2 pure-u-1-2">
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item" ng-class="menuClass('login')"><a href="#/logout">Logout</a></li>
-            </ul>
-        </div>
-        </div>
-        
     </div>
 </div>
 
