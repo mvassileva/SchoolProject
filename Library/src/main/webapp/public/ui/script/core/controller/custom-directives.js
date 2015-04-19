@@ -7,7 +7,6 @@
             link: function ($scope, element, attrs, controller) {
                 var originalRender, updateModel, usersOnSelectHandler;
 
-                // if ($scope.uiDate == null) {
                 if (typeof $scope.uiDate === 'undefined') {
                     $scope.uiDate = {};
                 }
