@@ -1,6 +1,7 @@
 <form name="form" novalidate class="pure-form pure-form-aligned" ng-submit="form.$valid && submitUser()">
 <fieldset>
-    <legend>User {{user.id}}:</legend>
+    <legend>User {{user.id}}:
+    <button ng-show="user.id && isLibrarian" type="button" class="pure-button pure-button-primary button-error" ng-click="removeUser()">Remove User</button></legend>
     <div class="pure-control-group">
         <label for="username">User Name:</label>
         <input name="username" required="" id="username" type="text" ng-model="user.userName"/>

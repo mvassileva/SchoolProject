@@ -1,6 +1,7 @@
 <form name="form" novalidate class="pure-form pure-form-aligned" ng-submit="form.$valid && submitAuthor()">
 <fieldset>
-    <legend>Author {{author.id}}:</legend>
+    <legend>Author {{author.id}}:
+    <button ng-show="author.id && isLibrarian" type="button" class="pure-button pure-button-primary button-error" ng-click="removeAuthor()">Remove Author</button></legend>
 
     <div class="pure-control-group">
         <label for="firstname">First Name:</label>

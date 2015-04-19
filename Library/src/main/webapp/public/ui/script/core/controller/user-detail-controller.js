@@ -17,5 +17,9 @@
             userServ.$update({id: $scope.user.id});
             $location.path('/users');
         };
+        $scope.removeUser = function() {
+            $scope.user.$remove({id: $scope.user.id});
+            $location.path("/users");
+        }
     }
 }());

@@ -16,5 +16,10 @@
             authorDAO.$update({id: $scope.author.id});
             $location.path('/author');
         };
+        
+         $scope.removeAuthor = function() {
+            $scope.author.$remove({id: $scope.author.id});
+            $location.path("/author");
+        }
     }
 }());

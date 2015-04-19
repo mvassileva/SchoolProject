@@ -37,5 +37,10 @@
                 $scope.book.authors.splice(index, 1);
             }
         };
+        
+        $scope.removeBook = function() {
+            $scope.book.$remove({id: $scope.book.id});
+            $location.path("/books");
+        }
     }
 }());

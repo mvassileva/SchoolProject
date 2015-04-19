@@ -131,7 +131,21 @@ public class BookController {
 
 	}
 	
-	
+	@RequestMapping( value="{bookId}",
+			 method = RequestMethod.DELETE,
+			 produces = "application/json")
+	@ResponseBody
+	public boolean removeBook(@RequestHeader("API-User") String userName, @RequestHeader("API-Key") String key, @PathVariable long bookId) {
+		if (authMapper.verifyUserAccessLevel(userName, key, UserLevel.LIBRARIAN)) {
+			bookMapper.removeBook(bookId);
+			return true;
+		}
+
+		//In all other sceanarios this is not allowed!
+		//todo: fix up return code
+		return false;
+
+	}
 	
 	@RequestMapping( value="{bookId}",
 			 method = RequestMethod.GET,

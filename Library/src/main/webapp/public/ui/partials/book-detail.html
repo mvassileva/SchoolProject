@@ -1,6 +1,8 @@
 <form name="form" novalidate class="pure-form pure-form-stacked" ng-submit="form.$valid && submitBook()">
+
 <fieldset>
-    <legend>Book {{book.id}}:</legend>
+    <legend>Book {{book.id}}:                          
+            <button ng-show="book.id && isLibrarian" type="button" class="pure-button pure-button-primary button-error" ng-click="removeBook()">Remove Book</button></legend>
 
     <div class="pure-g">
 
@@ -89,6 +91,8 @@
         <button ng-hide="book.id" class="pure-button pure-button-primary" type="submit">Create Book</button>
         <button ng-show="book.id" class="pure-button pure-button-primary" type="submit">Update Book</button>
         <button class="pure-button pure-button-primary" type="reset">Reset</button>
+        
+
     </div>
 </fieldset>
 </form>
