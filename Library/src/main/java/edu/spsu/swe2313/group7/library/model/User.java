@@ -47,8 +47,8 @@ public class User {
 	private String emailAddress;
 	
 
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="checkedOutBy")
-	private List<Book> booksCheckedOut;
+	//@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="checkedOutBy")
+	//private List<Book> booksCheckedOut;
 	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="waitingList")
 	private List<Book> waitingListBooks;
@@ -77,9 +77,9 @@ public class User {
 		return waitingListBooks;
 	}
 
-	public List<Book> getBooksCheckedOut() {
-		return booksCheckedOut;
-	}
+	//public List<Book> getBooksCheckedOut() {
+	//	return booksCheckedOut;
+	//}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
@@ -146,9 +146,9 @@ public class User {
 		this.bookCheckoutLimit = bookCheckoutLimit;
 	}
 
-	public int getBookCheckedOutCount() {
-		return booksCheckedOut.size();
-	}
+	//public int getBookCheckedOutCount() {
+	//	return booksCheckedOut.size();
+	//}
 	
 	public int getLateFees() {
 		return lateFees;
@@ -177,11 +177,11 @@ public class User {
 			logger.debug("User has late fees greater than 0");
 			return false;
 		}
-		if (getBookCheckedOutCount() >= this.getBookCheckoutLimit()) {
-			//User has checked out too many books
-			logger.debug("User has too many books checked out");
-			return false;
-		}
+		//if (getBookCheckedOutCount() >= this.getBookCheckoutLimit()) {
+		//	//User has checked out too many books
+		//	logger.debug("User has too many books checked out");
+		//	return false;
+		//}
 		//Everything looks good, allow checkout
 		logger.debug("User is allowed checkout");
 		return true;

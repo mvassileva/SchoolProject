@@ -71,11 +71,20 @@
         </div>
     </div>
 
-    <div ng-show="isLibrarian" class="pure-u-3 pure-u-md-1-3">
+    <div class="pure-u-1 pure-u-3-3">
+    <div ng-show="isLibrarian" class="pure-u-2 pure-u-md-1-3">
         <label for="duedate">Due Date:</label>
         <input name="duedate" id="duedate" class="pure-u-23-24" type="text" data-ng-model="book.dueDate" ui-date/>
     </div>
 
+    <div class="pure-u-3 pure-u-md-1-3">
+        <label for="checkedOutBy">Checked out By:</label>
+        <select id="checkedOutBy" ng-model="book.checkedOutBy" ng-options="i.lastName+', '+i.firstName for i in users track by i.id">
+            <option value="">Select User</option>
+        </select>
+    </div>
+    </div>
+    
     <div ng-show="isLibrarian" class="pure-controls">
         <button ng-hide="book.id" class="pure-button pure-button-primary" type="submit">Create Book</button>
         <button ng-show="book.id" class="pure-button pure-button-primary" type="submit">Update Book</button>

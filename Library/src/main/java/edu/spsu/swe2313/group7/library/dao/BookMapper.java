@@ -154,9 +154,9 @@ public class BookMapper {
 		managedB.setDueDate(cal.getTime());
 		managedB.setStatus(BookStatus.CHECKEDOUT);
 		managedB.setCheckedOutBy(managedU);
-		if (!managedU.getBooksCheckedOut().contains(managedB)) {
+		/*if (!managedU.getBooksCheckedOut().contains(managedB)) {
 			managedU.getBooksCheckedOut().add(managedB);
-		}
+		}*/
 		em.persist(managedU);
 		em.persist(managedB);
 		logger.debug("Successfully completed Checkout");
@@ -177,10 +177,10 @@ public class BookMapper {
 		}
 		
 		//remove book from user's checkout list
-		if (managedU != null && managedU.getBooksCheckedOut() != null 
+		/*if (managedU != null && managedU.getBooksCheckedOut() != null 
 			&& managedU.getBooksCheckedOut().size() > 0) {
 			managedU.getBooksCheckedOut().remove(managedB);
-		}
+		}*/
 		managedB.setCheckedOutBy(null);
 		managedB.setDueDate(null);
 		managedB.setStatus(BookStatus.CHECKEDIN);

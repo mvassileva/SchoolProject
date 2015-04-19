@@ -59,7 +59,7 @@ Search: <input ng-model="query">
     <td class="nowrap"><a href="#/book/{{book.id}}">{{book.isbn13}}</a></td>
     <td><a href="#/book/{{book.id}}">{{book.status}}</a></td>
     <td class="nowrap"><a href="#/book/{{book.id}}">{{book.shelf}}</a></td>
-    <td><a href="#/book/{{book.id}}">{{book.checkedOutBy}}</a></td>
+    <td><a href="#/book/{{book.id}}">{{book.checkedOutBy.userName}}</a></td>
     <td><a href="#/book/{{book.id}}">{{book.dueDate}}</a></td>
 </tr>
 </tbody>

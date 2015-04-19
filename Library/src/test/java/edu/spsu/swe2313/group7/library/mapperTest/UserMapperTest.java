@@ -79,7 +79,7 @@ public class UserMapperTest
 		assertEquals("First Name doesn't match Expected!", "Maria", pMap.getUserById(id).getFirstName());
 		assertEquals("Last Name doesn't match Expected!", "Vassileva", pMap.getUserById(id).getLastName());
 		//assertEquals("Date of Birth doesn't match!", "Maria", pMap.getUserById(id).getDateOfBirth());
-		assertEquals("Book Checked Out Count doesn't match!", 0, pMap.getUserById(id).getBookCheckedOutCount());
+		//assertEquals("Book Checked Out Count doesn't match!", 0, pMap.getUserById(id).getBookCheckedOutCount());
 		assertEquals("Book Checkout Limit doesn't match!", 5, pMap.getUserById(id).getBookCheckoutLimit());
 		assertEquals("Late Fees doesn't match!", 0, pMap.getUserById(id).getLateFees());
 		assertEquals("Date of Birth doesn't match!", format.parse("1989-09-01"), pMap.getUserById(id).getDateOfBirth());

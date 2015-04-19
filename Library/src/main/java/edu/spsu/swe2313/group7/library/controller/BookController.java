@@ -138,7 +138,9 @@ public class BookController {
 			 produces = "application/json")
 	public @ResponseBody Book findBookById(@PathVariable long bookId) {
 		logger.debug("Called Find Book By Id");
-		return bookMapper.getBookById(bookId);
+		Book b =  bookMapper.getBookById(bookId);
+		b.getCheckedOutBy();
+		return b;
 	}
 	
 	@RequestMapping( value="/checkout/{bookId}/{userId}",

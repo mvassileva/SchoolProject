@@ -25,7 +25,9 @@
             get: {
                 method: 'GET',
                 isArray: false,
-                headers: {Accept: 'application/json'}
+                headers: {Accept: 'application/json',
+                         'API-User': getApiUserName,
+                         'API-Key':  getApiToken}
             },
             update: {
                 method: 'PUT',
