@@ -1,6 +1,6 @@
 # SchoolProject
 Software engineering class project.  You can find additional documentation in
-the `Group7ProjectDocumentation` folder.
+the `Group7ProjectDocuments` folder.
 
 
 
